@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,10 +10,13 @@ import {
   noAllSpacesValidator,
 } from '../../../validator/formValidator';
 import { AdminAuthService } from '../../../../core/services/admin/authService/admin-auth.service';
-import { response } from 'express';
+import IToastOption from '../../../../core/models/IToastOptions';
+import { Router } from '@angular/router';
+import { ToastService } from '../../../../core/services/common/toaster/toast.service';
 
 @Component({
   selector: 'app-login-form',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css',
@@ -21,17 +24,14 @@ import { response } from 'express';
 export class LoginFormComponent implements OnInit {
   @Input() formType: 'user' | 'employee' | 'admin' = 'user';
   loginForm!: FormGroup;
-
-  constructor(private _fb: FormBuilder,
-    private adminAuthService: AdminAuthService
-  ) {}
+  private _fb = inject(FormBuilder);
+  private _adminAuthService = inject(AdminAuthService);
+  private _toastService = inject(ToastService);
+  private _router = inject(Router);
 
   ngOnInit(): void {
     this.loginForm = this._fb.group({
-      email: [
-        '',
-        [Validators.required, noAllSpacesValidator(), emailFormatValidator()],
-      ],
+      email: ['', [Validators.required, noAllSpacesValidator(), emailFormatValidator()]],
       password: ['', [Validators.required]],
     });
   }
@@ -39,15 +39,36 @@ export class LoginFormComponent implements OnInit {
   formOnSubmit() {
     if (this.loginForm.invalid) return;
     const { email, password } = this.loginForm.value;
-    console.log(email,password,"1212121212")
-    this.adminAuthService.login(email,password).subscribe({
-      next:(response)=>{
-        console.log(response,"responseee");
+    this._adminAuthService.login(email, password).subscribe({
+      next: (response) => {
+        if (response.success) {
+          const toastOption: IToastOption = {
+            severity: 'success-toast',
+            summary: 'Success',
+            detail: 'Login successful',
+          };
+          this._toastService.showToast(toastOption);
+          this._adminAuthService.setLoggedIn('true');
+          this._router.navigate(['/admin/dashboard']);
+        } else {
+          const toastOption: IToastOption = {
+            severity: 'danger-toast',
+            summary: 'Error',
+            detail: response.message || 'Login failed',
+          };
+          this._toastService.showToast(toastOption);
+        }
       },
-      error:(error)=>{
-        console.log(error,"error")
-      }
-    })
+      error: (error) => {
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail:
+            error.error?.message || 'Something went wrong. Please try again.',
+        };
+        this._toastService.showToast(toastOption);
+      },
+    });
   }
 
   hasError(controlName: string, errorName: string) {
