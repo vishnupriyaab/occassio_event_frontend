@@ -10,6 +10,12 @@ module.exports = {
         KayPhoDu: ['Kay Pho Du', 'serif'],
         Roboto: ['Roboto', 'serif'],
         Katibeh: ['Katibeh', 'serif']  ,
+      },
+      colors: {
+        adPrimary : '#F8F3D9',
+        adSecndary: '#EBE5C2',
+        adTertiary: '#B9B28A',
+        adQuaternary: '#504B38',
       }
     },
   },
