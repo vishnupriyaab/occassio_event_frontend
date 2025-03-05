@@ -1,1 +1,17 @@
-<p>login works!</p>
+<div class="bg-yellow-100 bg-opacity-60 flex-1 flex items-center justify-center z-10">
+    <div class="min-h-screen w-[600px]">
+        <div class="flex justify-center">
+            <div class="h-52 w-60 flex flex-col items-center justify-center mt-5">
+                <img src="logo.png" alt="logo" class="h-16 w-auto">
+                <p class="text-4xl text-black font-kaushan">Occasio</p>
+                <p class="text-black text-sm font-semibold">
+                    EVENTS
+                </p>
+            </div>
+        </div>
+        <div class="w-[430px] ml-20 mr-8">
+            <p class="text-yellow-950 mb-5 text-center font-bold text-4xl" >Welcome Admin</p>
+            <app-login-form [formType]="'admin'"></app-login-form>
+        </div>
+    </div>
+</div>
