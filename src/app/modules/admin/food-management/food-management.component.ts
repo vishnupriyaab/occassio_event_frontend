@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { ReusableTable1Component } from '../../../shared/components/admin/reusable-table1/reusable-table1.component';
 import { TableAction, TableColumn } from '../../../models/ITable';
+import { AddModalComponent } from "../../../shared/components/admin/add-edit-modal/add-modal.component";
 
 @Component({
   selector: 'app-food-management',
-  imports: [ReusableTable1Component],
+  imports: [ReusableTable1Component, AddModalComponent],
   templateUrl: './food-management.component.html',
   styleUrl: './food-management.component.css',
 })
 export class FoodManagementComponent {
+  isModalOpen = false;
+  modalHeading = '';
   foodColumns: TableColumn[] = [
     { key: 'name', header: 'Name', type: 'text' },
     { key: 'description', header: 'Description', type: 'text' },
@@ -50,22 +53,27 @@ export class FoodManagementComponent {
     {
       icon: 'Edit',
       color: 'blue',
-      action: (item) => this.editVenue(item),
+      action: (item) => this.editFood(item),
     },
     {
       icon: 'Delete',
       color: 'red',
-      action: (item) => this.deleteVenue(item),
+      action: (item) => this.deleteFood(item),
     },
   ];
 
-  editVenue(item: any) {
+  addFood() {
+    this.modalHeading = 'Add Food';
+    this.isModalOpen = true;
+  }
+
+  editFood(item: any) {
     console.log('Editing venue:', item);
     // Implement edit logic
     // For example, open a modal or navigate to an edit page
   }
 
-  deleteVenue(item: any) {
+  deleteFood(item: any) {
     console.log('Deleting venue:', item);
     // Implement delete logic
     // For example, show a confirmation dialog and remove the item

@@ -16,6 +16,7 @@ module.exports = {
         adSecndary: '#EBE5C2',
         adTertiary: '#B9B28A',
         adQuaternary: '#504B38',
+        baseYellow: '#b8860b'
       }
     },
   },

@@ -17,10 +17,11 @@ export class ReusableTable1Component {
 
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
+  @Output() toggleChange = new EventEmitter<{item: any, value: boolean}>();
 
-  onToggleChange(item: any, key: string) {
-    item[key] = !item[key];
-    // You can add additional logic here, like calling a service
+  onToggleChange(item: any) {
+    item.list = !item.list; 
+    this.toggleChange.emit({ item, value: item.list });
   }
 
   onEdit(item: any) {
@@ -29,6 +30,6 @@ export class ReusableTable1Component {
 
   onDelete(item: any) {
     this.delete.emit(item);
-  }
+  } 
 
 }

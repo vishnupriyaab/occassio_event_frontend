@@ -43,34 +43,27 @@
             <span *ngSwitchCase="'text'" class="text-sm text-adQuaternary">
               {{ item[col.key] }}
             </span>
-
             <div *ngSwitchCase="'toggle'" class="flex items-center">
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  class="sr-only peer"
-                  [checked]="item[col.key]"
-                  (change)="onToggleChange(item, col.key)"
-                />
                 <div
-                  class="relative w-20 h-9 bg-red-500 rounded-full flex items-center px-2 transition-colors duration-300 peer-checked:bg-green-500"
+                  class="relative w-20 h-9 rounded-full flex items-center px-2 transition-colors duration-300 cursor-pointer"
+                  [ngClass]="item[col.key] ? 'bg-green-500' : 'bg-red-500'"
+                  (click)="onToggleChange(item)"
                 >
                   <span
                     class="text-sm px-1 font-semibold text-white transition-all duration-300"
                     [ngClass]="item[col.key] ? 'ml-auto' : 'mr-auto'"
                   >
-                    {{ item[col.key] ? "List" : "Unlist" }}
+                    {{ item[col.key] ? "Listed" : "Unlisted" }}
                   </span>
                   <div
                     class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-all duration-300"
                     [ngStyle]="{
-                      left: item[col.key] ? '2px' : 'calc(100% - 26px)'
-                    }"
+                        left: item[col.key] ? '2px' : 'calc(100% - 26px)'
+                      }"
                   ></div>
                 </div>
-              </label>
-            </div>
-
+              </div>
+              
             <div *ngSwitchCase="'actions'" class="flex space-x-2">
               <button
                 *ngFor="let action of actions"
