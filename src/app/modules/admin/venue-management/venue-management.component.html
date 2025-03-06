@@ -17,6 +17,8 @@
         [data]="venues"
         [actions]="venueActions"
         [columnWidths]="venueColumnWidths"
+        (edit)="editVenue($event)"
+        (delete)="deleteVenue($event)"
         (toggleChange)="handleStatusChange($event.item, $event.value)">
     ></app-reusable-table1>
     <app-add-modal 

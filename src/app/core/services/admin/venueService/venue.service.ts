@@ -13,16 +13,15 @@ export class VenueService {
   constructor(private _http: HttpClient) { }
 
   getVenue():Observable<ApiResponse<any>>{
-    console.log("1234567");
     return this._http.get<ApiResponse<any>>(`${this._baseUrl}admin/venues`,{})
   }
 
   addVenue(venueData: any): Observable<ApiResponse<any>> {
-    console.log("12345678901234567891234567890",venueData)
     return this._http.post<ApiResponse<any>>(`${this._baseUrl}admin/venues`, venueData);
   }
 
   updateVenue(venueId: string, venueData: any): Observable<ApiResponse<any>> {
+    console.log("333", venueId,venueData)
     return this._http.put<ApiResponse<any>>(`${this._baseUrl}admin/venues/${venueId}`, venueData);
   }
 

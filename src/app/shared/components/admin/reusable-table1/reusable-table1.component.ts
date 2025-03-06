@@ -25,6 +25,7 @@ export class ReusableTable1Component {
   }
 
   onEdit(item: any) {
+    console.log("11")
     this.edit.emit(item);
   }
 

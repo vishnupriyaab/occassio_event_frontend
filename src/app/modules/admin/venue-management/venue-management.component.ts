@@ -13,8 +13,7 @@ import IToastOption from '../../../core/models/IToastOptions';
   templateUrl: './venue-management.component.html',
   styleUrl: './venue-management.component.css',
 })
-export class VenueManagementComponent implements OnInit{
-
+export class VenueManagementComponent implements OnInit {
   private _venueService = inject(VenueService);
   private _toastService = inject(ToastService);
   isModalOpen = false;
@@ -47,21 +46,23 @@ export class VenueManagementComponent implements OnInit{
     },
   ];
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.getVenues();
   }
 
-  getVenues(){
+  getVenues() {
     this.isLoading = true;
     this.errorMessage = '';
     this._venueService.getVenue().subscribe({
-      next:(response)=>{
-        console.log(response,"res")
+      next: (response) => {
+        console.log(response, 'res');
         if (response.success) {
           this.venues = response.data.map((venue: any) => {
-            if (venue.estimatedCost && 
-                venue.estimatedCost.min !== undefined && 
-                venue.estimatedCost.max !== undefined) {
+            if (
+              venue.estimatedCost &&
+              venue.estimatedCost.min !== undefined &&
+              venue.estimatedCost.max !== undefined
+            ) {
               venue.estimatedCost = `₹${venue.estimatedCost.min} - ₹${venue.estimatedCost.max}`;
             } else {
               venue.estimatedCost = 'Price not available';
@@ -69,7 +70,7 @@ export class VenueManagementComponent implements OnInit{
             venue.list = !venue.blocked;
             return venue;
           });
-          
+
           const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
@@ -78,7 +79,7 @@ export class VenueManagementComponent implements OnInit{
           this._toastService.showToast(toastOption);
         } else {
           this.errorMessage = response.message || 'Failed to fetch venues';
-          
+
           const toastOption: IToastOption = {
             severity: 'error-toast',
             summary: 'Error',
@@ -88,20 +89,20 @@ export class VenueManagementComponent implements OnInit{
         }
         this.isLoading = false;
       },
-      error:(error)=>{
+      error: (error) => {
         // this.errorMessage = 'An error occurred while fetching venues';
         console.error('Error fetching venues:', error);
-        
+
         const toastOption: IToastOption = {
           severity: 'danger-toast',
           summary: 'Error',
           detail: this.errorMessage,
         };
         this._toastService.showToast(toastOption);
-        
+
         this.isLoading = false;
-      }
-    })
+      },
+    });
   }
 
   addVenue() {
@@ -111,12 +112,9 @@ export class VenueManagementComponent implements OnInit{
   }
 
   editVenue(item: any) {
-    console.log('Editing venue:', item);
     this.modalHeading = 'Edit Venue';
     this.editingItem = item;
     this.isModalOpen = true;
-    // Implement edit logic
-    // For example, open a modal or navigate to an edit page
   }
 
   closeModal() {
@@ -124,14 +122,13 @@ export class VenueManagementComponent implements OnInit{
   }
 
   handleSaveData(data: any) {
-    if (this.editingItem) {
-      console.log(this.editingItem.id,"123456")
-      this._venueService.updateVenue(this.editingItem.id, data).subscribe({
+    if (this.editingItem._id) {
+      this._venueService.updateVenue(this.editingItem._id, data).subscribe({
         next: (response) => {
+          console.log(response, 'resss');
           if (response.success) {
-            // Update the local array with the updated venue
             const index = this.venues.findIndex(
-              (v) => v.id === this.editingItem.id
+              (v) => v._id === this.editingItem._id
             );
             if (index !== -1) {
               this.venues[index] = { ...this.venues[index], ...data };
@@ -150,14 +147,16 @@ export class VenueManagementComponent implements OnInit{
         next: (response) => {
           if (response.success) {
             const venueData = response.data;
-            if (venueData.estimatedCost && venueData.estimatedCost.min !== undefined && venueData.estimatedCost.max !== undefined) {
+            if (
+              venueData.estimatedCost &&
+              venueData.estimatedCost.min !== undefined &&
+              venueData.estimatedCost.max !== undefined
+            ) {
               venueData.estimatedCost = `₹${venueData.estimatedCost.min} - ₹${venueData.estimatedCost.max}`;
             } else {
-              console.warn('Estimated cost format is incorrect:', venueData.estimatedCost);
               venueData.estimatedCost = 'Price not available';
             }
             venueData.list = !venueData.blocked;
-
             console.log('Updated venueData:', venueData);
 
             this.venues.push(venueData);

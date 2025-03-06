@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -26,19 +26,18 @@ export class AddModalComponent{
     })
   }
 
-  ngOnChanges() {
-    if (this.initialData) {
-      // Parse price range if it's in the format "₹X - ₹Y"
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['initialData'] && this.initialData) {
       let startingPrice = null;
       let endingPrice = null;
       
-      // if (this.initialData.estimatedCost) {
-      //   const priceMatch = this.initialData.estimatedCost.match(/₹([\d,]+) - ₹([\d,]+)/);
-      //   if (priceMatch) {
-      //     startingPrice = parseInt(priceMatch[1].replace(/,/g, ''));
-      //     endingPrice = parseInt(priceMatch[2].replace(/,/g, ''));
-      //   }
-      // }
+      if (this.initialData.estimatedCost) {
+        const priceMatch = this.initialData.estimatedCost.match(/₹([\d,]+) - ₹([\d,]+)/);
+        if (priceMatch) {
+          startingPrice = parseInt(priceMatch[1].replace(/,/g, ''));
+          endingPrice = parseInt(priceMatch[2].replace(/,/g, ''));
+        }
+      }
       
       this.itemForm.patchValue({
         name: this.initialData.name,
@@ -64,7 +63,6 @@ export class AddModalComponent{
         description: formData.description,
         startingPrice: formData.startingPrice,
         endingPrice: formData.endingPrice,
-        // estimatedCost: estimatedCost,
         blocked: this.initialData ? this.initialData.blocked : false,
         id: this.initialData ? this.initialData.id : null
       };
