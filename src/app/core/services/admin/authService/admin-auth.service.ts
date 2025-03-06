@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../../models/commonAPIResponse';
+import { ApiResponse, LogOut } from '../../../models/commonAPIResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +20,9 @@ export class AdminAuthService {
   }
   setLoggedIn(status: string) {
     localStorage.setItem('isLoggedIn', status);
+  }
+
+  logOut(): Observable<LogOut> {
+    return this._http.post<LogOut>(`${this._baseUrl}admin/logOut`, {});
   }
 }

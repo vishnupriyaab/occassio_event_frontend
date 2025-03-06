@@ -1,6 +1,19 @@
-<div class="min-h-screen bg-adPrimary flex">
+<div class="bg-adPrimary flex h-screen">
   <app-admin-menu></app-admin-menu>
-    <div>
+
+  <div class="flex flex-1 flex-col">
+    <!-- Logout button -->
+    <div class="flex justify-end items-center pt-5 pr-9">
+      <button
+      (click)="logOut()"
+        class="text-red-500 hover:text-adQuaternary transition-colors duration-200 focus:outline-none"
+      >
+        <i class="fa-solid fa-power-off"></i>
+      </button>
+    </div>
+
+    <div class="flex justify-center overflow-x-hidden">
       <router-outlet></router-outlet>
     </div>
   </div>
+</div>
