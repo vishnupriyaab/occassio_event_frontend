@@ -3,10 +3,13 @@ import { ReusableTable1Component } from '../../../shared/components/admin/reusab
 import { TableAction, TableColumn } from '../../../core/models/ITable';
 import { DecorationService } from '../../../core/services/admin/decorationService/decoration.service';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
-import { IDecoration, IDecorationCreate } from '../../../core/models/IDecoration';
+import {
+  IDecoration,
+  IDecorationCreate,
+} from '../../../core/models/IDecoration';
 import IToastOption from '../../../core/models/IToastOptions';
 import { CommonModule } from '@angular/common';
-import { AddModalComponent } from "../../../shared/components/admin/add-edit-modal/add-modal.component";
+import { AddModalComponent } from '../../../shared/components/admin/add-edit-modal/add-modal.component';
 
 @Component({
   selector: 'app-decoration-management',
@@ -117,9 +120,11 @@ export class DecorationManagementComponent {
     this.isModalOpen = false;
   }
 
-    handleSaveData(data: IDecorationCreate) {
-      if (this.editingItem && this.editingItem._id) {
-        this._decorationService.updateDecoration(this.editingItem._id, data).subscribe({
+  handleSaveData(data: IDecorationCreate) {
+    if (this.editingItem && this.editingItem._id) {
+      this._decorationService
+        .updateDecoration(this.editingItem._id, data)
+        .subscribe({
           next: (response) => {
             console.log(response, 'resss');
             if (response.success) {
@@ -127,7 +132,10 @@ export class DecorationManagementComponent {
                 (v) => v._id === this.editingItem._id
               );
               if (index !== -1) {
-                this.decorations[index] = { ...this.decorations[index], ...data };
+                this.decorations[index] = {
+                  ...this.decorations[index],
+                  ...data,
+                };
                 if (
                   data.startingPrice !== undefined &&
                   data.endingPrice !== undefined
@@ -140,7 +148,8 @@ export class DecorationManagementComponent {
                 }
               }
             } else {
-              this.errorMessage = response.message || 'Failed to update decoration';
+              this.errorMessage =
+                response.message || 'Failed to update decoration';
             }
           },
           error: (error) => {
@@ -148,51 +157,54 @@ export class DecorationManagementComponent {
             console.error('Error updating decoration:', error);
           },
         });
-      } else {
-        this._decorationService.addDecoration(data).subscribe({
-          next: (response) => {
-            if (response.success) {
-              const decorationData = response.data;
-              if (
-                decorationData.estimatedCost?.min !== undefined &&
-                decorationData.estimatedCost?.max !== undefined
-              ) {
-                decorationData.estimatedCost = `₹${decorationData.estimatedCost.min} - ₹${decorationData.estimatedCost.max}`;
-              } else {
-                decorationData.estimatedCost = 'Price not available';
-              }
-  
-              decorationData.list = !decorationData.blocked;
-              console.log('Updated decorationData:', decorationData);
-  
-              this.decorations.push(decorationData);
-              const toastOption: IToastOption = {
-                severity: 'success-toast',
-                summary: 'Success',
-                detail: 'New Decoration is added',
-              };
-              this._toastService.showToast(toastOption);
-              this.closeModal();
+    } else {
+      this._decorationService.addDecoration(data).subscribe({
+        next: (response) => {
+          if (response.success) {
+            const decorationData = response.data;
+            if (
+              decorationData.estimatedCost?.min !== undefined &&
+              decorationData.estimatedCost?.max !== undefined
+            ) {
+              decorationData.estimatedCost = `₹${decorationData.estimatedCost.min} - ₹${decorationData.estimatedCost.max}`;
             } else {
-              this.errorMessage = response.message || 'Failed to add decoration';
+              decorationData.estimatedCost = 'Price not available';
             }
-          },
-          error: (error) => {
-            this.errorMessage = 'An error occurred while adding decoration';
-            console.error('Error adding decoration:', error);
-          },
-        });
-      }
+
+            decorationData.list = !decorationData.blocked;
+            console.log('Updated decorationData:', decorationData);
+
+            this.decorations.push(decorationData);
+            const toastOption: IToastOption = {
+              severity: 'success-toast',
+              summary: 'Success',
+              detail: 'New Decoration is added',
+            };
+            this._toastService.showToast(toastOption);
+            this.closeModal();
+          } else {
+            this.errorMessage = response.message || 'Failed to add decoration';
+          }
+        },
+        error: (error) => {
+          this.errorMessage = 'An error occurred while adding decoration';
+          console.error('Error adding decoration:', error);
+        },
+      });
     }
+  }
 
   deleteDecoration(item: IDecorationCreate) {
     if (confirm('Are you sure you want to delete this decoration?')) {
       this._decorationService.deleteDecoration(item._id).subscribe({
         next: (response) => {
           if (response.success) {
-            this.decorations = this.decorations.filter((decoration) => decoration._id !== item._id);
+            this.decorations = this.decorations.filter(
+              (decoration) => decoration._id !== item._id
+            );
           } else {
-            this.errorMessage = response.message || 'Failed to delete decorations';
+            this.errorMessage =
+              response.message || 'Failed to delete decorations';
           }
         },
         error: (error) => {
@@ -203,8 +215,10 @@ export class DecorationManagementComponent {
     }
   }
 
-    handleStatusChange(item: IDecorationCreate, newStatus: boolean) {
-      this._decorationService.toggleDecorationStatus(item._id, newStatus).subscribe({
+  handleStatusChange(item: IDecorationCreate, newStatus: boolean) {
+    this._decorationService
+      .toggleDecorationStatus(item._id, newStatus)
+      .subscribe({
         next: (response) => {
           if (response.success) {
             const index = this.decorations.findIndex((v) => v._id === item._id);
@@ -231,6 +245,5 @@ export class DecorationManagementComponent {
           }
         },
       });
-    }
-
+  }
 }
