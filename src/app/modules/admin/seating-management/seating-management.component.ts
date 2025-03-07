@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TableAction, TableColumn } from '../../../models/ITable';
+import { TableAction, TableColumn } from '../../../core/models/ITable';
 import { ReusableTable1Component } from '../../../shared/components/admin/reusable-table1/reusable-table1.component';
 import { AddModalComponent } from '../../../shared/components/admin/add-edit-modal/add-modal.component';
 import { CommonModule } from '@angular/common';
-import { ISeating, ISeatingCreate } from '../../../models/ISeating';
+import { ISeating, ISeatingCreate } from '../../../core/models/ISeating';
 import { SeatingService } from '../../../core/services/admin/seatingService/seating.service';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';

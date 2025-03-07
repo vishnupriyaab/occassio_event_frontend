@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ReusableTable1Component } from "../../../shared/components/admin/reusable-table1/reusable-table1.component";
-import { TableAction, TableColumn } from '../../../models/ITable';
+import { TableAction, TableColumn } from '../../../core/models/ITable';
 
 @Component({
   selector: 'app-package-management',

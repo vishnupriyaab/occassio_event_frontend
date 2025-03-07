@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../models/commonAPIResponse';
 import { environment } from '../../../../environments/environment';
-import { IVenue, IVenueCreate } from '../../../../models/IVenue';
+import { IVenue, IVenueCreate } from '../../../models/IVenue';
 
 @Injectable({
   providedIn: 'root'

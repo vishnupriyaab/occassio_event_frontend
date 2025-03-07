@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ReusableTable1Component } from '../../../shared/components/admin/reusable-table1/reusable-table1.component';
-import { TableAction, TableColumn } from '../../../models/ITable';
+import { TableAction, TableColumn } from '../../../core/models/ITable';
 import { AddModalComponent } from '../../../shared/components/admin/add-edit-modal/add-modal.component';
 import { VenueService } from '../../../core/services/admin/venueService/venue.service';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
-import { IVenue, IVenueCreate } from '../../../models/IVenue';
+import { IVenue, IVenueCreate } from '../../../core/models/IVenue';
 
 @Component({
   selector: 'app-venue-management',
