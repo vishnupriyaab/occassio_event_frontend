@@ -27,7 +27,7 @@ export class VenueManagementComponent implements OnInit {
     { key: 'blocked', header: 'Status', type: 'toggle' },
   ];
 
-  venueColumnWidths = ['160px', '320px', '190px', '120px'];
+  venueColumnWidths = ['160px', '320px', '160px', '150px'];
 
   venues: any[] = [];
   isLoading = false;
@@ -70,13 +70,6 @@ export class VenueManagementComponent implements OnInit {
             venue.list = !venue.blocked;
             return venue;
           });
-
-          const toastOption: IToastOption = {
-            severity: 'success-toast',
-            summary: 'Success',
-            detail: 'Venues loaded successfully',
-          };
-          this._toastService.showToast(toastOption);
         } else {
           this.errorMessage = response.message || 'Failed to fetch venues';
 
@@ -90,9 +83,7 @@ export class VenueManagementComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        // this.errorMessage = 'An error occurred while fetching venues';
         console.error('Error fetching venues:', error);
-
         const toastOption: IToastOption = {
           severity: 'danger-toast',
           summary: 'Error',
@@ -122,7 +113,7 @@ export class VenueManagementComponent implements OnInit {
   }
 
   handleSaveData(data: any) {
-    if (this.editingItem._id) {
+    if (this.editingItem && this.editingItem._id) {
       this._venueService.updateVenue(this.editingItem._id, data).subscribe({
         next: (response) => {
           console.log(response, 'resss');
@@ -163,9 +154,10 @@ export class VenueManagementComponent implements OnInit {
             const toastOption: IToastOption = {
               severity: 'success-toast',
               summary: 'Success',
-              detail: 'Login successful',
+              detail: 'New Venue is added',
             };
             this._toastService.showToast(toastOption);
+            this.closeModal()
           } else {
             this.errorMessage = response.message || 'Failed to add venue';
           }
@@ -180,10 +172,10 @@ export class VenueManagementComponent implements OnInit {
 
   deleteVenue(item: any) {
     if (confirm('Are you sure you want to delete this venue?')) {
-      this._venueService.deleteVenue(item.id).subscribe({
+      this._venueService.deleteVenue(item._id).subscribe({
         next: (response) => {
           if (response.success) {
-            this.venues = this.venues.filter((venue) => venue.id !== item.id);
+            this.venues = this.venues.filter((venue) => venue._id !== item._id);
           } else {
             this.errorMessage = response.message || 'Failed to delete venue';
           }
@@ -197,30 +189,30 @@ export class VenueManagementComponent implements OnInit {
   }
 
   handleStatusChange(item: any, newStatus: boolean) {
-    this._venueService.toggleVenueStatus(item.id, newStatus).subscribe({
+    this._venueService.toggleVenueStatus(item._id, newStatus).subscribe({
       next: (response) => {
         if (response.success) {
-          // Update the local array with the new status
-          const index = this.venues.findIndex((v) => v.id === item.id);
+          const index = this.venues.findIndex((v) => v._id === item._id);
           if (index !== -1) {
-            this.venues[index].blocked = newStatus;
+            this.venues[index].blocked = !newStatus;
+            this.venues[index].list = newStatus;  
           }
         } else {
           this.errorMessage = response.message || 'Failed to update status';
-          // Revert UI change if API call fails
-          const index = this.venues.findIndex((v) => v.id === item.id);
+          const index = this.venues.findIndex((v) => v._id === item._id);
           if (index !== -1) {
             this.venues[index].blocked = !newStatus;
+            this.venues[index].list = newStatus;  
           }
         }
       },
       error: (error) => {
         this.errorMessage = 'An error occurred while updating status';
         console.error('Error updating status:', error);
-        // Revert UI change if API call fails
         const index = this.venues.findIndex((v) => v.id === item.id);
         if (index !== -1) {
           this.venues[index].blocked = !newStatus;
+          this.venues[index].list = newStatus;  
         }
       },
     });

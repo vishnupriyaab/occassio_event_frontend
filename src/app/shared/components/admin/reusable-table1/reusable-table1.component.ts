@@ -20,8 +20,8 @@ export class ReusableTable1Component {
   @Output() toggleChange = new EventEmitter<{item: any, value: boolean}>();
 
   onToggleChange(item: any) {
-    item.list = !item.list; 
-    this.toggleChange.emit({ item, value: item.list });
+    item.blocked = !item.blocked; 
+    this.toggleChange.emit({ item, value: !item.blocked });
   }
 
   onEdit(item: any) {

@@ -26,10 +26,12 @@ export class VenueService {
   }
 
   deleteVenue(venueId: string): Observable<ApiResponse<any>> {
+    console.log(venueId, 'venueId')
     return this._http.delete<ApiResponse<any>>(`${this._baseUrl}admin/venues/${venueId}`);
   }
 
   toggleVenueStatus(venueId: string, status: boolean): Observable<ApiResponse<any>> {
+    console.log(venueId,status,"12345")
     return this._http.patch<ApiResponse<any>>(`${this._baseUrl}admin/venues/${venueId}/status`, { blocked: status });
   }
 

@@ -45,15 +45,15 @@
             </span>
             <div *ngSwitchCase="'toggle'" class="flex items-center">
                 <div
-                  class="relative w-20 h-9 rounded-full flex items-center px-2 transition-colors duration-300 cursor-pointer"
-                  [ngClass]="item[col.key] ? 'bg-green-500' : 'bg-red-500'"
+                  class="relative w-24 h-9 rounded-full flex items-center px-2 transition-colors duration-300 cursor-pointer"
+                  [ngClass]="!item[col.key] ? 'bg-green-500' : 'bg-red-500'"
                   (click)="onToggleChange(item)"
                 >
                   <span
                     class="text-sm px-1 font-semibold text-white transition-all duration-300"
-                    [ngClass]="item[col.key] ? 'ml-auto' : 'mr-auto'"
+                    [ngClass]="!item[col.key] ? 'mr-auto' : 'ml-auto'"
                   >
-                    {{ item[col.key] ? "Listed" : "Unlisted" }}
+                    {{ !item[col.key] ? "Listed" : "Unlisted" }}
                   </span>
                   <div
                     class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-all duration-300"
