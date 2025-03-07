@@ -6,6 +6,7 @@ import { VenueService } from '../../../core/services/admin/venueService/venue.se
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
+import { IVenue, IVenueCreate } from '../../../models/IVenue';
 
 @Component({
   selector: 'app-venue-management',
@@ -19,6 +20,9 @@ export class VenueManagementComponent implements OnInit {
   isModalOpen = false;
   modalHeading = '';
   editingItem: any = null;
+  venues: IVenue[] = [];
+  isLoading = false;
+  errorMessage = '';
 
   venueColumns: TableColumn[] = [
     { key: 'name', header: 'Name', type: 'text' },
@@ -28,10 +32,6 @@ export class VenueManagementComponent implements OnInit {
   ];
 
   venueColumnWidths = ['160px', '320px', '160px', '150px'];
-
-  venues: any[] = [];
-  isLoading = false;
-  errorMessage = '';
 
   venueActions: TableAction[] = [
     {
@@ -104,7 +104,13 @@ export class VenueManagementComponent implements OnInit {
 
   editVenue(item: any) {
     this.modalHeading = 'Edit Venue';
-    this.editingItem = item;
+    const startingPrice = item.estimatedCost?.min ?? 0;
+    const endingPrice = item.estimatedCost?.max ?? 0;
+    this.editingItem = {
+      ...item,
+      startingPrice,
+      endingPrice,
+    };
     this.isModalOpen = true;
   }
 
@@ -112,7 +118,7 @@ export class VenueManagementComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  handleSaveData(data: any) {
+  handleSaveData(data: IVenueCreate) {
     if (this.editingItem && this.editingItem._id) {
       this._venueService.updateVenue(this.editingItem._id, data).subscribe({
         next: (response) => {
@@ -122,7 +128,20 @@ export class VenueManagementComponent implements OnInit {
               (v) => v._id === this.editingItem._id
             );
             if (index !== -1) {
-              this.venues[index] = { ...this.venues[index], ...data };
+              this.venues[index] = {
+                ...this.venues[index],
+                ...data,
+              };
+              if (
+                data.startingPrice !== undefined &&
+                data.endingPrice !== undefined
+              ) {
+                this.venues[
+                  index
+                ].estimatedCost = `₹${data.startingPrice} - ₹${data.endingPrice}`;
+              } else {
+                this.venues[index].estimatedCost = 'Price not available';
+              }
             }
           } else {
             this.errorMessage = response.message || 'Failed to update venue';
@@ -138,15 +157,16 @@ export class VenueManagementComponent implements OnInit {
         next: (response) => {
           if (response.success) {
             const venueData = response.data;
+
             if (
-              venueData.estimatedCost &&
-              venueData.estimatedCost.min !== undefined &&
-              venueData.estimatedCost.max !== undefined
+              venueData.estimatedCost?.min !== undefined &&
+              venueData.estimatedCost?.max !== undefined
             ) {
               venueData.estimatedCost = `₹${venueData.estimatedCost.min} - ₹${venueData.estimatedCost.max}`;
             } else {
               venueData.estimatedCost = 'Price not available';
             }
+
             venueData.list = !venueData.blocked;
             console.log('Updated venueData:', venueData);
 
@@ -157,7 +177,7 @@ export class VenueManagementComponent implements OnInit {
               detail: 'New Venue is added',
             };
             this._toastService.showToast(toastOption);
-            this.closeModal()
+            this.closeModal();
           } else {
             this.errorMessage = response.message || 'Failed to add venue';
           }
@@ -170,7 +190,7 @@ export class VenueManagementComponent implements OnInit {
     }
   }
 
-  deleteVenue(item: any) {
+  deleteVenue(item: IVenueCreate) {
     if (confirm('Are you sure you want to delete this venue?')) {
       this._venueService.deleteVenue(item._id).subscribe({
         next: (response) => {
@@ -188,31 +208,31 @@ export class VenueManagementComponent implements OnInit {
     }
   }
 
-  handleStatusChange(item: any, newStatus: boolean) {
+  handleStatusChange(item: IVenueCreate, newStatus: boolean) {
     this._venueService.toggleVenueStatus(item._id, newStatus).subscribe({
       next: (response) => {
         if (response.success) {
           const index = this.venues.findIndex((v) => v._id === item._id);
           if (index !== -1) {
             this.venues[index].blocked = !newStatus;
-            this.venues[index].list = newStatus;  
+            this.venues[index].list = newStatus;
           }
         } else {
           this.errorMessage = response.message || 'Failed to update status';
           const index = this.venues.findIndex((v) => v._id === item._id);
           if (index !== -1) {
             this.venues[index].blocked = !newStatus;
-            this.venues[index].list = newStatus;  
+            this.venues[index].list = newStatus;
           }
         }
       },
       error: (error) => {
         this.errorMessage = 'An error occurred while updating status';
         console.error('Error updating status:', error);
-        const index = this.venues.findIndex((v) => v.id === item.id);
+        const index = this.venues.findIndex((v) => v._id === item._id);
         if (index !== -1) {
           this.venues[index].blocked = !newStatus;
-          this.venues[index].list = newStatus;  
+          this.venues[index].list = newStatus;
         }
       },
     });
