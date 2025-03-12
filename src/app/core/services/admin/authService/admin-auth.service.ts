@@ -13,7 +13,6 @@ export class AdminAuthService {
   constructor(private _http: HttpClient) {}
 
   login(email: string, password: string): Observable<ApiResponse<string>> {
-    console.log("1234");
     return this._http.post<ApiResponse<string>>(`${this._baseUrl}admin/login`, {
       email,
       password,

@@ -12,16 +12,16 @@
         <label class="block text-sm font-medium">Description</label>
         <textarea formControlName="description" class="w-full p-2 rounded mb-2 bg-adPrimary"></textarea>
   
-        <label class="block text-sm font-medium">Starting Price</label>
+        <label class="block text-sm font-medium">{{ firstRangeLabel }}</label>
         <input type="number" formControlName="startingPrice" class="w-full p-1 rounded mb-2 bg-adPrimary">
         <div *ngIf="itemForm.get('startingPrice')?.invalid && itemForm.get('startingPrice')?.touched" class="text-red-500 text-xs mb-2">
-          Starting price is required
+          {{ firstRangeLabel }} is required
         </div>
   
-        <label class="block text-sm font-medium">Ending Price</label>
+        <label class="block text-sm font-medium">{{ secondRangeLabel }}</label>
         <input type="number" formControlName="endingPrice" class="w-full p-1 rounded mb-4 bg-adPrimary">
         <div *ngIf="itemForm.get('endingPrice')?.invalid && itemForm.get('endingPrice')?.touched" class="text-red-500 text-xs mb-2">
-          Ending price is required
+          {{ secondRangeLabel }} is required
         </div>
   
         <div class="flex justify-between space-x-2">

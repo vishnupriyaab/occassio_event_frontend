@@ -67,15 +67,15 @@
     <div class="flex flex-col sm:flex-row justify-center gap-8 sm:gap-16 md:gap-44 p-5 text-yellow-600 font-KayPhoDu text-center mb-6 md:mb-0">
       <div class="flex flex-col items-center">
         <p>Coloring Up Your</p>
-        <p class="text-red-400 text-4xl sm:text-5xl md:text-6xl font-Katibeh">WEDDING</p>
+        <p class="text-baseYellow text-4xl sm:text-5xl md:text-6xl font-Katibeh">WEDDING</p>
       </div>
       <div class="flex flex-col items-center">
         <p>Adding Elegance To Your</p>
-        <p class="text-green-400 font-Katibeh text-4xl sm:text-5xl md:text-6xl">EVENTS</p>
+        <p class="text-baseYellow font-Katibeh text-4xl sm:text-5xl md:text-6xl">EVENTS</p>
       </div>
       <div class="flex flex-col items-center">
         <p>Bring Charm To Your</p>
-        <p class="text-blue-400 text-4xl sm:text-5xl md:text-6xl font-Katibeh">MOMENTS</p>
+        <p class="text-baseYellow text-4xl sm:text-5xl md:text-6xl font-Katibeh">MOMENTS</p>
       </div>
     </div>
 
@@ -168,24 +168,20 @@
   </div>
 
   <div class="h-auto md:h-[680px]">
-    <div class="relative h-[300px]">
-      <img
-        src="contact.jpg"
-        alt="contact"
-        class="h-[300px] w-full object-cover opacity-50"
-      />
-
+    <div class="relative h-[300px] bg-fixed" style="background-image: url('contact.jpg'); background-size: cover; background-position: center;">
+      <div class="absolute top-0 left-0 w-full h-full bg-white opacity-50"></div>
+  
       <div class="absolute top-0 left-0 w-full h-full flex flex-col md:flex-row items-center justify-center md:justify-between px-4 md:px-16 lg:px-28">
         <div class="md:w-2/4 flex flex-col space-y-2 text-center md:text-left mt-8 md:mt-0">
           <p class="text-black text-2xl md:text-3xl font-semibold font-kaushan tracking-wider">
             Get in Touch
           </p>
-          <p class="text-black text-sm md:text-md">
+          <p class="text-black text-sm md:text-md font-KayPhoDu">
             Have questions or ready to plan your event? Contact us today – we're
             here to make it unforgettable!
           </p>
         </div>
-
+  
         <div class="mt-4 md:mt-0">
           <button class="animate-pulse bg-black text-white py-2 px-6 rounded-lg hover:bg-gray-800 shadow-lg">
             Contact Us
@@ -193,8 +189,7 @@
         </div>
       </div>
     </div>
-
-    <div class="px-4">
+    <div class="relative z-10 bg-white px-4">
       <p class="mt-12 text-2xl md:text-3xl text-yellow-600 text-center font-kaushan">
         Purposeful Event Creation
       </p>
@@ -202,71 +197,70 @@
         Where unforgettable memories are created, and magic brings every moment
         alive.
       </p>
-    </div>
-
-    <div class="flex flex-wrap justify-center mt-6 md:mt-9 gap-4 md:gap-8 px-4">
-      <div class="w-16 md:w-24 h-8 md:h-10 mt-16 md:mt-28 flex items-center justify-center">
-        <img
-          src="amazon.png"
-          alt="Brand 1"
-          class="object-contain h-full w-full"
-        />
-      </div>
-      <div class="w-16 md:w-24 h-16 md:h-24 flex items-center justify-center">
-        <img
-          src="google_rating.png"
-          alt="Brand 2"
-          class="object-contain h-full w-full"
-        />
-      </div>
-      <div class="w-16 md:w-24 h-16 md:h-24 mt-10 md:mt-20 flex items-center justify-center">
-        <img
-          src="microsoft.png"
-          alt="Brand 3"
-          class="object-contain h-full w-full"
-        />
-      </div>
-      <div class="w-16 md:w-24 h-16 md:h-24 flex items-center justify-center">
-        <img
-          src="nestle.png"
-          alt="Brand 4"
-          class="object-contain h-full w-full"
-        />
-      </div>
-      <div class="w-16 md:w-24 h-16 md:h-24 mt-10 md:mt-20 flex items-center justify-center">
-        <img
-          src="nike.png"
-          alt="Brand 5"
-          class="object-contain h-full w-full"
-        />
-      </div>
-      <div class="w-16 md:w-24 h-16 md:h-24 flex items-center justify-center">
-        <img
-          src="redbull.png"
-          alt="Brand 6"
-          class="object-contain h-full w-full"
-        />
-      </div>
-      <div class="w-16 md:w-24 h-16 md:h-24 mt-10 md:mt-20 flex items-center justify-center">
-        <img
-          src="samsung.png"
-          alt="Brand 7"
-          class="object-contain h-full w-full"
-        />
-      </div>
-      <div class="w-16 md:w-24 h-16 md:h-24 flex items-center justify-center">
-        <img
-          src="sprite.webp"
-          alt="Brand 8"
-          class="object-contain h-full w-full"
-        />
-      </div>
-      <div class="w-16 md:w-24 h-16 md:h-24 mt-10 md:mt-20 flex items-center justify-center">
-        <img
-          src="cocacola.png"
-          alt="Brand 9"
-          class="object-contain h-full w-full"
-        />
+      <div class="flex flex-wrap justify-center mt-6 md:mt-9 gap-4 md:gap-8 px-4">
+        <div class="w-16 md:w-24 h-8 md:h-10 mt-16 md:mt-28 flex items-center justify-center">
+          <img
+            src="amazon.png"
+            alt="Brand 1"
+            class="object-contain h-full w-full"
+          />
+        </div>
+        <div class="w-16 md:w-24 h-16 md:h-24 flex items-center justify-center">
+          <img
+            src="google_rating.png"
+            alt="Brand 2"
+            class="object-contain h-full w-full"
+          />
+        </div>
+        <div class="w-16 md:w-24 h-16 md:h-24 mt-10 md:mt-20 flex items-center justify-center">
+          <img
+            src="microsoft.png"
+            alt="Brand 3"
+            class="object-contain h-full w-full"
+          />
+        </div>
+        <div class="w-16 md:w-24 h-16 md:h-24 flex items-center justify-center">
+          <img
+            src="nestle.png"
+            alt="Brand 4"
+            class="object-contain h-full w-full"
+          />
+        </div>
+        <div class="w-16 md:w-24 h-16 md:h-24 mt-10 md:mt-20 flex items-center justify-center">
+          <img
+            src="nike.png"
+            alt="Brand 5"
+            class="object-contain h-full w-full"
+          />
+        </div>
+        <div class="w-16 md:w-24 h-16 md:h-24 flex items-center justify-center">
+          <img
+            src="redbull.png"
+            alt="Brand 6"
+            class="object-contain h-full w-full"
+          />
+        </div>
+        <div class="w-16 md:w-24 h-16 md:h-24 mt-10 md:mt-20 flex items-center justify-center">
+          <img
+            src="samsung.png"
+            alt="Brand 7"
+            class="object-contain h-full w-full"
+          />
+        </div>
+        <div class="w-16 md:w-24 h-16 md:h-24 flex items-center justify-center">
+          <img
+            src="sprite.webp"
+            alt="Brand 8"
+            class="object-contain h-full w-full"
+          />
+        </div>
+        <div class="w-16 md:w-24 h-16 md:h-24 mt-10 md:mt-20 flex items-center justify-center">
+          <img
+            src="cocacola.png"
+            alt="Brand 9"
+            class="object-contain h-full w-full"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -276,7 +270,7 @@
   <button
     *ngIf="showScrollButton"
     (click)="scrollToTop()"
-    class="fixed bottom-5 right-5 md:bottom-10 md:right-10 bg-white-100 bg-yellow-600 opacity-65 p-2 md:p-3 rounded-full w-[40px] md:w-[49px] shadow-lg hover:bg-yellow-600 transition-all"
+    class="fixed z-20 bottom-5 right-5 md:bottom-10 md:right-10 bg-white-100 bg-yellow-600 opacity-65 p-2 md:p-3 rounded-full w-[40px] md:w-[49px] shadow-lg hover:bg-yellow-600 transition-all"
   >
     <i class="fa-solid fa-arrow-up text-white"></i>
   </button>

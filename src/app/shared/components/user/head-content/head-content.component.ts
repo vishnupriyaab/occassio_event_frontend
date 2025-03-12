@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-head-content',
-  imports: [],
+  imports: [FooterComponent],
   templateUrl: './head-content.component.html',
   styleUrl: './head-content.component.css'
 })
