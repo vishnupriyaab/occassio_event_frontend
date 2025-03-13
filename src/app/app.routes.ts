@@ -3,32 +3,32 @@ import { HomeComponent } from './modules/user/home/home.component';
 import { LoginComponent } from './modules/admin/login/login.component';
 import { MainComponent } from './shared/components/admin/main/main.component';
 import { DashboardComponent } from './modules/admin/dashboard/dashboard.component';
+import { ServiceComponent } from './modules/user/service/service.component';
 
 export const routes: Routes = [
   //user-side
   {
     path: '',
-    component:HomeComponent,
+    component: HomeComponent,
   },
-  // {
-  //   path: 'services',
-  //   component:PackageListingComponent,
-  // },
+  {
+    path: 'services',
+    component: ServiceComponent,
+  },
 
   //admin-side
   {
     path: 'admin-login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'admin',
     component: MainComponent,
-    children:[
+    children: [
       {
         path: 'dashboard',
-        component: DashboardComponent
+        component: DashboardComponent,
       },
-    ]
-  }
- 
+    ],
+  },
 ];
