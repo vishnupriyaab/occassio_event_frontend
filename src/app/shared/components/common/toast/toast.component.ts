@@ -14,10 +14,9 @@ export class ToastComponent implements OnInit {
   toast: IToastOption | null = null;
   private _toastService = inject(ToastService);
 
-
   ngOnInit() {
     console.log('Toast component initialized');
-    this._toastService.toastOption$.subscribe((toast) => {
+    this._toastService.toastOption$.subscribe(toast => {
       console.log('Received toast:', toast);
       this.toast = toast;
       setTimeout(() => {

@@ -4,9 +4,9 @@ import { Component, Input } from '@angular/core';
   selector: 'app-head-content',
   imports: [],
   templateUrl: './head-content.component.html',
-  styleUrl: './head-content.component.css'
+  styleUrl: './head-content.component.css',
 })
 export class HeadContentComponent {
-  @Input() title: string = '';
-  @Input() content: string = '';
+  @Input() title = '';
+  @Input() content = '';
 }

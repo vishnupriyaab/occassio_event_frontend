@@ -22,15 +22,10 @@ export function emailFormatValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
     if (!value) return null;
-    const emailPattern =
-      /^(?!.*[@.]{2})[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailPattern = /^(?!.*[@.]{2})[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const startsOrEndsWithInvalid = /^[.@]|[.@]$/.test(value);
     const containsMultipleAtSigns = (value.match(/@/g) || []).length > 1;
-    if (
-      !emailPattern.test(value) ||
-      startsOrEndsWithInvalid ||
-      containsMultipleAtSigns
-    ) {
+    if (!emailPattern.test(value) || startsOrEndsWithInvalid || containsMultipleAtSigns) {
       return { email: true };
     }
     return null;
@@ -42,8 +37,7 @@ export function noAllSpacesValidator(): ValidatorFn {
     if (control.value != null && !control.value.length) {
       return null;
     }
-    const isAllSpaces =
-      control.value != null && control.value.trim().length === 0;
+    const isAllSpaces = control.value != null && control.value.trim().length === 0;
     return isAllSpaces ? { allSpaces: true } : null;
   };
 }
@@ -68,9 +62,7 @@ export function onlyNumbersValidator(): ValidatorFn {
   };
 }
 
-export function passwordMatchValidator(
-  group: AbstractControl
-): ValidationErrors | null {
+export function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
   const password = group.get('password')?.value;
   const confirmPassword = group.get('confirmPassword')?.value;
   console.log(confirmPassword, '1234567890');
@@ -89,12 +81,7 @@ export function strongPasswordValidator(): ValidatorFn {
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
     const hasMinLength = value.length >= 8;
 
-    const isValid =
-      hasUpperCase &&
-      hasLowerCase &&
-      hasNumber &&
-      hasSpecialChar &&
-      hasMinLength;
+    const isValid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && hasMinLength;
 
     return isValid ? null : { strongPassword: true };
   };

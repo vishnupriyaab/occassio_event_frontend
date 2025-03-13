@@ -171,8 +171,8 @@ import {
   withLatestFrom,
   zip,
   zipAll,
-  zipWith
-} from "./chunk-5TID76VL.js";
+  zipWith,
+} from './chunk-5TID76VL.js';
 export {
   ArgumentOutOfRangeError,
   AsyncSubject,
@@ -346,6 +346,6 @@ export {
   withLatestFrom,
   zip,
   zipAll,
-  zipWith
+  zipWith,
 };
 //# sourceMappingURL=rxjs.js.map

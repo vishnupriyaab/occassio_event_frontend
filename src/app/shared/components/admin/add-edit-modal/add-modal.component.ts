@@ -1,19 +1,6 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  SimpleChange,
-  SimpleChanges,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-modal',
@@ -22,9 +9,9 @@ import {
   templateUrl: './add-modal.component.html',
   styleUrl: './add-modal.component.css',
 })
-export class AddModalComponent {
-  @Input() heading: string = '';
-  @Input() isOpen: boolean = false;
+export class AddModalComponent implements OnChanges {
+  @Input() heading = '';
+  @Input() isOpen = false;
   @Input() initialData: any = null;
   @Input() modalType: 'default' | 'package' = 'default';
   @Output() closeModalEvent = new EventEmitter<void>();
@@ -32,9 +19,8 @@ export class AddModalComponent {
 
   itemForm!: FormGroup;
 
-  // Field labels
-  firstRangeLabel: string = 'Starting Price';
-  secondRangeLabel: string = 'Ending Price';
+  firstRangeLabel = 'Starting Price';
+  secondRangeLabel = 'Ending Price';
 
   constructor(private _fb: FormBuilder) {
     this.itemForm = this._fb.group({
@@ -62,7 +48,7 @@ export class AddModalComponent {
         name: this.initialData.name,
         description: this.initialData.description,
         startingPrice: startingPrice,
-        endingPrice: endingPrice
+        endingPrice: endingPrice,
       });
     } else {
       this.itemForm.reset();
@@ -70,36 +56,17 @@ export class AddModalComponent {
   }
 
   closeModal() {
-    // this.isModalOpen = false;
     this.closeModalEvent.emit();
   }
-
-  // onSubmit() {
-  //   if (this.itemForm.valid) {
-  //     const formData = this.itemForm.value;
-
-  //     const dataToEmit = {
-  //       name: formData.name,
-  //       description: formData.description,
-  //       startingPrice: formData.startingPrice,
-  //       endingPrice: formData.endingPrice,
-  //       blocked: this.initialData ? this.initialData.blocked : false,
-  //       id: this.initialData ? this.initialData.id : null
-  //     };
-  //     console.log(dataToEmit,"12")
-  //     this.saveDataEvent.emit(dataToEmit);
-  //     this.closeModal();
-  //   }
-  // }
 
   onSubmit() {
     if (this.itemForm.valid) {
       const formData = this.itemForm.value;
-      let dataToEmit: any = {
+      const dataToEmit: any = {
         name: formData.name,
         description: formData.description,
         blocked: this.initialData ? this.initialData.blocked : false,
-        id: this.initialData ? this.initialData.id : null,  
+        id: this.initialData ? this.initialData.id : null,
       };
 
       if (this.modalType === 'package' || this.heading.includes('Package')) {

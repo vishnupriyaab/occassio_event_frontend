@@ -18,7 +18,7 @@ export class MainComponent {
 
   logOut() {
     this._adminAuthService.logOut().subscribe({
-      next: (response) => {
+      next: response => {
         console.log(response, 'res');
         const toastOption: IToastOption = {
           severity: 'success-toast',
@@ -29,7 +29,7 @@ export class MainComponent {
         localStorage.removeItem('isLoggedIn');
         this._router.navigate(['/admin-login']);
       },
-      error: (error) => {
+      error: error => {
         console.log(error, 'error');
         const toastOption = {
           severity: 'danger-toast',

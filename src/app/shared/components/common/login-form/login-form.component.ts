@@ -1,14 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import {
-  emailFormatValidator,
-  noAllSpacesValidator,
-} from '../../../validator/formValidator';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { emailFormatValidator, noAllSpacesValidator } from '../../../validator/formValidator';
 import { AdminAuthService } from '../../../../core/services/admin/authService/admin-auth.service';
 import IToastOption from '../../../../core/models/IToastOptions';
 import { Router } from '@angular/router';
@@ -40,7 +32,7 @@ export class LoginFormComponent implements OnInit {
     if (this.loginForm.invalid) return;
     const { email, password } = this.loginForm.value;
     this._adminAuthService.login(email, password).subscribe({
-      next: (response) => {
+      next: response => {
         if (response.success) {
           const toastOption: IToastOption = {
             severity: 'success-toast',
@@ -59,12 +51,11 @@ export class LoginFormComponent implements OnInit {
           this._toastService.showToast(toastOption);
         }
       },
-      error: (error) => {
+      error: error => {
         const toastOption: IToastOption = {
           severity: 'danger-toast',
           summary: 'Error',
-          detail:
-            error.error?.message || 'Something went wrong. Please try again.',
+          detail: error.error?.message || 'Something went wrong. Please try again.',
         };
         this._toastService.showToast(toastOption);
       },

@@ -6,5 +6,9 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authenticationInterceptor } from './core/interceptors/authentication/authentication.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withInterceptors([authenticationInterceptor])) ]
-}; 
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authenticationInterceptor])),
+  ],
+};

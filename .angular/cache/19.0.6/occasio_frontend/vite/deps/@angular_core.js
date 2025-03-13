@@ -492,10 +492,10 @@ import {
   ɵɵtwoWayProperty,
   ɵɵvalidateIframeAttribute,
   ɵɵviewQuery,
-  ɵɵviewQuerySignal
-} from "./chunk-XO6GGWRL.js";
-import "./chunk-ZSY7TSMJ.js";
-import "./chunk-3OV72XIM.js";
+  ɵɵviewQuerySignal,
+} from './chunk-XO6GGWRL.js';
+import './chunk-ZSY7TSMJ.js';
+import './chunk-3OV72XIM.js';
 export {
   ANIMATION_MODULE_TYPE,
   APP_BOOTSTRAP_LISTENER,
@@ -992,6 +992,6 @@ export {
   ɵɵtwoWayProperty,
   ɵɵvalidateIframeAttribute,
   ɵɵviewQuery,
-  ɵɵviewQuerySignal
+  ɵɵviewQuerySignal,
 };
 //# sourceMappingURL=@angular_core.js.map

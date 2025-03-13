@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavBarComponent } from "../../../shared/components/user/nav-bar/nav-bar.component";
-import { FooterComponent } from "../../../shared/components/user/footer/footer.component";
+import { NavBarComponent } from '../../../shared/components/user/nav-bar/nav-bar.component';
+import { FooterComponent } from '../../../shared/components/user/footer/footer.component';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +16,10 @@ export class HomeComponent {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    // Show button when scrolled down 300px
     this.showScrollButton = window.scrollY > 300;
   }
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
 }
