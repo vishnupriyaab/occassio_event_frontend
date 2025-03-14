@@ -44,10 +44,11 @@ export function noAllSpacesValidator(): ValidatorFn {
 
 export function mobileNumberValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    if (control.value != null && !control.value.length) {
+    if (!control.value) {
       return null;
     }
-    const valid = /^[0-9]{10}$/.test(control.value);
+    const phoneStr = control.value.toString();
+    const valid = /^[0-9]{10}$/.test(phoneStr);
     return valid ? null : { invalidMobile: true };
   };
 }
@@ -87,12 +88,69 @@ export function strongPasswordValidator(): ValidatorFn {
   };
 }
 
-export function otpPattern(): ValidatorFn {
+
+export function startDateValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    if (!control.value || control.value.length === 0) {
-      return null;
+    if (!control.value) {
+      return null; 
     }
-    const valid = /^[0-9]+$/.test(control.value);
-    return valid ? null : { pattern: true };
+
+    const inputDate = new Date(control.value);
+    const today = new Date();
+    
+    today.setHours(0, 0, 0, 0);
+    const minDate = new Date(today);
+    minDate.setDate(today.getDate() + 10);
+    return inputDate >= minDate ? null : { futureDate: { 
+      required: minDate.toISOString().split('T')[0], 
+      actual: control.value 
+    }};
   };
 }
+
+export function dateRangeValidator(): ValidatorFn {
+  return (formGroup: AbstractControl): ValidationErrors | null => {
+    const startDateControl = formGroup.get('startDate');
+    const endDateControl = formGroup.get('endDate');
+    if (!startDateControl || !endDateControl || !startDateControl.value || !endDateControl.value) {
+      return null;
+    }
+
+    const startDate = new Date(startDateControl.value);
+    const endDate = new Date(endDateControl.value);
+    if (endDate < startDate) {
+      endDateControl.setErrors({ invalidDateRange: true });
+      return { invalidDateRange: true };
+    } else {
+      if (endDateControl.errors) {
+        const errors = { ...endDateControl.errors };
+        delete errors['invalidDateRange'];
+        endDateControl.setErrors(Object.keys(errors).length ? errors : null);
+      }
+      return null;
+    }
+  };
+}
+
+export function pincodeValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value) {
+      return null;
+    }
+    const pincode = control.value.toString();
+    const valid = /^[0-9]{6}$/.test(pincode);
+    
+    return valid ? null : { invalidPincode: true };
+  };
+}
+
+
+// export function otpPattern(): ValidatorFn {
+//   return (control: AbstractControl): ValidationErrors | null => {
+//     if (!control.value || control.value.length === 0) {
+//       return null;
+//     }
+//     const valid = /^[0-9]+$/.test(control.value);
+//     return valid ? null : { pattern: true };
+//   };
+// }

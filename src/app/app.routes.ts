@@ -4,6 +4,7 @@ import { LoginComponent } from './modules/admin/login/login.component';
 import { MainComponent } from './shared/components/admin/main/main.component';
 import { DashboardComponent } from './modules/admin/dashboard/dashboard.component';
 import { ServiceComponent } from './modules/user/service/service.component';
+import { EntryFormComponent } from './modules/user/entry-form/entry-form.component';
 
 export const routes: Routes = [
   //user-side
@@ -14,6 +15,10 @@ export const routes: Routes = [
   {
     path: 'services',
     component: ServiceComponent,
+  },
+  {
+    path: 'entryForm',
+    component: EntryFormComponent,
   },
 
   //admin-side

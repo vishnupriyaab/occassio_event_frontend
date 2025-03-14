@@ -1,0 +1,251 @@
+<app-nav-bar2></app-nav-bar2>
+
+<div class="p-6 max-w-4xl mx-auto my-7 bg-gray-100 shadow-lg rounded-md">
+  <div class="bg-white shadow-lg rounded-md py-6 px-16">
+    <h2 class="text-4xl flex items-center justify-center font-kaushan text-baseYellow mb-5">
+      {{ step === 1 ? 'Personal & Event Details' : 'Event Requirements' }}
+    </h2>
+
+    <!-- Step 1 Form -->
+    <form *ngIf="step === 1" [formGroup]="step1Form" (ngSubmit)="nextStep()" class="space-y-4">
+      <div class="space-y-1 mb-2">
+        <label for="name" class="font-KayPhoDu">Full Name:</label>
+        <input type="text" formControlName="name" class="input-field w-full rounded-sm border h-8" (input)="step1Form.get('name')?.markAsTouched()" />
+        <small class="text-red-500" *ngIf="step1Form.get('name')?.hasError('required') && step1Form.get('name')?.touched"> Name is required. </small>
+        <small class="text-red-500" *ngIf="step1Form.get('name')?.hasError('allSpaces') && step1Form.get('name')?.touched">
+          Name cannot be just spaces.
+        </small>
+      </div>
+
+      <div class="space-y-1 mb-2">
+        <label for="email" class="font-KayPhoDu">Email Address:</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="input-field w-full rounded-sm border h-8"
+          (input)="step1Form.get('email')?.markAsTouched()" />
+        <small class="text-red-500" *ngIf="step1Form.get('email')?.hasError('required') && step1Form.get('email')?.touched">
+          Email is required
+        </small>
+        <small class="text-red-500" *ngIf="step1Form.get('email')?.hasError('email') && step1Form.get('email')?.touched">
+          Enter a valid email.
+        </small>
+      </div>
+
+      <div class="space-y-1 mb-2">
+        <label for="phone" class="font-KayPhoDu">Phone Number:</label>
+        <input
+          type="number"
+          formControlName="phone"
+          class="input-field w-full rounded-sm border h-8"
+          (input)="step1Form.get('phone')?.markAsTouched()" />
+        <small class="text-red-500" *ngIf="step1Form.get('phone')?.hasError('required') && step1Form.get('phone')?.touched">
+          Phone number is required
+        </small>
+        <small class="text-red-500" *ngIf="step1Form.get('phone')?.hasError('invalidMobile') && step1Form.get('phone')?.touched">
+          Enter 10-digit phone number
+        </small>
+      </div>
+
+      <div class="space-y-1 mb-2">
+        <label for="eventName" class="font-KayPhoDu">Event Name:</label>
+        <input
+          type="text"
+          formControlName="eventName"
+          class="input-field w-full rounded-sm border h-8"
+          (input)="step1Form.get('eventName')?.markAsTouched()" />
+        <small class="text-red-500" *ngIf="step1Form.get('eventName')?.hasError('required') && step1Form.get('eventName')?.touched">
+          Event name is required.
+        </small>
+        <small class="text-red-500" *ngIf="step1Form.get('eventName')?.hasError('allSpaces') && step1Form.get('eventName')?.touched">
+          Event name cannot be just spaces.
+        </small>
+      </div>
+
+      <div class="space-y-1 mb-2">
+        <label for="date" class="font-KayPhoDu">Date of Event:</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div>
+            <input type="date" formControlName="startDate" class="pl-2 input-field w-full rounded-sm border h-8" />
+            <small class="text-red-500" *ngIf="step1Form.get('startDate')?.hasError('required') && step1Form.get('startDate')?.touched">
+              Start date is required.
+            </small>
+            <small class="text-red-500" *ngIf="step1Form.get('startDate')?.hasError('futureDate') && step1Form.get('startDate')?.touched">
+              Event must be scheduled at least 10 days in advance.
+            </small>
+          </div>
+          <div>
+            <input type="date" formControlName="endDate" class="pl-2 input-field w-full rounded-sm border h-8" />
+            <small class="text-red-500" *ngIf="step1Form.get('endDate')?.hasError('required') && step1Form.get('endDate')?.touched">
+              End date is required.
+            </small>
+            <small class="text-red-500" *ngIf="step1Form.get('endDate')?.hasError('invalidDateRange') && step1Form.get('endDate')?.touched">
+              End date cannot be before start date.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-1 mb-2">
+        <label for="location" class="font-KayPhoDu">Location of Event:</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <div>
+            <input
+              type="text"
+              formControlName="district"
+              placeholder="district"
+              class="pl-2 input-field w-full rounded-sm border h-8"
+              (input)="step1Form.get('district')?.markAsTouched()" />
+            <small class="text-red-500" *ngIf="step1Form.get('district')?.hasError('required') && step1Form.get('district')?.touched">
+              District is required.
+            </small>
+            <small class="text-red-500" *ngIf="step1Form.get('district')?.hasError('allSpaces') && step1Form.get('district')?.touched">
+              District cannot be just spaces.
+            </small>
+          </div>
+          <div>
+            <input
+              type="text"
+              formControlName="state"
+              placeholder="state"
+              class="pl-2 input-field w-full rounded-sm border h-8"
+              (input)="step1Form.get('state')?.markAsTouched()" />
+            <small class="text-red-500" *ngIf="step1Form.get('state')?.hasError('required') && step1Form.get('state')?.touched">
+              State is required.
+            </small>
+            <small class="text-red-500" *ngIf="step1Form.get('state')?.hasError('allSpaces') && step1Form.get('state')?.touched">
+              State cannot be just spaces.
+            </small>
+          </div>
+          <div>
+            <input
+              type="text"
+              formControlName="pincode"
+              placeholder="pincode"
+              class="pl-2 input-field w-full rounded-sm border h-8"
+              (input)="step1Form.get('pincode')?.markAsTouched()" />
+            <small class="text-red-500" *ngIf="step1Form.get('pincode')?.hasError('required') && step1Form.get('pincode')?.touched">
+              Pincode is required.
+            </small>
+            <small class="text-red-500" *ngIf="step1Form.get('pincode')?.hasError('invalidPincode') && step1Form.get('pincode')?.touched">
+              Pincode must be a 6-digit number.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full flex flex-col justify-end items-center p-4">
+        <button
+          type="submit"
+          class="px-6 py-2 text-white bg-adQuaternary rounded-md shadow-lg hover:bg-black active:scale-95 transition duration-200">
+          Next >>
+        </button>
+      </div>
+    </form>
+
+    <!-- Step 2 Form -->
+    <form *ngIf="step === 2" [formGroup]="step2Form" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div class="space-y-1 mb-2">
+        <label for="guestCount" class="font-KayPhoDu">How many guests are you anticipating? (Avg)</label>
+        <input
+          type="number"
+          formControlName="guestCount"
+          class="input-field w-full rounded-sm border h-8"
+          (input)="step1Form.get('guestCount')?.markAsTouched()" />
+        <small class="text-red-500" *ngIf="step2Form.get('guestCount')?.invalid && step2Form.get('guestCount')?.touched">
+          Guest count is required.
+        </small>
+      </div>
+
+      <div class="space-y-1 mb-2">
+        <label for="venue" class="font-KayPhoDu">Venue</label>
+        <input
+          type="text"
+          formControlName="venue"
+          class="input-field w-full rounded-sm border h-8"
+          (input)="step1Form.get('venue')?.markAsTouched()" />
+        <small class="text-red-500" *ngIf="step2Form.get('venue')?.invalid && step2Form.get('venue')?.touched"> Venue is required. </small>
+        <small class="text-red-500" *ngIf="step1Form.get('venue')?.hasError('allSpaces') && step1Form.get('venue')?.touched">
+            Venue cannot be just spaces.
+          </small>
+      </div>
+      <div class="space-y-2 mb-4">
+        <div class="grid grid-cols-2 gap-4">
+          <label class="flex items-center space-x-2">
+            <input type="radio" formControlName="service" value="decoration" class="accent-blue-500" />
+            <span>Decoration</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="radio" formControlName="service" value="sound" class="accent-blue-500" />
+            <span>Sound and Entertainment</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="radio" formControlName="service" value="seating" class="accent-blue-500" />
+            <span>Seating</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="radio" formControlName="service" value="photography" class="accent-blue-500" />
+            <span>Photography & Videography</span>
+          </label>
+        </div>
+      </div>
+      <div class="space-y-2 mb-4">
+        <label for="food" class="font-KayPhoDu">Food</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            class="w-full py-1 border rounded-md font-KayPhoDu"
+            [ngClass]="{
+              'bg-adTertiary text-white': step2Form.get('foodOptions.welcomeDrink')?.value,
+              'bg-gray-100 hover:bg-gray-200': !step2Form.get('foodOptions.welcomeDrink')?.value,
+            }"
+            (click)="toggleFoodSelection('welcomeDrink')">
+            Welcome Drink
+          </button>
+
+          <button
+            type="button"
+            class="w-full py-1 border rounded-md font-KayPhoDu"
+            [ngClass]="{
+              'bg-adTertiary text-white': step2Form.get('foodOptions.starters')?.value,
+              'bg-gray-100 hover:bg-gray-200': !step2Form.get('foodOptions.starters')?.value,
+            }"
+            (click)="toggleFoodSelection('starters')">
+            Starters
+          </button>
+
+          <button
+            type="button"
+            class="w-full py-1 border rounded-md font-KayPhoDu"
+            [ngClass]="{
+              'bg-adTertiary text-white': step2Form.get('foodOptions.mainCourse')?.value,
+              'bg-gray-100 hover:bg-gray-200': !step2Form.get('foodOptions.mainCourse')?.value,
+            }"
+            (click)="toggleFoodSelection('mainCourse')">
+            Main Course
+          </button>
+
+          <button
+            type="button"
+            class="w-full py-1 border rounded-md font-KayPhoDu"
+            [ngClass]="{
+              'bg-adTertiary text-white': step2Form.get('foodOptions.dessert')?.value,
+              'bg-gray-100 hover:bg-gray-200': !step2Form.get('foodOptions.dessert')?.value,
+            }"
+            (click)="toggleFoodSelection('dessert')">
+            Dessert
+          </button>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-6">
+        <button type="button" (click)="prevStep()" class="px-6 py-2 font-KayPhoDu bg-white border rounded-md shadow-md hover:bg-gray-200">
+          << Back
+        </button>
+        <button type="submit" class="px-6 py-2 font-KayPhoDu bg-adQuaternary text-white rounded-md shadow-md hover:bg-black">Confirm Booking</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>
