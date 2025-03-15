@@ -7,13 +7,12 @@ import EntryRegFormData from '../../../models/IRegisterForm';
 
 @Injectable()
 export class FormSubmitService {
-
   private _baseUrl = environment.baseUrl;
 
-  constructor( private _http: HttpClient ) { }
+  constructor(private _http: HttpClient) {}
 
-    entryRegistration(entryRegData: EntryRegFormData): Observable<ApiResponse<string>> {
-      console.log(entryRegData,"entryRegData");
-      return this._http.post<ApiResponse<string>>(`${this._baseUrl}user/entry-reg`, entryRegData);
-    }
+  entryRegistration(entryRegData: EntryRegFormData): Observable<ApiResponse<string>> {
+    console.log(entryRegData, 'entryRegData');
+    return this._http.post<ApiResponse<string>>(`${this._baseUrl}user/entry-reg`, entryRegData);
   }
+}

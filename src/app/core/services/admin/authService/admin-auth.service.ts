@@ -7,7 +7,6 @@ import { ApiResponse, LogOut } from '../../../models/commonAPIResponse';
 @Injectable({
   providedIn: 'root',
 })
-
 export class AdminAuthService {
   private _baseUrl = environment.baseUrl;
 

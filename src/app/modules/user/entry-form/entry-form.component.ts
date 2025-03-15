@@ -27,7 +27,10 @@ export class EntryFormComponent {
 
   foodItems = ['welcomeDrink', 'starters', 'mainCourse', 'dessert'];
   selectedFoods: Record<string, boolean> = {};
-  constructor(private fb: FormBuilder, private _entryFormReg: FormSubmitService) {
+  constructor(
+    private fb: FormBuilder,
+    private _entryFormReg: FormSubmitService
+  ) {
     this.step1Form = this.fb.group(
       {
         name: new FormControl('', {
@@ -117,15 +120,14 @@ export class EntryFormComponent {
         ...this.step1Form.value,
         ...this.step2Form.value,
       };
-
-    this._entryFormReg.entryRegistration(formData).subscribe({
-      next:(response)=>{
-        console.log(response,'res')
-      },error:(error)=>{
-        console.log(error);
-      }
-    })
-
+      this._entryFormReg.entryRegistration(formData).subscribe({
+        next: response => {
+          console.log(response, 'res');
+        },
+        error: error => {
+          console.log(error);
+        },
+      });
+    }
   }
-}
 }
