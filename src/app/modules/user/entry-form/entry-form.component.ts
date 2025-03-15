@@ -10,11 +10,13 @@ import {
   pincodeValidator,
   startDateValidator,
 } from '../../../shared/validator/formValidator';
+import { FormSubmitService } from '../../../core/services/users/form/form-submit.service';
 
 @Component({
   selector: 'app-entry-form',
   standalone: true,
   imports: [FooterComponent, NavBar2Component, CommonModule, ReactiveFormsModule],
+  providers: [FormSubmitService],
   templateUrl: './entry-form.component.html',
   styleUrl: './entry-form.component.css',
 })
@@ -25,7 +27,7 @@ export class EntryFormComponent {
 
   foodItems = ['welcomeDrink', 'starters', 'mainCourse', 'dessert'];
   selectedFoods: Record<string, boolean> = {};
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private _entryFormReg: FormSubmitService) {
     this.step1Form = this.fb.group(
       {
         name: new FormControl('', {
@@ -110,12 +112,20 @@ export class EntryFormComponent {
   }
 
   onSubmit() {
-    const formData = {
-      ...this.step1Form.value,
-      ...this.step2Form.value,
-    };
+    if (this.step1Form.valid && this.step2Form.valid) {
+      const formData = {
+        ...this.step1Form.value,
+        ...this.step2Form.value,
+      };
 
-    console.log('Form Submitted:', formData);
-    alert('Booking Confirmed!');
+    this._entryFormReg.entryRegistration(formData).subscribe({
+      next:(response)=>{
+        console.log(response,'res')
+      },error:(error)=>{
+        console.log(error);
+      }
+    })
+
   }
+}
 }
