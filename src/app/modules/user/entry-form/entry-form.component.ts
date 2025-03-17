@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FooterComponent } from '../../../shared/components/user/footer/footer.component';
 import { NavBar2Component } from '../../../shared/components/user/nav-bar2/nav-bar2.component';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,9 @@ import {
   startDateValidator,
 } from '../../../shared/validator/formValidator';
 import { FormSubmitService } from '../../../core/services/users/form/form-submit.service';
+import IToastOption from '../../../core/models/IToastOptions';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entry-form',
@@ -27,6 +30,8 @@ export class EntryFormComponent {
 
   foodItems = ['welcomeDrink', 'starters', 'mainCourse', 'dessert'];
   selectedFoods: Record<string, boolean> = {};
+  private _toastService = inject(ToastService);
+  private router = inject(Router); 
   constructor(
     private fb: FormBuilder,
     private _entryFormReg: FormSubmitService
@@ -122,7 +127,16 @@ export class EntryFormComponent {
       };
       this._entryFormReg.entryRegistration(formData).subscribe({
         next: response => {
-          console.log(response, 'res');
+          console.log(response, 'res'); //here i got email id
+          if (response.success) {
+            const toastOption: IToastOption = {
+              severity: 'success-toast',
+              summary: 'Success',
+              detail: 'Entry form submitted!',
+            };
+            this._toastService.showToast(toastOption);
+            this.router.navigate(['/entry-success']); //here i want to pass email id into next page
+          }
         },
         error: error => {
           console.log(error);
