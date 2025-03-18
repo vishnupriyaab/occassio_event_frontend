@@ -14,6 +14,7 @@ import { FormSubmitService } from '../../../core/services/users/form/form-submit
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { Router } from '@angular/router';
+import { PaymentService } from '../../../core/services/users/payment/payment.service';
 
 @Component({
   selector: 'app-entry-form',
@@ -31,7 +32,8 @@ export class EntryFormComponent {
   foodItems = ['welcomeDrink', 'starters', 'mainCourse', 'dessert'];
   selectedFoods: Record<string, boolean> = {};
   private _toastService = inject(ToastService);
-  private router = inject(Router); 
+  private _paymentService = inject(PaymentService);
+  private router = inject(Router);
   constructor(
     private fb: FormBuilder,
     private _entryFormReg: FormSubmitService
@@ -126,20 +128,30 @@ export class EntryFormComponent {
         ...this.step2Form.value,
       };
       this._entryFormReg.entryRegistration(formData).subscribe({
-        next: response => {
-          console.log(response, 'res'); //here i got email id
-          if (response.success) {
-            const toastOption: IToastOption = {
-              severity: 'success-toast',
-              summary: 'Success',
-              detail: 'Entry form submitted!',
-            };
-            this._toastService.showToast(toastOption);
-            this.router.navigate(['/entry-success']); //here i want to pass email id into next page
+        next: (response: any) => {
+          console.log(response, 'res');
+          if (response.success && response.data) {
+            const email = response.data.email;
+            console.log(email);
+            this._paymentService.entryPaymentLink(email).subscribe({
+              next: response => {
+                console.log('Payment link sent:', response);
+                const toastOption = {
+                  severity: 'success-toast',
+                  summary: 'Success',
+                  detail: 'Entry form submitted! Payment link sent.',
+                };
+                this._toastService.showToast(toastOption);
+                this.router.navigate(['/entry-success'], { queryParams: { email } });
+              },
+              error: error => {
+                console.log(error, 'payment error');
+              },
+            });
           }
         },
         error: error => {
-          console.log(error);
+          console.log(error, 'page error');
         },
       });
     }
