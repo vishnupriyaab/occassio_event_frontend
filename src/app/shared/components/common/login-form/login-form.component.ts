@@ -35,6 +35,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     const { email, password } = this.loginForm.value;
     this._adminAuthService.login(email, password).subscribe({
       next: response => {
+        console.log(response,"123456789")
         if (response.success) {
           const toastOption: IToastOption = {
             severity: 'success-toast',
