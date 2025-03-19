@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FooterComponent } from '../../../shared/components/user/footer/footer.component';
 import { NavBar2Component } from '../../../shared/components/user/nav-bar2/nav-bar2.component';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,7 @@ import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { Router } from '@angular/router';
 import { PaymentService } from '../../../core/services/users/payment/payment.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-entry-form',
@@ -24,7 +25,8 @@ import { PaymentService } from '../../../core/services/users/payment/payment.ser
   templateUrl: './entry-form.component.html',
   styleUrl: './entry-form.component.css',
 })
-export class EntryFormComponent {
+export class EntryFormComponent implements OnDestroy {
+  private subscription = new Subscription();
   step = 1;
   step1Form: FormGroup;
   step2Form: FormGroup;
@@ -127,13 +129,13 @@ export class EntryFormComponent {
         ...this.step1Form.value,
         ...this.step2Form.value,
       };
-      this._entryFormReg.entryRegistration(formData).subscribe({
+      const entrySub = this._entryFormReg.entryRegistration(formData).subscribe({
         next: (response: any) => {
           console.log(response, 'res');
           if (response.success && response.data) {
             const email = response.data.email;
             console.log(email);
-            this._paymentService.entryPaymentLink(email).subscribe({
+            const paymentSub = this._paymentService.entryPaymentLink(email).subscribe({
               next: response => {
                 console.log('Payment link sent:', response);
                 const toastOption = {
@@ -148,12 +150,19 @@ export class EntryFormComponent {
                 console.log(error, 'payment error');
               },
             });
+            this.subscription.add(paymentSub);
           }
         },
         error: error => {
           console.log(error, 'page error');
         },
       });
+      this.subscription.add(entrySub);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    console.log('EntryFormComponent destroyed and unsubscribed.');
   }
 }

@@ -1,10 +1,11 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { emailFormatValidator, noAllSpacesValidator } from '../../../validator/formValidator';
 import { AdminAuthService } from '../../../../core/services/admin/authService/admin-auth.service';
 import IToastOption from '../../../../core/models/IToastOptions';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -13,13 +14,14 @@ import { ToastService } from '../../../../core/services/common/toaster/toast.ser
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css',
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit, OnDestroy {
   @Input() formType: 'user' | 'employee' | 'admin' = 'user';
   loginForm!: FormGroup;
   private _fb = inject(FormBuilder);
   private _adminAuthService = inject(AdminAuthService);
   private _toastService = inject(ToastService);
   private _router = inject(Router);
+  private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.loginForm = this._fb.group({
@@ -64,5 +66,10 @@ export class LoginFormComponent implements OnInit {
 
   hasError(controlName: string, errorName: string) {
     return this.loginForm.controls[controlName].hasError(errorName);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    console.log('LoginFormComponent destroyed and unsubscribed.');
   }
 }

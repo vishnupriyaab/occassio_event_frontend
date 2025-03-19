@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { AdminMenuComponent } from '../admin-menu/admin-menu.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { AdminAuthService } from '../../../../core/services/admin/authService/admin-auth.service';
 import IToastOption from '../../../../core/models/IToastOptions';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -11,13 +12,14 @@ import { ToastService } from '../../../../core/services/common/toaster/toast.ser
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
-export class MainComponent {
+export class MainComponent implements OnDestroy{
   private _adminAuthService = inject(AdminAuthService);
   private _toastService = inject(ToastService);
   private _router = inject(Router);
+  private subscription = new Subscription();
 
   logOut() {
-    this._adminAuthService.logOut().subscribe({
+    const logoutSub = this._adminAuthService.logOut().subscribe({
       next: response => {
         console.log(response, 'res');
         const toastOption: IToastOption = {
@@ -39,5 +41,10 @@ export class MainComponent {
         this._toastService.showToast(toastOption);
       },
     });
+    this.subscription.add(logoutSub)
+  }
+  ngOnDestroy(): void {
+   this.subscription.unsubscribe();
+   console.log("MainComponent destroyed and unsubscribed")
   }
 }
