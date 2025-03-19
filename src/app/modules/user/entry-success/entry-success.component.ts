@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './entry-success.component.css',
 })
 export class EntrySuccessComponent implements OnInit, OnDestroy {
-  email: string = '';
+  email = '';
   private subscription: Subscription = new Subscription();
 
   constructor(private route: ActivatedRoute) {}

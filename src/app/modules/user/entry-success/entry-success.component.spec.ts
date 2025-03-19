@@ -8,9 +8,8 @@ describe('EntrySuccessComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EntrySuccessComponent]
-    })
-    .compileComponents();
+      imports: [EntrySuccessComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EntrySuccessComponent);
     component = fixture.componentInstance;

@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
-export class MainComponent implements OnDestroy{
+export class MainComponent implements OnDestroy {
   private _adminAuthService = inject(AdminAuthService);
   private _toastService = inject(ToastService);
   private _router = inject(Router);
@@ -41,10 +41,10 @@ export class MainComponent implements OnDestroy{
         this._toastService.showToast(toastOption);
       },
     });
-    this.subscription.add(logoutSub)
+    this.subscription.add(logoutSub);
   }
   ngOnDestroy(): void {
-   this.subscription.unsubscribe();
-   console.log("MainComponent destroyed and unsubscribed")
+    this.subscription.unsubscribe();
+    console.log('MainComponent destroyed and unsubscribed');
   }
 }

@@ -5,7 +5,6 @@ import { catchError, switchMap, throwError } from 'rxjs';
 
 export const errorHandlingInterceptor: HttpInterceptorFn = (req, next) => {
   const refreshToken = inject(RefreshTokenService);
-
   return next(req).pipe(
     catchError((error: any) => {
       console.log(error, 'dfghjkl');
