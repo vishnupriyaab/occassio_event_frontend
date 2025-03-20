@@ -6,12 +6,17 @@ import { DashboardComponent } from './modules/admin/dashboard/dashboard.componen
 import { ServiceComponent } from './modules/user/service/service.component';
 import { EntryFormComponent } from './modules/user/entry-form/entry-form.component';
 import { EntrySuccessComponent } from './modules/user/entry-success/entry-success.component';
+import { AboutComponent } from './modules/user/about/about.component';
 
 export const routes: Routes = [
   //user-side
   {
     path: '',
     component: HomeComponent,
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
   },
   {
     path: 'services',
