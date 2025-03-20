@@ -133,8 +133,9 @@ export class EntryFormComponent implements OnDestroy {
           console.log(response, 'res');
           if (response.success && response.data) {
             const email = response.data.email;
+            const entryId = response.data._id;
             console.log(email);
-            const paymentSub = this._paymentService.entryPaymentLink(email).subscribe({
+            const paymentSub = this._paymentService.entryPaymentLink(email, entryId).subscribe({
               next: response => {
                 console.log('Payment link sent:', response);
                 const toastOption = {

@@ -10,7 +10,7 @@ export class PaymentService {
 
   constructor(private _http: HttpClient) {}
 
-  entryPaymentLink(email: string) {
-    return this._http.post<{ success: boolean; message: string }>(`${this._baseUrl}user/entry-payment-link`, { email });
+  entryPaymentLink(email: string, entryId: string) {
+    return this._http.post<{ success: boolean; message: string }>(`${this._baseUrl}user/entry-payment-link`, { email, entryId });
   }
 }
