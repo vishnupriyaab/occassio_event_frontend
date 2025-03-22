@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './entry-form.component.css',
 })
 export class EntryFormComponent implements OnDestroy {
-  private subscription = new Subscription();
+  private _subscription = new Subscription();
   step = 1;
   step1Form: FormGroup;
   step2Form: FormGroup;
@@ -36,10 +36,10 @@ export class EntryFormComponent implements OnDestroy {
   private _paymentService = inject(PaymentService);
   private router = inject(Router);
   constructor(
-    private fb: FormBuilder,
+    private _fb: FormBuilder,
     private _entryFormReg: FormSubmitService
   ) {
-    this.step1Form = this.fb.group(
+    this.step1Form = this._fb.group(
       {
         name: new FormControl('', {
           validators: [Validators.required, noAllSpacesValidator()],
@@ -75,7 +75,7 @@ export class EntryFormComponent implements OnDestroy {
       { validators: dateRangeValidator(), updateOn: 'change' }
     );
 
-    this.step2Form = this.fb.group(
+    this.step2Form = this._fb.group(
       {
         guestCount: ['', Validators.required],
         venue: ['', [Validators.required, noAllSpacesValidator()]],
@@ -83,7 +83,7 @@ export class EntryFormComponent implements OnDestroy {
         sound: [false],
         seating: [false],
         photography: [false],
-        foodOptions: this.fb.group({
+        foodOptions: this._fb.group({
           welcomeDrink: [false],
           starters: [false],
           mainCourse: [false],
@@ -150,19 +150,19 @@ export class EntryFormComponent implements OnDestroy {
                 console.log(error, 'payment error');
               },
             });
-            this.subscription.add(paymentSub);
+            this._subscription.add(paymentSub);
           }
         },
         error: error => {
           console.log(error, 'page error');
         },
       });
-      this.subscription.add(entrySub);
+      this._subscription.add(entrySub);
     }
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this._subscription.unsubscribe();
     console.log('EntryFormComponent destroyed and unsubscribed.');
   }
 }

@@ -7,6 +7,10 @@ import { ServiceComponent } from './modules/user/service/service.component';
 import { EntryFormComponent } from './modules/user/entry-form/entry-form.component';
 import { EntrySuccessComponent } from './modules/user/entry-success/entry-success.component';
 import { AboutComponent } from './modules/user/about/about.component';
+import { EntryPaymentDoneComponent } from './modules/user/entry-payment-done/entry-payment-done.component';
+import { EmployeesComponent } from './modules/admin/employees/employees.component';
+import { EmployeeLoginComponent } from './modules/employee/employee-login/employee-login.component';
+import { ResetPasswordComponent } from './shared/components/common/reset-password/reset-password.component';
 
 export const routes: Routes = [
   //user-side
@@ -27,8 +31,16 @@ export const routes: Routes = [
     component: EntryFormComponent,
   },
   {
+    path: 'entry-payment-success',
+    component: EntryPaymentDoneComponent,
+  },
+  {
     path: 'entry-success',
     component: EntrySuccessComponent,
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
   },
 
   //admin-side
@@ -44,6 +56,20 @@ export const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
       },
+      {
+        path: 'employees',
+        component: EmployeesComponent,
+      },
     ],
   },
+
+  //employee-Side
+  {
+    path:'employee-login',
+    component: EmployeeLoginComponent,
+  },
+  // {
+  //   path: 'employee',
+  //   component:
+  // }
 ];

@@ -1,0 +1,29 @@
+/* Blur effect */
+.blur {
+    filter: blur(30%);
+    pointer-events: none;
+  }
+  
+  /* Loading Overlay */
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 10000; /* Ensure it's above modal content */
+  }
+  
+  /* Spinner Styling */
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001; /* Ensure it is above the modal content */
+  }
+  

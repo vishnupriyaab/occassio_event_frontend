@@ -10,6 +10,7 @@ module.exports = {
         Katibeh: ['Katibeh', 'serif'],
       },
       colors: {
+        adLight: '#F9F7EE',
         adPrimary: '#F8F3D9',
         adSecndary: '#EBE5C2',
         adTertiary: '#B9B28A',

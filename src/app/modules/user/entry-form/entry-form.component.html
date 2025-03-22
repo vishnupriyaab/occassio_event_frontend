@@ -166,8 +166,8 @@
           (input)="step1Form.get('venue')?.markAsTouched()" />
         <small class="text-red-500" *ngIf="step2Form.get('venue')?.invalid && step2Form.get('venue')?.touched"> Venue is required. </small>
         <small class="text-red-500" *ngIf="step1Form.get('venue')?.hasError('allSpaces') && step1Form.get('venue')?.touched">
-            Venue cannot be just spaces.
-          </small>
+          Venue cannot be just spaces.
+        </small>
       </div>
       <div class="space-y-2 mb-4">
         <div class="grid grid-cols-2 gap-4">
