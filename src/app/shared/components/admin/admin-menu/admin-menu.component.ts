@@ -4,6 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-admin-menu',
   imports: [],
   templateUrl: './admin-menu.component.html',
-  styleUrl: './admin-menu.component.css',
+  styleUrl: './admin-menu.component.css'
 })
-export class AdminMenuComponent {}
+export class AdminMenuComponent {
+
+}

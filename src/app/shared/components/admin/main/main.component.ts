@@ -1,14 +1,14 @@
 import { Component, inject, OnDestroy } from '@angular/core';
-import { AdminMenuComponent } from '../admin-menu/admin-menu.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { AdminAuthService } from '../../../../core/services/admin/authService/admin-auth.service';
 import IToastOption from '../../../../core/models/IToastOptions';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
 import { Subscription } from 'rxjs';
+import { AdminMenuComponent } from "../admin-menu/admin-menu.component";
 
 @Component({
   selector: 'app-main',
-  imports: [AdminMenuComponent, RouterOutlet],
+  imports: [RouterOutlet, AdminMenuComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })

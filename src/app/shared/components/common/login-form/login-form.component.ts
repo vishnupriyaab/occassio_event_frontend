@@ -111,8 +111,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
     const routes = {
       user: '',
-      employee: '/employee/dashboard',
-      admin: '/admin/dashboard',
+      employee: 'employee/dashboard',
+      admin: 'admin/dashboard',
     };
     this._router.navigate([routes[this.formType]]);
   }

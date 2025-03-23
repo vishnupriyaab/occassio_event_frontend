@@ -11,6 +11,9 @@ import { EntryPaymentDoneComponent } from './modules/user/entry-payment-done/ent
 import { EmployeesComponent } from './modules/admin/employees/employees.component';
 import { EmployeeLoginComponent } from './modules/employee/employee-login/employee-login.component';
 import { ResetPasswordComponent } from './shared/components/common/reset-password/reset-password.component';
+import { EmplMainComponent } from './shared/components/employee/empl-main/empl-main.component';
+import { EDashboardComponent } from './modules/employee/e-dashboard/e-dashboard.component';
+import { MyClientsComponent } from './modules/employee/my-clients/my-clients.component';
 
 export const routes: Routes = [
   //user-side
@@ -68,8 +71,18 @@ export const routes: Routes = [
     path:'employee-login',
     component: EmployeeLoginComponent,
   },
-  // {
-  //   path: 'employee',
-  //   component:
-  // }
+  {
+    path: 'employee',
+    component:EmplMainComponent,
+    children:[
+      {
+        path: 'dashboard',
+        component: EDashboardComponent
+      },
+      {
+        path: 'clients',
+        component: MyClientsComponent
+      },
+    ]
+  }
 ];
