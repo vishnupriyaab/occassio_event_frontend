@@ -39,7 +39,7 @@ export class ResetPasswordComponent {
     if (this._token) {
       try {
         this.decodedToken = jwtDecode(this._token);
-        console.log('Decoded Token:', this.decodedToken);
+        console.log('Decoded Token:', this.decodedToken.role);
       } catch (error) {
         console.error('Invalid token', error);
       }
@@ -59,11 +59,13 @@ export class ResetPasswordComponent {
       const newPassword = this.resetPasswordForm.value.password;
       console.log(newPassword, '111');
       console.log(this._token, "tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+      console.log(this.decodedToken,"111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
   
       const authService =
         this.decodedToken.role === 'user'
           ? this._userAuthService
           : this._employeeAuthService;
+          
       const redirectRoute =
         this.decodedToken.role === 'user' ? '/user-login' : '/employee-login';
   
