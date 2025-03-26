@@ -14,6 +14,7 @@ import { ResetPasswordComponent } from './shared/components/common/reset-passwor
 import { EmplMainComponent } from './shared/components/employee/empl-main/empl-main.component';
 import { EDashboardComponent } from './modules/employee/e-dashboard/e-dashboard.component';
 import { MyClientsComponent } from './modules/employee/my-clients/my-clients.component';
+import { UserLoginComponent } from './modules/user/user-login/user-login.component';
 
 export const routes: Routes = [
   //user-side
@@ -44,6 +45,10 @@ export const routes: Routes = [
   {
     path: 'reset-password',
     component: ResetPasswordComponent,
+  },
+  {
+    path: 'user-login',
+    component: UserLoginComponent,
   },
 
   //admin-side
