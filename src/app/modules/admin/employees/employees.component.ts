@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmployeeManagementService } from '../../../core/services/admin/employeeManagement/employee-management.service';
 import { Subscription } from 'rxjs';
-import { Employee } from '../../../core/models/IEmployee';
+import { Employee, IEmployee } from '../../../core/models/IEmployee';
 import { mobileNumberValidator, noAllSpacesValidator } from '../../../shared/validator/formValidator';
 import { SearchComponent } from '../search/search.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
+import { response } from 'express';
+import { error } from 'console';
+import { SweetAlertService } from '../../../core/services/common/sweetAlert/sweet-alert.service';
 
 @Component({
   selector: 'app-employees',
@@ -28,7 +31,7 @@ export class EmployeesComponent implements OnDestroy, OnInit {
   employeeForm!: FormGroup;
 
   employees: Employee[] = [];
-  filteredEmployees: Employee[] = [];
+  filteredEmployees: any[] = [];
 
   currentFilter = 'all';
   searchTerm = '';
@@ -40,7 +43,8 @@ export class EmployeesComponent implements OnDestroy, OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private _sweetAlert: SweetAlertService
   ) {
     this.employeeForm = this._fb.group({
       name: new FormControl('', {
@@ -62,6 +66,7 @@ export class EmployeesComponent implements OnDestroy, OnInit {
   fetchEmployees(): void {
     const getEmplSub = this._employeeService.seacrhAndFilterEmpl('', this.currentFilter, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
+        console.log(response);
         if (response.data && response.data.employees) {
           this.employees = response.data.employees;
           this.filteredEmployees = [...this.employees];
@@ -203,6 +208,59 @@ export class EmployeesComponent implements OnDestroy, OnInit {
       this.showModal = false;
       this.resetForm();
     }
+  }
+  blockStatus(employeeId: string, currentStatus: boolean) {
+    console.log(employeeId, currentStatus);
+
+    this._employeeService.blockUnblockEmpl(employeeId, currentStatus).subscribe({
+      next: response => {
+        console.log(response, 'response');
+        if (response.success) {
+          const toastOption: IToastOption = {
+            severity: 'success-toast',
+            summary: 'Success',
+            detail: `Event ${response.data.isBlocked ? 'unblocked' : 'blocked'} successfully!`,
+          };
+          this._toastService.showToast(toastOption);
+          this.fetchEmployees();
+        }
+      },
+      error: error => {
+        console.log(error, 'error');
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Failed to update event status.',
+        };
+        this._toastService.showToast(toastOption);
+      },
+    });
+  }
+
+  deleteEmployee(employeeId: string) {
+    console.log(employeeId, 'employeeId');
+    this._sweetAlert.confirmationAlert('Are you sure?', "You won't be able to revert this!").then(result => {
+      if (result.isConfirmed) {
+        this._employeeService.deleteEmployee(employeeId).subscribe({
+          next: response => {
+            console.log(response, 'resposnee');
+            this._sweetAlert.successAlert('Deleted!', 'Your event has been deleted.');
+            this.fetchEmployees();
+          },
+          error: error => {
+            console.log(error, 'error');
+            const toastOption: IToastOption = {
+              severity: 'danger-toast',
+              summary: 'Error',
+              detail: error.error?.message || 'There was a problem deleting the event.',
+            };
+            this._toastService.showToast(toastOption);
+          },
+        });
+      } else {
+        this._sweetAlert.successAlert('Cancelled', 'Your event deletion has been cancelled.');
+      }
+    });
   }
 
   private resetForm(): void {

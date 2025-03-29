@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Employee } from '../../../models/IEmployee';
+import { Employee, IEmployee } from '../../../models/IEmployee';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../models/commonAPIResponse';
 
@@ -31,12 +31,13 @@ export class EmployeeManagementService {
   saveEmployee(employee: Employee): Observable<ApiResponse<Employee>> {
     return this._http.post<ApiResponse<Employee>>(`${this._baseUrl}admin/employees`, employee);
   }
+  
+  blockUnblockEmpl(id: string, status: boolean): Observable<ApiResponse<IEmployee>> {
+    return this._http.patch<ApiResponse<IEmployee>>(`${this._baseUrl}admin/employees/${id}`, { status });
+  }
 
   deleteEmployee(id: string): Observable<void> {
     return this._http.delete<void>(`${this._baseUrl}admin/employees/${id}`);
   }
 
-  blockUnblockEmpl(id: string, status: string): Observable<ApiResponse<Employee>> {
-    return this._http.patch<ApiResponse<Employee>>(`${this._baseUrl}admin/employees/${id}`, { status });
-  }
 }
