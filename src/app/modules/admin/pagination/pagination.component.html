@@ -1,0 +1,33 @@
+<nav *ngIf="shouldShowPagination()" aria-label="Page navigation">
+  <ul class="flex items-center -space-x-px h-8 text-sm">
+    <li>
+      <button
+        (click)="changePage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+        [ngClass]="{ 'cursor-pointer': currentPage !== 1, 'cursor-not-allowed': currentPage === 1 }"
+        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-adSecndary border border-gray-300 rounded-s-lg hover:bg-blue-200 hover:text-blue-900">
+        <span class="sr-only">Previous</span>
+        <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
+        </svg>
+      </button>
+    </li>
+    @for (page of getPageNumbers(); track page) {
+      <li (click)="changePage(page)">
+        <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-adSecndary border border-gray-300 cursor-pointer"> {{ page }} </a>
+      </li>
+    }
+    <li>
+      <button
+        (click)="changePage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+        [ngClass]="{ 'cursor-pointer': totalPages !== currentPage, 'cursor-not-allowed': totalPages === currentPage }"
+        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-adSecndary border border-gray-300 rounded-e-lg hover:bg-blue-200 hover:text-blue-900">
+        <span class="sr-only">Next</span>
+        <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+        </svg>
+      </button>
+    </li>
+  </ul>
+</nav>

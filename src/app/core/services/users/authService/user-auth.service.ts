@@ -17,6 +17,12 @@ export class UserAuthService {
       credential,
     });
   }
+  login(email: string, password: string): Observable<LoginResponse> {
+    return this._http.post<LoginResponse>(`${this._baseUrl}user/login`, {
+      email,
+      password,
+    });
+  }
   forgotPassword(email: string): Observable<{ message: string }> {
     return this._http.post<{ message: string }>(`${this._baseUrl}user/forgotPassword`, { email });
   }

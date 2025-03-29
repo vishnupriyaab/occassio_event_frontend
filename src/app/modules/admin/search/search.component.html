@@ -1,0 +1,28 @@
+<div class="flex flex-wrap items-center gap-3 pr-4">
+  <!-- Search Input -->
+  <div class="flex-grow min-w-[655px] max-w-[450px]">
+    <div class="flex items-center border border-gray-300 rounded-md shadow-md">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onInputChange($event)"
+        [placeholder]="placeholder"
+        class="flex-grow p-2 text-sm text-adQuaternary outline-none bg-transparent" />
+      <button class="px-4 text-gray-500 hover:text-adQuaternary">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Status Filter  -->
+  <div class="min-w-[130px]">
+    <select
+    [(ngModel)]="selectedFilter"
+    (change)="onFilterChange($event)"
+     class="w-full p-2 text-sm text-adQuaternary border border-gray-300 rounded-md shadow-md bg-transparent">
+      <option value="all">All</option>
+      <option value="blocked">Blocked</option>
+      <option value="unblocked">Unblocked</option>
+    </select>
+  </div>
+</div>
