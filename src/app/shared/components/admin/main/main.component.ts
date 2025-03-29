@@ -4,7 +4,7 @@ import { AdminAuthService } from '../../../../core/services/admin/authService/ad
 import IToastOption from '../../../../core/models/IToastOptions';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
 import { Subscription } from 'rxjs';
-import { AdminMenuComponent } from "../admin-menu/admin-menu.component";
+import { AdminMenuComponent } from '../admin-menu/admin-menu.component';
 
 @Component({
   selector: 'app-main',

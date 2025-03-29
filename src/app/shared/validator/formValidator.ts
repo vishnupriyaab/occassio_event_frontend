@@ -88,23 +88,26 @@ export function strongPasswordValidator(): ValidatorFn {
   };
 }
 
-
 export function startDateValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value) {
-      return null; 
+      return null;
     }
 
     const inputDate = new Date(control.value);
     const today = new Date();
-    
+
     today.setHours(0, 0, 0, 0);
     const minDate = new Date(today);
     minDate.setDate(today.getDate() + 10);
-    return inputDate >= minDate ? null : { futureDate: { 
-      required: minDate.toISOString().split('T')[0], 
-      actual: control.value 
-    }};
+    return inputDate >= minDate
+      ? null
+      : {
+          futureDate: {
+            required: minDate.toISOString().split('T')[0],
+            actual: control.value,
+          },
+        };
   };
 }
 
@@ -139,11 +142,10 @@ export function pincodeValidator(): ValidatorFn {
     }
     const pincode = control.value.toString();
     const valid = /^[0-9]{6}$/.test(pincode);
-    
+
     return valid ? null : { invalidPincode: true };
   };
 }
-
 
 // export function otpPattern(): ValidatorFn {
 //   return (control: AbstractControl): ValidationErrors | null => {

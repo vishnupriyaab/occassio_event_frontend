@@ -4,7 +4,6 @@ import { Component, Input } from '@angular/core';
   selector: 'app-empl-nav',
   imports: [],
   templateUrl: './empl-nav.component.html',
-  styleUrl: './empl-nav.component.css'
+  styleUrl: './empl-nav.component.css',
 })
-export class EmplNavComponent {
-}
+export class EmplNavComponent {}

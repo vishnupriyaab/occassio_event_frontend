@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-empl-menu',
   imports: [],
   templateUrl: './empl-menu.component.html',
-  styleUrl: './empl-menu.component.css'
+  styleUrl: './empl-menu.component.css',
 })
-export class EmplMenuComponent {
-
-}
+export class EmplMenuComponent {}

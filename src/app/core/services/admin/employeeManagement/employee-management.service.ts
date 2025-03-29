@@ -14,10 +14,9 @@ export class EmployeeManagementService {
   seacrhAndFilterEmpl(
     searchTerm: string,
     filterStatus?: string,
-    page: number = 1,
-    limit: number = 10
+    page = 1,
+    limit = 10
   ): Observable<{ data: any; totalCount: number; message: string; statusCode: number }> {
-    console.log(searchTerm, filterStatus, page, limit,"servicee!!");
     let params: { [key: string]: string } = {
       searchTerm,
       page: page.toString(),

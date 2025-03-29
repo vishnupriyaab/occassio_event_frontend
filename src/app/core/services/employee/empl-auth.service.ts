@@ -13,7 +13,7 @@ export class EmplAuthService {
   constructor(private _http: HttpClient) {}
 
   login(email: string, password: string): Observable<ApiResponse<string>> {
-    console.log(email,password,"123456")
+    console.log(email, password, '123456');
     return this._http.post<ApiResponse<string>>(`${this._baseUrl}employee/login`, {
       email,
       password,
@@ -23,7 +23,7 @@ export class EmplAuthService {
     return this._http.post<{ message: string }>(`${this._baseUrl}employee/forgotPassword`, { email });
   }
   resetPassword(newPassword: string, token: string): Observable<{ message: string }> {
-    console.log("wowoowowowowo",token)
+    console.log('wowoowowowowo', token);
     return this._http.post<{ message: string }>(`${this._baseUrl}employee/resetPassword`, { password: newPassword, token });
   }
   setLoggedIn(status: string) {

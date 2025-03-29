@@ -1,13 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {jwtDecode} from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
 import { EmplAuthService } from '../../../../core/services/employee/empl-auth.service';
 import { UserAuthService } from '../../../../core/services/users/authService/user-auth.service';
@@ -20,14 +15,13 @@ import IToastOption from '../../../../core/models/IToastOptions';
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css',
 })
-
 export class ResetPasswordComponent {
   resetPasswordForm!: FormGroup;
   private _token!: string;
-  decodedToken:any;
+  decodedToken: any;
   private _toastService: ToastService = inject(ToastService);
   private _userAuthService: UserAuthService = inject(UserAuthService);
-  private _employeeAuthService:EmplAuthService = inject(EmplAuthService)
+  private _employeeAuthService: EmplAuthService = inject(EmplAuthService);
   constructor(
     private _route: ActivatedRoute,
     private _fb: FormBuilder,
@@ -58,19 +52,15 @@ export class ResetPasswordComponent {
     if (this.resetPasswordForm.valid) {
       const newPassword = this.resetPasswordForm.value.password;
       console.log(newPassword, '111');
-      console.log(this._token, "tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-      console.log(this.decodedToken,"111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
-  
-      const authService =
-        this.decodedToken.role === 'user'
-          ? this._userAuthService
-          : this._employeeAuthService;
-          
-      const redirectRoute =
-        this.decodedToken.role === 'user' ? '/user-login' : '/employee-login';
-  
+      console.log(this._token, 'tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
+      console.log(this.decodedToken, '111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111');
+
+      const authService = this.decodedToken.role === 'user' ? this._userAuthService : this._employeeAuthService;
+
+      const redirectRoute = this.decodedToken.role === 'user' ? '/user-login' : '/employee-login';
+
       authService.resetPassword(newPassword, this._token).subscribe(
-        (response) => {
+        response => {
           console.log(response, 'response');
           const toastOption: IToastOption = {
             severity: 'success-toast',
@@ -81,7 +71,7 @@ export class ResetPasswordComponent {
           console.log('Password reset successful');
           this._router.navigate([redirectRoute]);
         },
-        (err) => {
+        err => {
           const toastOption: IToastOption = {
             severity: 'danger-toast',
             summary: 'Error',
@@ -95,11 +85,8 @@ export class ResetPasswordComponent {
       console.log('form is invalid');
     }
   }
-  
 
-  onCancel(){
-
-  }
+  onCancel() {}
 
   hasError(controlName: string, errorName: string) {
     return this.resetPasswordForm.controls[controlName].hasError(errorName);

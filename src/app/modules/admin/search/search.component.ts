@@ -15,18 +15,17 @@ export class SearchComponent {
   @Output() searchQuery = new EventEmitter<string>();
   @Output() filterChange = new EventEmitter<string>();
 
-  @Input() placeholder: string = 'Search...';
+  @Input() placeholder = 'Search...';
 
-  searchTerm: string = '';
-  selectedFilter: string = 'all';
+  searchTerm = '';
+  selectedFilter = 'all';
 
   constructor() {
     this.searchSubject.pipe(debounceTime(300)).subscribe(value => {
       this.searchQuery.emit(value);
     });
   }
-  onFilterChange(event:Event): void {
-    // this.filterChange.emit(value);
+  onFilterChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
     this.selectedFilter = select.value;
     this.filterChange.emit(this.selectedFilter);

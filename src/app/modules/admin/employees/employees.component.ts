@@ -24,19 +24,19 @@ export class EmployeesComponent implements OnDestroy, OnInit {
   private _subscription = new Subscription();
   private _employeeService = inject(EmployeeManagementService);
 
-  showModal: boolean = false;
+  showModal = false;
   employeeForm!: FormGroup;
 
   employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
 
-  currentFilter: string = 'all';
-  searchTerm: string = '';
+  currentFilter = 'all';
+  searchTerm = '';
 
-  currentPage: number = 1;
-  itemsPerPage: number = 4;
-  totalItems: number = 0;
-  totalPages: number = 0;
+  currentPage = 1;
+  itemsPerPage = 4;
+  totalItems = 0;
+  totalPages = 0;
 
   constructor(
     private _fb: FormBuilder,
@@ -97,12 +97,7 @@ export class EmployeesComponent implements OnDestroy, OnInit {
       this.currentPage = 1;
       return;
     }
-    const searchSub = this._employeeService.seacrhAndFilterEmpl(
-      searchTerm, 
-      this.currentFilter, 
-      this.currentPage, 
-      this.itemsPerPage
-    ).subscribe({
+    const searchSub = this._employeeService.seacrhAndFilterEmpl(searchTerm, this.currentFilter, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
         console.log(response, 'Search results');
         if (response.data && response.data.employees) {

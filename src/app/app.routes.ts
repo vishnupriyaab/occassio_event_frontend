@@ -15,6 +15,7 @@ import { EmplMainComponent } from './shared/components/employee/empl-main/empl-m
 import { EDashboardComponent } from './modules/employee/e-dashboard/e-dashboard.component';
 import { MyClientsComponent } from './modules/employee/my-clients/my-clients.component';
 import { UserLoginComponent } from './modules/user/user-login/user-login.component';
+import { ClientsComponent } from './modules/admin/clients/clients.component';
 
 export const routes: Routes = [
   //user-side
@@ -68,26 +69,30 @@ export const routes: Routes = [
         path: 'employees',
         component: EmployeesComponent,
       },
+      {
+        path: 'clients',
+        component: ClientsComponent,
+      },
     ],
   },
 
   //employee-Side
   {
-    path:'employee-login',
+    path: 'employee-login',
     component: EmployeeLoginComponent,
   },
   {
     path: 'employee',
-    component:EmplMainComponent,
-    children:[
+    component: EmplMainComponent,
+    children: [
       {
         path: 'dashboard',
-        component: EDashboardComponent
+        component: EDashboardComponent,
       },
       {
         path: 'clients',
-        component: MyClientsComponent
+        component: MyClientsComponent,
       },
-    ]
-  }
+    ],
+  },
 ];

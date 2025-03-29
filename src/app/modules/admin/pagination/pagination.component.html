@@ -14,7 +14,9 @@
     </li>
     @for (page of getPageNumbers(); track page) {
       <li (click)="changePage(page)">
-        <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-adSecndary border border-gray-300 cursor-pointer"> {{ page }} </a>
+        <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-adSecndary border border-gray-300 cursor-pointer">
+          {{ page }}
+        </a>
       </li>
     }
     <li>

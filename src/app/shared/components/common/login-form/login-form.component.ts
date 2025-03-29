@@ -89,12 +89,12 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
     authService?.login(email, password).subscribe(
       (response: any) => {
-        console.log(response.data,"wertyuiop")
+        console.log(response.data, 'wertyuiop');
         this.handleSuccess(response);
       },
       (error: any) => {
-        console.log(error,"1234567890")
-        this.handleError(error)
+        console.log(error, '1234567890');
+        this.handleError(error);
       }
     );
   }
@@ -118,10 +118,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   private handleError(error: any): void {
-    if (
-      error.status === 403 &&
-      error.error.message === 'Account not verified. Please verify your account.'
-    ) {
+    if (error.status === 403 && error.error.message === 'Account not verified. Please verify your account.') {
       localStorage.setItem(`${this.formType}Id`, error.error.userId);
       const toastOption: IToastOption = {
         severity: 'warning-toast',

@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-entry-payment-done',
   imports: [],
   templateUrl: './entry-payment-done.component.html',
-  styleUrl: './entry-payment-done.component.css'
+  styleUrl: './entry-payment-done.component.css',
 })
-export class EntryPaymentDoneComponent {
-
-}
+export class EntryPaymentDoneComponent {}

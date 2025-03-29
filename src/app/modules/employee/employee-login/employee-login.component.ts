@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginFormComponent } from "../../../shared/components/common/login-form/login-form.component";
+import { LoginFormComponent } from '../../../shared/components/common/login-form/login-form.component';
 
 @Component({
   selector: 'app-employee-login',

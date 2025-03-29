@@ -1,11 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { emailFormatValidator, noAllSpacesValidator } from '../../../validator/formValidator';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../../core/models/IToastOptions';
@@ -30,15 +25,12 @@ export class ForgotPasswordComponent {
     private userAuthService: UserAuthService,
     private employeeAuthService: EmplAuthService,
     private _toastService: ToastService
-  ){}
+  ) {}
 
   ngOnInit(): void {
     this.forgotPasswordForm = this._fb.group({
-      email: [
-        '',
-        [Validators.required, noAllSpacesValidator(), emailFormatValidator()],
-      ],
-    })
+      email: ['', [Validators.required, noAllSpacesValidator(), emailFormatValidator()]],
+    });
   }
 
   onSubmitForgotPassword() {
@@ -46,13 +38,10 @@ export class ForgotPasswordComponent {
       console.log(this.forgotPasswordForm.value);
       const { email } = this.forgotPasswordForm.value;
       console.log(email, 'emaillll');
-      const authService =
-        this.formType === 'employee'
-          ? this.employeeAuthService
-          : this.userAuthService;
+      const authService = this.formType === 'employee' ? this.employeeAuthService : this.userAuthService;
 
       authService.forgotPassword(email).subscribe(
-        (response) => {
+        response => {
           console.log('responseeeeses', response);
           const toastOption: IToastOption = {
             severity: 'warning-toast',
@@ -65,7 +54,7 @@ export class ForgotPasswordComponent {
           this.showForgotPasswordModal = false;
           this.cancel.emit();
         },
-        (error) => {
+        error => {
           const toastOption: IToastOption = {
             severity: 'danger-toast',
             summary: 'Error',
@@ -77,7 +66,7 @@ export class ForgotPasswordComponent {
       );
     }
   }
-  
+
   onCancel() {
     this.showForgotPasswordModal = false;
     this.cancel.emit();

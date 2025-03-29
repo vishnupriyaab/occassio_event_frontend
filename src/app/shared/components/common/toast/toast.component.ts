@@ -30,8 +30,7 @@ export class ToastComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.subscription.unsubscribe();
-      console.log('ToastComponent destroyed and unsubscribed.');
-    }
+    this.subscription.unsubscribe();
+    console.log('ToastComponent destroyed and unsubscribed.');
   }
-
+}
