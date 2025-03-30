@@ -30,7 +30,7 @@ export class EmployeesComponent implements OnDestroy, OnInit {
   showModal = false;
   employeeForm!: FormGroup;
 
-  employees: Employee[] = [];
+  employees: IEmployee[] = [];
   filteredEmployees: any[] = [];
 
   currentFilter = 'all';
@@ -216,13 +216,34 @@ export class EmployeesComponent implements OnDestroy, OnInit {
       next: response => {
         console.log(response, 'response');
         if (response.success) {
+          const updatedEmployee = response.data;
+          const employeeIndex = this.filteredEmployees.findIndex(employee => employee._id === employeeId);
+
+          if (employeeIndex !== -1) {
+            // Create a new array to ensure change detection works
+            this.filteredEmployees = [
+              ...this.filteredEmployees.slice(0, employeeIndex),
+              { ...this.filteredEmployees[employeeIndex], isBlocked: updatedEmployee.isBlocked },
+              ...this.filteredEmployees.slice(employeeIndex + 1),
+            ];
+          }
+
+          // Also update in the original employees array if it exists there
+          const originalEmployeeIndex = this.employees.findIndex(employee => employee._id === employeeId);
+          if (originalEmployeeIndex !== -1) {
+            this.employees = [
+              ...this.employees.slice(0, originalEmployeeIndex),
+              { ...this.employees[originalEmployeeIndex], isBlocked: updatedEmployee.isBlocked },
+              ...this.employees.slice(originalEmployeeIndex + 1),
+            ];
+          }
+
           const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
-            detail: `Event ${response.data.isBlocked ? 'unblocked' : 'blocked'} successfully!`,
+            detail: `Employee ${response.data.isBlocked ? 'unblocked' : 'blocked'} successfully!`,
           };
           this._toastService.showToast(toastOption);
-          this.fetchEmployees();
         }
       },
       error: error => {
@@ -230,7 +251,7 @@ export class EmployeesComponent implements OnDestroy, OnInit {
         const toastOption: IToastOption = {
           severity: 'danger-toast',
           summary: 'Error',
-          detail: 'Failed to update event status.',
+          detail: 'Failed to update Employee status.',
         };
         this._toastService.showToast(toastOption);
       },
@@ -244,8 +265,20 @@ export class EmployeesComponent implements OnDestroy, OnInit {
         this._employeeService.deleteEmployee(employeeId).subscribe({
           next: response => {
             console.log(response, 'resposnee');
+            this.filteredEmployees = this.filteredEmployees.filter(employee => employee._id !== employeeId);
+            this.employees = this.employees.filter(employee => employee._id !== employeeId);
+            this.totalItems--;
+            this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+
+            if (this.filteredEmployees.length === 0 && this.currentPage > 1) {
+              this.onPageChange(this.currentPage - 1);
+            } else if (this.filteredEmployees.length < this.itemsPerPage && this.totalItems > 0) {
+              
+              if ((this.currentPage - 1) * this.itemsPerPage + this.filteredEmployees.length < this.totalItems) {
+                this.onPageChange(this.currentPage);
+              }
+            }
             this._sweetAlert.successAlert('Deleted!', 'Your event has been deleted.');
-            this.fetchEmployees();
           },
           error: error => {
             console.log(error, 'error');
