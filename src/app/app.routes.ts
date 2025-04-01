@@ -16,6 +16,8 @@ import { MyClientsComponent } from './modules/employee/my-clients/my-clients.com
 import { UserLoginComponent } from './modules/user/user-login/user-login.component';
 import { ClientsComponent } from './modules/admin/clients/clients.component';
 import { EDashboardComponent } from './modules/employee/e-dashboard/e-dashboard.component';
+import { ChatWithClientComponent } from './modules/employee/chat-with-client/chat-with-client.component';
+import { SubscriptionHomeComponent } from './modules/user/subscription-home/subscription-home.component';
 
 export const routes: Routes = [
   //user-side
@@ -50,6 +52,14 @@ export const routes: Routes = [
   {
     path: 'user-login',
     component: UserLoginComponent,
+  },
+  {
+    path: 'sub-home',
+    component: SubscriptionHomeComponent,
+  },
+  {
+    path: 'sub-details',
+    component: SubscriptionHomeComponent,
   },
 
   //admin-side
@@ -94,5 +104,9 @@ export const routes: Routes = [
         component: MyClientsComponent,
       },
     ],
+  },
+  {
+    path: 'chat-with-client',
+    component: ChatWithClientComponent,
   },
 ];

@@ -46,41 +46,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  // formOnSubmit() {
-  //   if (this.loginForm.invalid) return;
-  //   const { email, password } = this.loginForm.value;
-  //   this._adminAuthService.login(email, password).subscribe({
-  //     next: response => {
-  //       console.log(response, '123456789');
-  //       if (response.success) {
-  //         const toastOption: IToastOption = {
-  //           severity: 'success-toast',
-  //           summary: 'Success',
-  //           detail: 'Login successful',
-  //         };
-  //         this._toastService.showToast(toastOption);
-  //         this._adminAuthService.setLoggedIn('true');
-  //         this._router.navigate(['/admin/dashboard']);
-  //       } else {
-  //         const toastOption: IToastOption = {
-  //           severity: 'danger-toast',
-  //           summary: 'Error',
-  //           detail: response.message || 'Login failed',
-  //         };
-  //         this._toastService.showToast(toastOption);
-  //       }
-  //     },
-  //     error: error => {
-  //       const toastOption: IToastOption = {
-  //         severity: 'danger-toast',
-  //         summary: 'Error',
-  //         detail: error.error?.message || 'Something went wrong. Please try again.',
-  //       };
-  //       this._toastService.showToast(toastOption);
-  //     },
-  //   });
-  // }
-
   formOnSubmit() {
     if (this.loginForm.invalid) return;
 
@@ -110,7 +75,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this._authServices[this.formType].setLoggedIn('true');
 
     const routes = {
-      user: '',
+      user: 'user/sub-home',
       employee: 'employee/dashboard',
       admin: 'admin/dashboard',
     };
@@ -126,7 +91,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         detail: 'Account not verified. Please verify your account.',
       };
       this._toastService.showToast(toastOption);
-      // this.showOtpModal = true;
     } else {
       const toastDetail =
         error.status === 401
