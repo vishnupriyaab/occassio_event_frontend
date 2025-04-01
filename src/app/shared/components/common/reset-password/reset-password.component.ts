@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
-import { EmplAuthService } from '../../../../core/services/employee/empl-auth.service';
+import { EmplAuthService } from '../../../../core/services/employee/authService/empl-auth.service';
 import { UserAuthService } from '../../../../core/services/users/authService/user-auth.service';
 import { passwordMatchValidator } from '../../../validator/formValidator';
 import IToastOption from '../../../../core/models/IToastOptions';

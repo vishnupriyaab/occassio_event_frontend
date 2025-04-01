@@ -5,6 +5,7 @@ export interface Employee {
   email: string;
   phone: string;
   status?: string;
+  imageUrl?:string;
 }
 
 export interface IEmployee {

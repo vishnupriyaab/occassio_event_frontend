@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
 import { Subscription } from 'rxjs';
 import { UserAuthService } from '../../../../core/services/users/authService/user-auth.service';
-import { EmplAuthService } from '../../../../core/services/employee/empl-auth.service';
+import { EmplAuthService } from '../../../../core/services/employee/authService/empl-auth.service';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 
 @Component({

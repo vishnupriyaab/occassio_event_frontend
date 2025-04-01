@@ -12,10 +12,10 @@ import { EmployeesComponent } from './modules/admin/employees/employees.componen
 import { EmployeeLoginComponent } from './modules/employee/employee-login/employee-login.component';
 import { ResetPasswordComponent } from './shared/components/common/reset-password/reset-password.component';
 import { EmplMainComponent } from './shared/components/employee/empl-main/empl-main.component';
-import { EDashboardComponent } from './modules/employee/e-dashboard/e-dashboard.component';
 import { MyClientsComponent } from './modules/employee/my-clients/my-clients.component';
 import { UserLoginComponent } from './modules/user/user-login/user-login.component';
 import { ClientsComponent } from './modules/admin/clients/clients.component';
+import { EDashboardComponent } from './modules/employee/e-dashboard/e-dashboard.component';
 
 export const routes: Routes = [
   //user-side
