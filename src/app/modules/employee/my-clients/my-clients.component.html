@@ -56,74 +56,74 @@
 
 <!-- Event Details Modal with Fixed Positioning -->
 <div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-y-auto flex items-start justify-center pt-5 pb-5">
-    <div class="bg-neutral-800 w-full max-w-3xl rounded-lg shadow-lg p-6 mx-4 my-8">
-      <div class="flex justify-between items-center mb-3">
-        <h2 class="text-xl font-bold text-adLight">Event Details</h2>
-        <button (click)="closeModal()" class="text-adLight hover:text-white">
-          <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-      </div>
-  
-      <div *ngIf="selectedClient" class="text-adLight mb-4">
-        <p class="text-lg font-semibold">{{ selectedClient.name }}'s Event: {{ selectedClient.eventName }}</p>
-        <p class="text-sm">{{ selectedClient.startDate }} to {{ selectedClient.endDate }}</p>
-        <div class="mt-4 bg-neutral-700 p-4 rounded-lg">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p class="font-semibold mb-2">Expecting Guests: {{ selectedClient.guestCount }}</p>
-              <div class="mb-4">
-                  <p class="font-semibold">Location:</p>
-                  <p class="text-sm"> {{ selectedClient.district }}, {{ selectedClient.state }}, {{ selectedClient.pincode }}</p>
-              </div>
-              <div class="mb-3">
-                <p class="font-semibold">Venue</p>
-                <p class="text-sm">{{ selectedClient.venue || '---' }}</p>
-              </div>
-  
-              <div class="mb-3">
-                <p class="font-semibold">Seating</p>
-                <p class="text-sm">{{ selectedClient.seating ? 'Included' : 'Not included' }}</p>
+  <div class="bg-neutral-800 w-full max-w-3xl rounded-lg shadow-lg p-6 mx-4 my-8">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-xl font-bold text-adLight">Event Details</h2>
+      <button (click)="closeModal()" class="text-adLight hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+    </div>
+
+    <div *ngIf="selectedClient" class="text-adLight mb-4">
+      <p class="text-lg font-semibold">{{ selectedClient.name }}'s Event: {{ selectedClient.eventName }}</p>
+      <p class="text-sm">{{ selectedClient.startDate }} to {{ selectedClient.endDate }}</p>
+      <div class="mt-4 bg-neutral-700 p-4 rounded-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p class="font-semibold mb-2">Expecting Guests: {{ selectedClient.guestCount }}</p>
+            <div class="mb-4">
+              <p class="font-semibold">Location:</p>
+              <p class="text-sm">{{ selectedClient.district }}, {{ selectedClient.state }}, {{ selectedClient.pincode }}</p>
+            </div>
+            <div class="mb-3">
+              <p class="font-semibold">Venue</p>
+              <p class="text-sm">{{ selectedClient.venue || '---' }}</p>
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Seating</p>
+              <p class="text-sm">{{ selectedClient.seating ? 'Included' : 'Not included' }}</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-3">
+              <p class="font-semibold">Food Options</p>
+              <div class="ml-2">
+                <p class="text-sm">Welcome drink: {{ selectedClient.foodOptions.welcomeDrink ? 'Included' : 'Not included' }}</p>
+                <p class="text-sm">Starters: {{ selectedClient.foodOptions.starters ? 'Included' : 'Not included' }}</p>
+                <p class="text-sm">Main course: {{ selectedClient.foodOptions.mainCourse ? 'Included' : 'Not included' }}</p>
+                <p class="text-sm">Dessert: {{ selectedClient.foodOptions.dessert ? 'Included' : 'Not included' }}</p>
               </div>
             </div>
-  
-            <div>
-              <div class="mb-3">
-                <p class="font-semibold">Food Options</p>
-                <div class="ml-2">
-                  <p class="text-sm">Welcome drink: {{ selectedClient.foodOptions.welcomeDrink ? 'Included' : 'Not included' }}</p>
-                  <p class="text-sm">Starters: {{ selectedClient.foodOptions.starters ? 'Included' : 'Not included' }}</p>
-                  <p class="text-sm">Main course: {{ selectedClient.foodOptions.mainCourse ? 'Included' : 'Not included' }}</p>
-                  <p class="text-sm">Dessert: {{ selectedClient.foodOptions.dessert ? 'Included' : 'Not included' }}</p>
-                </div>
-              </div>
-  
-              <div class="mb-3">
-                <p class="font-semibold">Decoration</p>
-                <p class="text-sm">{{ selectedClient.decoration ? 'Included' : 'Not included' }}</p>
-              </div>
-  
-              <div class="mb-3">
-                <p class="font-semibold">Sound & Entertainment</p>
-                <p class="text-sm">{{ selectedClient.sound ? 'Included' : 'Not included' }}</p>
-              </div>
-  
-              <div class="mb-3">
-                <p class="font-semibold">Photography</p>
-                <p class="text-sm">{{ selectedClient.photography ? 'Included' : 'Not included' }}</p>
-              </div>
-  
-              <div class="mb-3">
-                <p class="font-semibold">Contact Details</p>
-                <p>Email: {{ selectedClient.email }}</p>
-                <p>Phone: {{ selectedClient.phone }}</p>
-              </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Decoration</p>
+              <p class="text-sm">{{ selectedClient.decoration ? 'Included' : 'Not included' }}</p>
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Sound & Entertainment</p>
+              <p class="text-sm">{{ selectedClient.sound ? 'Included' : 'Not included' }}</p>
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Photography</p>
+              <p class="text-sm">{{ selectedClient.photography ? 'Included' : 'Not included' }}</p>
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Contact Details</p>
+              <p>Email: {{ selectedClient.email }}</p>
+              <p>Phone: {{ selectedClient.phone }}</p>
             </div>
           </div>
         </div>
       </div>
-  
-      <div class="flex justify-end">
-        <button (click)="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Close</button>
-      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button (click)="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Close</button>
     </div>
   </div>
+</div>

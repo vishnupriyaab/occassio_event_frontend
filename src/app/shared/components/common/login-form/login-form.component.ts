@@ -75,7 +75,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this._authServices[this.formType].setLoggedIn('true');
 
     const routes = {
-      user: 'user/sub-home',
+      user: '/sub-home',
       employee: 'employee/dashboard',
       admin: 'admin/dashboard',
     };

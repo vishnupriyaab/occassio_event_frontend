@@ -18,6 +18,8 @@ import { ClientsComponent } from './modules/admin/clients/clients.component';
 import { EDashboardComponent } from './modules/employee/e-dashboard/e-dashboard.component';
 import { ChatWithClientComponent } from './modules/employee/chat-with-client/chat-with-client.component';
 import { SubscriptionHomeComponent } from './modules/user/subscription-home/subscription-home.component';
+import { SubscriptionDetailsComponent } from './modules/user/subscription-details/subscription-details.component';
+import { ChatWithEmployeeComponent } from './modules/user/chat-with-employee/chat-with-employee.component';
 
 export const routes: Routes = [
   //user-side
@@ -59,7 +61,11 @@ export const routes: Routes = [
   },
   {
     path: 'sub-details',
-    component: SubscriptionHomeComponent,
+    component: SubscriptionDetailsComponent,
+  },
+  {
+    path: 'chat-with-employee',
+    component: ChatWithEmployeeComponent,
   },
 
   //admin-side
