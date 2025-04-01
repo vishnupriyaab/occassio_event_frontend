@@ -3,14 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmployeeManagementService } from '../../../core/services/admin/employeeManagement/employee-management.service';
 import { Subscription } from 'rxjs';
-import { Employee, IEmployee } from '../../../core/models/IEmployee';
+import { IEmployee } from '../../../core/models/IEmployee';
 import { mobileNumberValidator, noAllSpacesValidator } from '../../../shared/validator/formValidator';
 import { SearchComponent } from '../search/search.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
-import { response } from 'express';
-import { error } from 'console';
 import { SweetAlertService } from '../../../core/services/common/sweetAlert/sweet-alert.service';
 
 @Component({

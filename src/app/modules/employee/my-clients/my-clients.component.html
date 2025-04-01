@@ -1,1 +1,129 @@
-<p class="text-white pl-4 text-3xl">Clients</p>
+<div class="px-4">
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-white">My Clients</h1>
+  </header>
+</div>
+<div class="container mx-auto py-4 px-5 pl-10 pr-10">
+  <div class="overflow-x-auto shadow-md rounded-lg">
+    <table class="min-w-full">
+      <thead>
+        <tr class="bg-neutral-700 text-adLight">
+          <th class="py-1 px-2 text-left text-sm md:text-base">Sl No</th>
+          <th class="py-1 px-2 text-left text-sm md:text-base">Name</th>
+          <th class="py-1 px-2 text-left text-sm md:text-base">Email</th>
+          <th class="py-1 px-2 text-left text-sm md:text-base">Phone</th>
+          <th class="py-1 px-2 text-left text-sm md:text-base">Event Name</th>
+          <th class="py-1 px-2 text-left text-sm md:text-base">Event Dates</th>
+          <th class="py-1 px-2 text-left text-sm md:text-base">Guest Count</th>
+          <th class="py-1 px-2 text-center text-sm md:text-base">More</th>
+        </tr>
+      </thead>
+      <tbody class="text-adLight">
+        <tr *ngFor="let client of clients; let i = index" class="bg-neutral-900 hover:bg-neutral-800">
+          <td class="py-1 px-2 text-sm md:text-base">{{ i + 1 }}.</td>
+          <td class="py-1 px-2 text-xs md:text-base">{{ client.name }}</td>
+          <td class="py-1 px-2 text-xs md:text-base">{{ client.email }}</td>
+          <td class="py-1 px-2 text-xs md:text-base">{{ client.phone }}</td>
+          <td class="py-1 px-2 text-xs md:text-base">{{ client.eventName }}</td>
+          <td class="py-1 px-2 text-xs md:text-base">
+            <div class="flex flex-col">
+              <p>{{ client.startDate }}</p>
+              <p>{{ client.endDate }}</p>
+            </div>
+          </td>
+          <td class="py-1 md:py-3 px-2 md:px-4 text-xs md:text-base">{{ client.guestCount }}</td>
+          <td class="py-1 md:py-3 px-2 md:px-4">
+            <div class="flex flex-row xs:flex-row justify-start gap-1">
+              <button class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
+                <i class="fa-solid fa-file-pen"></i>
+              </button>
+              <button (click)="openEventDetails(client.clientId)" class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
+                <i class="fa-solid fa-circle-info"></i>
+              </button>
+              <button class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
+                <i class="fa-solid fa-message"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="clients.length === 0" class="bg-neutral-900">
+          <td colspan="8" class="py-4 text-center text-gray-500">No clients found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Event Details Modal with Fixed Positioning -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-y-auto flex items-start justify-center pt-5 pb-5">
+    <div class="bg-neutral-800 w-full max-w-3xl rounded-lg shadow-lg p-6 mx-4 my-8">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-xl font-bold text-adLight">Event Details</h2>
+        <button (click)="closeModal()" class="text-adLight hover:text-white">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+  
+      <div *ngIf="selectedClient" class="text-adLight mb-4">
+        <p class="text-lg font-semibold">{{ selectedClient.name }}'s Event: {{ selectedClient.eventName }}</p>
+        <p class="text-sm">{{ selectedClient.startDate }} to {{ selectedClient.endDate }}</p>
+        <div class="mt-4 bg-neutral-700 p-4 rounded-lg">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="font-semibold mb-2">Expecting Guests: {{ selectedClient.guestCount }}</p>
+              <div class="mb-4">
+                  <p class="font-semibold">Location:</p>
+                  <p class="text-sm"> {{ selectedClient.district }}, {{ selectedClient.state }}, {{ selectedClient.pincode }}</p>
+              </div>
+              <div class="mb-3">
+                <p class="font-semibold">Venue</p>
+                <p class="text-sm">{{ selectedClient.venue || '---' }}</p>
+              </div>
+  
+              <div class="mb-3">
+                <p class="font-semibold">Seating</p>
+                <p class="text-sm">{{ selectedClient.seating ? 'Included' : 'Not included' }}</p>
+              </div>
+            </div>
+  
+            <div>
+              <div class="mb-3">
+                <p class="font-semibold">Food Options</p>
+                <div class="ml-2">
+                  <p class="text-sm">Welcome drink: {{ selectedClient.foodOptions.welcomeDrink ? 'Included' : 'Not included' }}</p>
+                  <p class="text-sm">Starters: {{ selectedClient.foodOptions.starters ? 'Included' : 'Not included' }}</p>
+                  <p class="text-sm">Main course: {{ selectedClient.foodOptions.mainCourse ? 'Included' : 'Not included' }}</p>
+                  <p class="text-sm">Dessert: {{ selectedClient.foodOptions.dessert ? 'Included' : 'Not included' }}</p>
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <p class="font-semibold">Decoration</p>
+                <p class="text-sm">{{ selectedClient.decoration ? 'Included' : 'Not included' }}</p>
+              </div>
+  
+              <div class="mb-3">
+                <p class="font-semibold">Sound & Entertainment</p>
+                <p class="text-sm">{{ selectedClient.sound ? 'Included' : 'Not included' }}</p>
+              </div>
+  
+              <div class="mb-3">
+                <p class="font-semibold">Photography</p>
+                <p class="text-sm">{{ selectedClient.photography ? 'Included' : 'Not included' }}</p>
+              </div>
+  
+              <div class="mb-3">
+                <p class="font-semibold">Contact Details</p>
+                <p>Email: {{ selectedClient.email }}</p>
+                <p>Phone: {{ selectedClient.phone }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="flex justify-end">
+        <button (click)="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Close</button>
+      </div>
+    </div>
+  </div>
