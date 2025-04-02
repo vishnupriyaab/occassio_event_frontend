@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ClientService } from '../../../core/services/employee/clientService/client.service';
 import { IClientData } from '../../../core/models/IUser';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
+import IToastOption from '../../../core/models/IToastOptions';
 
 @Component({
   selector: 'app-my-clients',
@@ -11,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class MyClientsComponent implements OnInit {
   private _clientService = inject(ClientService);
+  private _toastService = inject(ToastService);
   clients: IClientData[] = [];
   selectedClient: IClientData | null = null;
   isModalOpen = false;
@@ -24,7 +27,14 @@ export class MyClientsComponent implements OnInit {
       next: response => {
         this.clients = response.data;
       },
-      error: error => {},
+      error: error => {
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Failed to fetch clients.',
+        };
+        this._toastService.showToast(toastOption);
+      },
     });
   }
 

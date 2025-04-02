@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Employee } from '../../../core/models/IEmployee';
+import { Employee, ShowProfile } from '../../../core/models/IEmployee';
 import { ProfileService } from '../../../core/services/employee/profileService/profile.service';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { emailFormatValidator, mobileNumberValidator, noAllSpacesValidator, passwordMatchValidator } from '../../../shared/validator/formValidator';
+import IToastOption from '../../../core/models/IToastOptions';
 
 @Component({
   selector: 'app-e-dashboard',
@@ -13,7 +14,7 @@ import { emailFormatValidator, mobileNumberValidator, noAllSpacesValidator, pass
   styleUrl: './e-dashboard.component.css',
 })
 export class EDashboardComponent implements OnInit {
-  employeeProfile: Employee | undefined;
+  employeeProfile: ShowProfile | undefined;
   editForm!: FormGroup;
   imagePreview = 'employee.png';
   isProfileModalOpen = false;
@@ -52,7 +53,15 @@ export class EDashboardComponent implements OnInit {
           phone: this.employeeProfile?.phone,
         });
       },
-      error: error => console.error(error),
+      error: error => {
+        console.error(error);
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Failed to fetch Employee profile.',
+        };
+        this._toastService.showToast(toastOption);
+      },
     });
   }
 
@@ -85,21 +94,23 @@ export class EDashboardComponent implements OnInit {
       this._emplProfileService.updateProfileImage(formData).subscribe({
         next: response => {
           console.log(response, 'res');
-          this._toastService.showToast({
+          const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
-            detail: 'Profile picture updated successfully',
-          });
+            detail: 'Profile picture updated successfully.',
+          };
+          this._toastService.showToast(toastOption);
           this.loadProfile();
           this.isImgModalOpen = false;
           this.isProfileModalOpen = false;
         },
         error: error => {
-          this._toastService.showToast({
+          const toastOption: IToastOption = {
             severity: 'danger-toast',
             summary: 'Error',
-            detail: error.error.message || 'Failed to update profile picture',
-          });
+            detail: 'Failed to update profile picture.',
+          };
+          this._toastService.showToast(toastOption);
         },
       });
     }
@@ -111,20 +122,22 @@ export class EDashboardComponent implements OnInit {
       this._emplProfileService.updateProfile(formData).subscribe({
         next: response => {
           console.log(response, 'responseee');
-          this._toastService.showToast({
+          const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
-            detail: 'Profile updated successfully',
-          });
+            detail: 'Profile updated successfully.',
+          };
+          this._toastService.showToast(toastOption);
           this.loadProfile();
           this.isProfileModalOpen = false;
         },
         error: error => {
-          this._toastService.showToast({
+          const toastOption: IToastOption = {
             severity: 'danger-toast',
             summary: 'Error',
-            detail: error.error.message || 'Failed to update profile',
-          });
+            detail: 'Failed to update picture.',
+          };
+          this._toastService.showToast(toastOption);
         },
       });
     }

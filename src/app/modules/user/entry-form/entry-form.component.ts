@@ -15,6 +15,7 @@ import { ToastService } from '../../../core/services/common/toaster/toast.servic
 import { Router } from '@angular/router';
 import { PaymentService } from '../../../core/services/users/payment/payment.service';
 import { Subscription } from 'rxjs';
+import IToastOption from '../../../core/models/IToastOptions';
 
 @Component({
   selector: 'app-entry-form',
@@ -138,7 +139,7 @@ export class EntryFormComponent implements OnDestroy {
             const paymentSub = this._paymentService.entryPaymentLink(email, entryId).subscribe({
               next: response => {
                 console.log('Payment link sent:', response);
-                const toastOption = {
+                const toastOption: IToastOption = {
                   severity: 'success-toast',
                   summary: 'Success',
                   detail: 'Entry form submitted! Payment link sent.',
@@ -148,6 +149,12 @@ export class EntryFormComponent implements OnDestroy {
               },
               error: error => {
                 console.log(error, 'payment error');
+                const toastOption: IToastOption = {
+                  severity: 'danger-toast',
+                  summary: 'Error',
+                  detail: 'Failed to payment',
+                };
+                this._toastService.showToast(toastOption);
               },
             });
             this._subscription.add(paymentSub);

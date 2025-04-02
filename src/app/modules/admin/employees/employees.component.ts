@@ -219,15 +219,12 @@ export class EmployeesComponent implements OnDestroy, OnInit {
           const employeeIndex = this.filteredEmployees.findIndex(employee => employee._id === employeeId);
 
           if (employeeIndex !== -1) {
-            // Create a new array to ensure change detection works
             this.filteredEmployees = [
               ...this.filteredEmployees.slice(0, employeeIndex),
               { ...this.filteredEmployees[employeeIndex], isBlocked: updatedEmployee.isBlocked },
               ...this.filteredEmployees.slice(employeeIndex + 1),
             ];
           }
-
-          // Also update in the original employees array if it exists there
           const originalEmployeeIndex = this.employees.findIndex(employee => employee._id === employeeId);
           if (originalEmployeeIndex !== -1) {
             this.employees = [

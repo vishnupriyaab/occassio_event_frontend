@@ -3,6 +3,8 @@ import { SubscriptionService } from '../../../core/services/users/subscriptionUs
 import { IClientData } from '../../../core/models/IUser';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import IToastOption from '../../../core/models/IToastOptions';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 
 @Component({
   selector: 'app-subscription-details',
@@ -12,6 +14,7 @@ import { RouterModule } from '@angular/router';
 })
 export class SubscriptionDetailsComponent implements OnInit {
   private _subscriptionService = inject(SubscriptionService);
+  private _toastService = inject(ToastService);
   selectedClient: IClientData | null = null;
 
   ngOnInit(): void {
@@ -26,6 +29,12 @@ export class SubscriptionDetailsComponent implements OnInit {
       },
       error: error => {
         console.log(error);
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Failed to fetch user.',
+        };
+        this._toastService.showToast(toastOption);
       },
     });
   }

@@ -84,6 +84,12 @@ export class ResetPasswordComponent {
       );
     } else {
       console.log('form is invalid');
+      const toastOption: IToastOption = {
+        severity: 'danger-toast',
+        summary: 'Error',
+        detail: 'form is invalid.',
+      };
+      this._toastService.showToast(toastOption);
     }
   }
 

@@ -39,3 +39,19 @@ export interface FetchEmployeeResponse {
   totalEmployees: number;
   totalPages: number;
 }
+
+export interface ShowProfile {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  imageUrl: string;
+  isBlocked: boolean;
+  isVerified: boolean;
+  assignedUsers: string[];
+  password?: string;
+  assignedUsersCount: number;
+  resetPasswordToken: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
