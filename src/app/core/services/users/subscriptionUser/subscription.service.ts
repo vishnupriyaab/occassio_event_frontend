@@ -13,8 +13,7 @@ export class SubscriptionService {
 
   constructor(private _http: HttpClient) {}
 
-  fetchSubscribedUser():Observable<ApiResponse<IClientData>>{
-    return this._http.get<ApiResponse<IClientData>>(`${this._baseUrl}user/sub-details`,{});
+  fetchSubscribedUser(): Observable<ApiResponse<IClientData>> {
+    return this._http.get<ApiResponse<IClientData>>(`${this._baseUrl}user/sub-details`, {});
   }
-
 }

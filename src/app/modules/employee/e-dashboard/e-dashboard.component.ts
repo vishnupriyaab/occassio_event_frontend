@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Employee } from '../../../core/models/IEmployee';
 import { ProfileService } from '../../../core/services/employee/profileService/profile.service';
@@ -12,12 +12,12 @@ import { emailFormatValidator, mobileNumberValidator, noAllSpacesValidator, pass
   templateUrl: './e-dashboard.component.html',
   styleUrl: './e-dashboard.component.css',
 })
-export class EDashboardComponent {
+export class EDashboardComponent implements OnInit {
   employeeProfile: Employee | undefined;
   editForm!: FormGroup;
-  imagePreview: string = 'employee.png';
-  isProfileModalOpen: boolean = false;
-  isImgModalOpen: boolean = false;
+  imagePreview = 'employee.png';
+  isProfileModalOpen = false;
+  isImgModalOpen = false;
   selectedImage: File | null = null;
 
   private _emplProfileService = inject(ProfileService);

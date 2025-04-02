@@ -4,9 +4,8 @@ import IToastOption from '../../../core/models/IToastOptions';
 import { Subscription } from 'rxjs';
 import { ClientService } from '../../../core/services/admin/clientManagement/client.service';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
-import { IUser } from '../../../core/models/IUser';
+import { FetchClientData, IUser } from '../../../core/models/IUser';
 import { CommonModule } from '@angular/common';
-import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-clients',
@@ -22,7 +21,7 @@ export class ClientsComponent implements OnInit {
   private _toastService = inject(ToastService);
   currentFilter = 'all';
   searchTerm = '';
-  filteredClients: any[] = [];
+  filteredClients: FetchClientData[] = [];
   clients: IUser[] = [];
   currentPage = 1;
   itemsPerPage = 4;
@@ -35,13 +34,13 @@ export class ClientsComponent implements OnInit {
   }
 
   fetchUsers() {
-    const getUserSub = this._clientService.seacrhAndFilterEmpl('', this.currentFilter, this.currentPage, this.itemsPerPage).subscribe({
+    const getUserSub = this._clientService.seacrhAndFilterClient('', this.currentFilter, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
         console.log(response, 'response');
         if (response.data && response.data.users) {
           this.clients = response.data.users;
           this.filteredClients = [...this.clients];
-          this.totalItems = response.data.totalclients;
+          this.totalItems = response.data.totalUsers;
           this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         } else {
           this.clients = [];
@@ -73,12 +72,12 @@ export class ClientsComponent implements OnInit {
       this.currentPage = 1;
       return;
     }
-    const searchSub = this._clientService.seacrhAndFilterEmpl(searchTerm, this.currentFilter, this.currentPage, this.itemsPerPage).subscribe({
+    const searchSub = this._clientService.seacrhAndFilterClient(searchTerm, this.currentFilter, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
         console.log(response, 'Search results');
-        if (response.data && response.data.clients) {
-          this.filteredClients = response.data.clients;
-          this.totalItems = response.data.totalclients;
+        if (response.data && response.data.users) {
+          this.filteredClients = response.data.users;
+          this.totalItems = response.data.totalUsers;
           this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         } else {
           this.filteredClients = [];

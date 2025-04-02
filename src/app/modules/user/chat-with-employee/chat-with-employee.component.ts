@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-chat-with-employee',
   imports: [],
   templateUrl: './chat-with-employee.component.html',
-  styleUrl: './chat-with-employee.component.css'
+  styleUrl: './chat-with-employee.component.css',
 })
-export class ChatWithEmployeeComponent {
-
-}
+export class ChatWithEmployeeComponent {}

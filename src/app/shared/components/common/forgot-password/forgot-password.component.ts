@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { emailFormatValidator, noAllSpacesValidator } from '../../../validator/formValidator';
 import { ToastService } from '../../../../core/services/common/toaster/toast.service';
@@ -13,10 +13,10 @@ import { UserAuthService } from '../../../../core/services/users/authService/use
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm!: FormGroup;
   @Input() formType: 'user' | 'employee' | 'admin' = 'user';
-  @Input() showForgotPasswordModal: boolean = false;
+  @Input() showForgotPasswordModal = false;
   @Output() cancel = new EventEmitter<void>();
   @Output() otpTrigger = new EventEmitter<void>();
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, Subject } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { debounceTime, Subject } from 'rxjs';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
-export class SearchComponent {
+export class SearchComponent implements OnDestroy {
   private searchSubject = new Subject<string>();
 
   @Output() searchQuery = new EventEmitter<string>();
@@ -31,7 +31,7 @@ export class SearchComponent {
     this.filterChange.emit(this.selectedFilter);
   }
 
-  onInputChange(value: any): void {
+  onInputChange(value: string): void {
     this.searchSubject.next(value);
   }
 

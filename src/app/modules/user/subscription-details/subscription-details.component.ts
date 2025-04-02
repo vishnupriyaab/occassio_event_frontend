@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../../core/services/users/subscriptionUser/subscription.service';
-import { response } from 'express';
 import { IClientData } from '../../../core/models/IUser';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -23,7 +22,7 @@ export class SubscriptionDetailsComponent implements OnInit {
     this._subscriptionService.fetchSubscribedUser().subscribe({
       next: response => {
         console.log(response, 'response');
-        this.selectedClient = response.data
+        this.selectedClient = response.data;
       },
       error: error => {
         console.log(error);

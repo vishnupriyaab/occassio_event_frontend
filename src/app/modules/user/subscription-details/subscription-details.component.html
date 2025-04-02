@@ -1,75 +1,75 @@
 <div class="container min-h-screen bg-adLight">
-    <div class="flex py-2 px-10">
-        <!-- Left Side - Event Details -->
-        <div class="w-3/4 p-4 bg-adPrimary  shadow-lg">
-          <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl font-bold text-black">Event Details</h2>
-          </div>
-          
-          <div *ngIf="selectedClient as client" class="text-black mb-4">
-            <p class="text-lg font-semibold">{{ client.name }}'s Event: {{ client.eventName }}</p>
-            <p class="text-sm">{{ client.startDate }} to {{ client.endDate }}</p>
-            <div class="mt-4 bg-adLight p-4 rounded-lg shadow-lg">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p class="font-semibold mb-2">Expecting Guests: {{ client.guestCount }}</p>
-                  <div class="mb-4">
-                      <p class="font-semibold">Location:</p>
-                      <p class="text-sm"> {{ client.district }}, {{ client.state }}, {{ client.pincode }}</p>
-                  </div>
-                  <div class="mb-3">
-                    <p class="font-semibold">Venue</p>
-                    <p class="text-sm">{{ client.venue || '---' }}</p>
-                  </div>
-                  <div class="mb-3">
-                    <p class="font-semibold">Seating</p>
-                    <p class="text-sm">{{ client.seating ? 'Included' : 'Not included' }}</p>
-                  </div>
+  <div class="flex py-2 px-10">
+    <!-- Left Side - Event Details -->
+    <div class="w-3/4 p-4 bg-adPrimary shadow-lg">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-xl font-bold text-black">Event Details</h2>
+      </div>
+
+      <div *ngIf="selectedClient as client" class="text-black mb-4">
+        <p class="text-lg font-semibold">{{ client.name }}'s Event: {{ client.eventName }}</p>
+        <p class="text-sm">{{ client.startDate }} to {{ client.endDate }}</p>
+        <div class="mt-4 bg-adLight p-4 rounded-lg shadow-lg">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="font-semibold mb-2">Expecting Guests: {{ client.guestCount }}</p>
+              <div class="mb-4">
+                <p class="font-semibold">Location:</p>
+                <p class="text-sm">{{ client.district }}, {{ client.state }}, {{ client.pincode }}</p>
+              </div>
+              <div class="mb-3">
+                <p class="font-semibold">Venue</p>
+                <p class="text-sm">{{ client.venue || '---' }}</p>
+              </div>
+              <div class="mb-3">
+                <p class="font-semibold">Seating</p>
+                <p class="text-sm">{{ client.seating ? 'Included' : 'Not included' }}</p>
+              </div>
+            </div>
+
+            <div>
+              <div class="mb-3">
+                <p class="font-semibold">Food Options</p>
+                <div class="ml-2">
+                  <p class="text-sm">Welcome drink: {{ client.foodOptions.welcomeDrink ? 'Included' : 'Not included' }}</p>
+                  <p class="text-sm">Starters: {{ client.foodOptions.starters ? 'Included' : 'Not included' }}</p>
+                  <p class="text-sm">Main course: {{ client.foodOptions.mainCourse ? 'Included' : 'Not included' }}</p>
+                  <p class="text-sm">Dessert: {{ client.foodOptions.dessert ? 'Included' : 'Not included' }}</p>
                 </div>
-                
-                <div>
-                  <div class="mb-3">
-                    <p class="font-semibold">Food Options</p>
-                    <div class="ml-2">
-                      <p class="text-sm">Welcome drink: {{ client.foodOptions.welcomeDrink ? 'Included' : 'Not included' }}</p>
-                      <p class="text-sm">Starters: {{ client.foodOptions.starters ? 'Included' : 'Not included' }}</p>
-                      <p class="text-sm">Main course: {{ client.foodOptions.mainCourse ? 'Included' : 'Not included' }}</p>
-                      <p class="text-sm">Dessert: {{ client.foodOptions.dessert ? 'Included' : 'Not included' }}</p>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <p class="font-semibold">Decoration</p>
-                    <p class="text-sm">{{ client.decoration ? 'Included' : 'Not included' }}</p>
-                  </div>
-                  <div class="mb-3">
-                    <p class="font-semibold">Sound & Entertainment</p>
-                    <p class="text-sm">{{ client.sound ? 'Included' : 'Not included' }}</p>
-                  </div>
-                  <div class="mb-3">
-                    <p class="font-semibold">Photography</p>
-                    <p class="text-sm">{{ client.photography ? 'Included' : 'Not included' }}</p>
-                  </div>
-                  <div class="mb-3">
-                    <p class="font-semibold">Contact Details</p>
-                    <p>Email: {{ client.email }}</p>
-                    <p>Phone: {{ client.phone }}</p>
-                  </div>
-                </div>
+              </div>
+              <div class="mb-3">
+                <p class="font-semibold">Decoration</p>
+                <p class="text-sm">{{ client.decoration ? 'Included' : 'Not included' }}</p>
+              </div>
+              <div class="mb-3">
+                <p class="font-semibold">Sound & Entertainment</p>
+                <p class="text-sm">{{ client.sound ? 'Included' : 'Not included' }}</p>
+              </div>
+              <div class="mb-3">
+                <p class="font-semibold">Photography</p>
+                <p class="text-sm">{{ client.photography ? 'Included' : 'Not included' }}</p>
+              </div>
+              <div class="mb-3">
+                <p class="font-semibold">Contact Details</p>
+                <p>Email: {{ client.email }}</p>
+                <p>Phone: {{ client.phone }}</p>
               </div>
             </div>
           </div>
         </div>
-      
-        <!-- Right Side - Chat Preview -->
-        <div class="w-1/4 bg-gray-800 p-4 flex flex-col justify-between">
-          <div class="text-white text-center text-lg font-semibold mb-4">Chat Preview</div>
-          <div class="flex-grow flex items-center justify-center">
-            <p class="text-gray-300 text-sm text-center">(Chat interface preview here)</p>
-          </div>
-          <div class="text-center mt-4">
-            <p class="text-gray-400">Click the below button and use our employee's help to make your date perfectly</p>
-            <button class="bg-green-500 text-white px-4 py-2 rounded mt-2 hover:bg-green-600" [routerLink]="['/chat-with-employee']">Get Help</button>
-          </div>
-        </div>
       </div>
+    </div>
+
+    <!-- Right Side - Chat Preview -->
+    <div class="w-1/4 bg-gray-800 p-4 flex flex-col justify-between">
+      <div class="text-white text-center text-lg font-semibold mb-4">Chat Preview</div>
+      <div class="flex-grow flex items-center justify-center">
+        <p class="text-gray-300 text-sm text-center">(Chat interface preview here)</p>
+      </div>
+      <div class="text-center mt-4">
+        <p class="text-gray-400">Click the below button and use our employee's help to make your date perfectly</p>
+        <button class="bg-green-500 text-white px-4 py-2 rounded mt-2 hover:bg-green-600" [routerLink]="['/chat-with-employee']">Get Help</button>
+      </div>
+    </div>
+  </div>
 </div>

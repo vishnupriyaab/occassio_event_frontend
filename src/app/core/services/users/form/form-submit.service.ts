@@ -12,7 +12,6 @@ export class FormSubmitService {
   constructor(private _http: HttpClient) {}
 
   entryRegistration(entryRegData: EntryRegFormData): Observable<ApiResponse<string>> {
-    console.log(entryRegData, 'entryRegData');
     return this._http.post<ApiResponse<string>>(`${this._baseUrl}user/entry-reg`, entryRegData);
   }
 }

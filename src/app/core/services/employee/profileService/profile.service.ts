@@ -18,7 +18,6 @@ export class ProfileService {
     return this._http.put<any>(`${this._baseUrl}employee/updateProfile`, formData);
   }
   updateProfileImage(formData: FormData): Observable<any> {
-    console.log(formData, 'qwertyuio');
     return this._http.put(`${this._baseUrl}employee/profileImage`, formData);
   }
 }

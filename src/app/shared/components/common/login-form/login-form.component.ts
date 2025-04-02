@@ -54,10 +54,11 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
     authService?.login(email, password).subscribe(
       (response: any) => {
+        console.log(response, 'qwertyuio');
         console.log(response.data, 'wertyuiop');
         this.handleSuccess(response);
       },
-      (error: any) => {
+      (error: unknown) => {
         console.log(error, '1234567890');
         this.handleError(error);
       }

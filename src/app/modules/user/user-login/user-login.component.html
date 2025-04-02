@@ -1,13 +1,7 @@
 <div class="h-screen w-screen relative flex">
-  <img
-    src="bg.jpg"
-    alt="Background Image"
-    class="h-full w-full object-cover absolute z-0"
-  />
+  <img src="bg.jpg" alt="Background Image" class="h-full w-full object-cover absolute z-0" />
   <!-----left side----->
-  <div
-    class="bg-white bg-opacity-60 flex-1 flex items-center justify-center z-10"
-  >
+  <div class="bg-white bg-opacity-60 flex-1 flex items-center justify-center z-10">
     <div class="h-60 w-60 flex flex-col items-center justify-center">
       <img src="logo.png" alt="logo" class="h-24 w-auto" />
       <p class="text-6xl text-black font-kaushan">Occasio</p>
@@ -15,31 +9,19 @@
     </div>
   </div>
   <!-----right side----->
-  <div
-    class="bg-white bg-opacity-60 flex-1 flex items-center justify-center z-10"
-  >
+  <div class="bg-white bg-opacity-60 flex-1 flex items-center justify-center z-10">
     <div class="bg-white bg-opacity-60 h-[500px] w-[600px] m-20 rounded-lg">
-      <p
-        class="text-yellow-600 mt-12 mb-2 text-center text-4xl font-kaushan"
-      >
-        Make your Date Perfectly!
-      </p>
-      <div
-        class="bg-white bg-opacity-55 shadow-lg h-[350px] w-[430px] ml-20 mr-8 rounded-lg mt-6 pt-5"
-      >
-
-    @if(errorMessage){
-      <p class="text-center text-sm text-red-600 pb-1">{{errorMessage}}</p>
-    }
-      <div class="flex items-center justify-center">
-          <div id="google-btn">
+      <p class="text-yellow-600 mt-12 mb-2 text-center text-4xl font-kaushan">Make your Date Perfectly!</p>
+      <div class="bg-white bg-opacity-55 shadow-lg h-[350px] w-[430px] ml-20 mr-8 rounded-lg mt-6 pt-5">
+        @if (errorMessage) {
+          <p class="text-center text-sm text-red-600 pb-1">{{ errorMessage }}</p>
+        }
+        <div class="flex items-center justify-center">
+          <div id="google-btn"></div>
         </div>
-    </div>
         <div class="flex items-center my-4">
           <div class="flex-grow border-t border-gray-500"></div>
-          <span class="px-4 text-gray-500 text-sm font-normal"
-            >or continue with email</span
-          >
+          <span class="px-4 text-gray-500 text-sm font-normal">or continue with email</span>
           <div class="flex-grow border-t border-gray-500"></div>
         </div>
         <app-login-form [formType]="'user'"></app-login-form>

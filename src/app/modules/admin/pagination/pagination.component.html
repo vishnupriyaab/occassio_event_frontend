@@ -3,6 +3,7 @@
     <li>
       <button
         (click)="changePage(currentPage - 1)"
+        (keydown.enter)="changePage(currentPage - 1)"
         [disabled]="currentPage === 1"
         [ngClass]="{ 'cursor-pointer': currentPage !== 1, 'cursor-not-allowed': currentPage === 1 }"
         class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-adSecndary border border-gray-300 rounded-s-lg hover:bg-blue-200 hover:text-blue-900">
@@ -13,7 +14,7 @@
       </button>
     </li>
     @for (page of getPageNumbers(); track page) {
-      <li (click)="changePage(page)">
+      <li (click)="changePage(page)" (keydown.enter)="changePage(page)">
         <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-adSecndary border border-gray-300 cursor-pointer">
           {{ page }}
         </a>
@@ -22,6 +23,7 @@
     <li>
       <button
         (click)="changePage(currentPage + 1)"
+        (keydown.enter)="changePage(currentPage + 1)"
         [disabled]="currentPage === totalPages"
         [ngClass]="{ 'cursor-pointer': totalPages !== currentPage, 'cursor-not-allowed': totalPages === currentPage }"
         class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-adSecndary border border-gray-300 rounded-e-lg hover:bg-blue-200 hover:text-blue-900">

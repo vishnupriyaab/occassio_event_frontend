@@ -2690,11 +2690,7 @@ var Timer = class {
 };
 var swalStringParams = ['swal-title', 'swal-html', 'swal-footer'];
 var getTemplateParams = params => {
-  const template =
-    typeof params.template === 'string'
-      ? /** @type {HTMLTemplateElement} */
-        document.querySelector(params.template)
-      : params.template;
+  const template = typeof params.template === 'string' ? /** @type {HTMLTemplateElement} */ document.querySelector(params.template) : params.template;
   if (!template) {
     return {};
   }

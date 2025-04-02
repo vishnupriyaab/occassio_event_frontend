@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmployeeManagementService } from '../../../core/services/admin/employeeManagement/employee-management.service';
 import { Subscription } from 'rxjs';
-import { IEmployee } from '../../../core/models/IEmployee';
+import { FetchEmployeeData, IEmployee } from '../../../core/models/IEmployee';
 import { mobileNumberValidator, noAllSpacesValidator } from '../../../shared/validator/formValidator';
 import { SearchComponent } from '../search/search.component';
 import { PaginationComponent } from '../pagination/pagination.component';
@@ -29,7 +29,7 @@ export class EmployeesComponent implements OnDestroy, OnInit {
   employeeForm!: FormGroup;
 
   employees: IEmployee[] = [];
-  filteredEmployees: any[] = [];
+  filteredEmployees: FetchEmployeeData[] = [];
 
   currentFilter = 'all';
   searchTerm = '';
@@ -194,6 +194,7 @@ export class EmployeesComponent implements OnDestroy, OnInit {
           }
         },
         error: error => {
+          console.log(error, 'error');
           const toastOption: IToastOption = {
             severity: 'danger-toast',
             summary: 'Error',
@@ -271,7 +272,6 @@ export class EmployeesComponent implements OnDestroy, OnInit {
             if (this.filteredEmployees.length === 0 && this.currentPage > 1) {
               this.onPageChange(this.currentPage - 1);
             } else if (this.filteredEmployees.length < this.itemsPerPage && this.totalItems > 0) {
-              
               if ((this.currentPage - 1) * this.itemsPerPage + this.filteredEmployees.length < this.totalItems) {
                 this.onPageChange(this.currentPage);
               }

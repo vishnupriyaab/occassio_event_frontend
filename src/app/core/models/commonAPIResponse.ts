@@ -8,3 +8,8 @@ export interface ApiResponse<T> {
 export interface LogOut {
   message: string;
 }
+
+export interface Token {
+  _id: string;
+  role: string;
+}

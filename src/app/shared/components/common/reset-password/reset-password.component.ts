@@ -8,6 +8,7 @@ import { EmplAuthService } from '../../../../core/services/employee/authService/
 import { UserAuthService } from '../../../../core/services/users/authService/user-auth.service';
 import { passwordMatchValidator } from '../../../validator/formValidator';
 import IToastOption from '../../../../core/models/IToastOptions';
+import { Token } from '../../../../core/models/commonAPIResponse';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,7 +19,7 @@ import IToastOption from '../../../../core/models/IToastOptions';
 export class ResetPasswordComponent {
   resetPasswordForm!: FormGroup;
   private _token!: string;
-  decodedToken: any;
+  decodedToken: Token | undefined;
   private _toastService: ToastService = inject(ToastService);
   private _userAuthService: UserAuthService = inject(UserAuthService);
   private _employeeAuthService: EmplAuthService = inject(EmplAuthService);
@@ -33,7 +34,7 @@ export class ResetPasswordComponent {
     if (this._token) {
       try {
         this.decodedToken = jwtDecode(this._token);
-        console.log('Decoded Token:', this.decodedToken.role);
+        console.log('Decoded Token:', this.decodedToken?.role);
       } catch (error) {
         console.error('Invalid token', error);
       }
@@ -55,9 +56,9 @@ export class ResetPasswordComponent {
       console.log(this._token, 'tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
       console.log(this.decodedToken, '111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111');
 
-      const authService = this.decodedToken.role === 'user' ? this._userAuthService : this._employeeAuthService;
+      const authService = this.decodedToken?.role === 'user' ? this._userAuthService : this._employeeAuthService;
 
-      const redirectRoute = this.decodedToken.role === 'user' ? '/user-login' : '/employee-login';
+      const redirectRoute = this.decodedToken?.role === 'user' ? '/user-login' : '/employee-login';
 
       authService.resetPassword(newPassword, this._token).subscribe(
         response => {

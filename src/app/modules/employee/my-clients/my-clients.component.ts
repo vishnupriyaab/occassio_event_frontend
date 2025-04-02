@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ClientService } from '../../../core/services/employee/clientService/client.service';
-import { response } from 'express';
 import { IClientData } from '../../../core/models/IUser';
 import { CommonModule } from '@angular/common';
 
@@ -23,7 +22,6 @@ export class MyClientsComponent implements OnInit {
   fetchClients() {
     this._clientService.fetchClients().subscribe({
       next: response => {
-        console.log(response), 'responseeeeeeeeeeeeeee';
         this.clients = response.data;
       },
       error: error => {},
@@ -39,5 +37,4 @@ export class MyClientsComponent implements OnInit {
     this.isModalOpen = false;
     this.selectedClient = null;
   }
-
 }

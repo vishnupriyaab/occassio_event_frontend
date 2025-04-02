@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
   selector: 'app-subscription-home',
   imports: [RouterModule],
   templateUrl: './subscription-home.component.html',
-  styleUrl: './subscription-home.component.css'
+  styleUrl: './subscription-home.component.css',
 })
-export class SubscriptionHomeComponent {
-
-}
+export class SubscriptionHomeComponent {}
