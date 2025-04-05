@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer utilities {
+    .dark-scrollbar {
+      scrollbar-color: #4b5563 #171717;
+      scrollbar-width: thin;
+    }
+  
+    .dark-scrollbar::-webkit-scrollbar {
+      width: 3px;
+      opacity: 0;
+    }
+  
+    .dark-scrollbar:hover::-webkit-scrollbar {
+      opacity: 1;
+    }
+  
+    .dark-scrollbar::-webkit-scrollbar-track {
+      background: #171717;
+    }
+  
+    .dark-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #4b5563;
+      border-radius: 10px;
+    }
+  }
+  
