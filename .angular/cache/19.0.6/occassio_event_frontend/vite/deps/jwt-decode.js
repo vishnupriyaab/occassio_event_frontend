@@ -1,32 +1,31 @@
-import './chunk-3OV72XIM.js';
+import "./chunk-CX3I3NQG.js";
 
 // node_modules/jwt-decode/build/esm/index.js
-var InvalidTokenError = class extends Error {};
-InvalidTokenError.prototype.name = 'InvalidTokenError';
+var InvalidTokenError = class extends Error {
+};
+InvalidTokenError.prototype.name = "InvalidTokenError";
 function b64DecodeUnicode(str) {
-  return decodeURIComponent(
-    atob(str).replace(/(.)/g, (m, p) => {
-      let code = p.charCodeAt(0).toString(16).toUpperCase();
-      if (code.length < 2) {
-        code = '0' + code;
-      }
-      return '%' + code;
-    })
-  );
+  return decodeURIComponent(atob(str).replace(/(.)/g, (m, p) => {
+    let code = p.charCodeAt(0).toString(16).toUpperCase();
+    if (code.length < 2) {
+      code = "0" + code;
+    }
+    return "%" + code;
+  }));
 }
 function base64UrlDecode(str) {
-  let output = str.replace(/-/g, '+').replace(/_/g, '/');
+  let output = str.replace(/-/g, "+").replace(/_/g, "/");
   switch (output.length % 4) {
     case 0:
       break;
     case 2:
-      output += '==';
+      output += "==";
       break;
     case 3:
-      output += '=';
+      output += "=";
       break;
     default:
-      throw new Error('base64 string is not of the correct length');
+      throw new Error("base64 string is not of the correct length");
   }
   try {
     return b64DecodeUnicode(output);
@@ -35,13 +34,13 @@ function base64UrlDecode(str) {
   }
 }
 function jwtDecode(token, options) {
-  if (typeof token !== 'string') {
-    throw new InvalidTokenError('Invalid token specified: must be a string');
+  if (typeof token !== "string") {
+    throw new InvalidTokenError("Invalid token specified: must be a string");
   }
   options || (options = {});
   const pos = options.header === true ? 0 : 1;
-  const part = token.split('.')[pos];
-  if (typeof part !== 'string') {
+  const part = token.split(".")[pos];
+  if (typeof part !== "string") {
     throw new InvalidTokenError(`Invalid token specified: missing part #${pos + 1}`);
   }
   let decoded;
@@ -56,5 +55,8 @@ function jwtDecode(token, options) {
     throw new InvalidTokenError(`Invalid token specified: invalid json for part #${pos + 1} (${e.message})`);
   }
 }
-export { InvalidTokenError, jwtDecode };
+export {
+  InvalidTokenError,
+  jwtDecode
+};
 //# sourceMappingURL=jwt-decode.js.map

@@ -31,109 +31,33 @@
         </div>
         <span class="text-[10px] text-gray-300 whitespace-nowrap">10:28 AM</span>
       </div>
-      <div class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white">
-        <div class="flex items-center gap-3">
-          <img src="img_2.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-          <div class="flex flex-col">
-            <span class="font-semibold text-sm">Ann</span>
-            <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span>recent message</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">10:28 AM</span>
-      </div>
-      <div class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white">
-        <div class="flex items-center gap-3">
-          <img src="img_3.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-          <div class="flex flex-col">
-            <span class="font-semibold text-sm">Ann</span>
-            <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span>recent message</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">10:28 AM</span>
-      </div>
-      <div class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white">
-        <div class="flex items-center gap-3">
-          <img src="img_4.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-          <div class="flex flex-col">
-            <span class="font-semibold text-sm">Ann</span>
-            <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span>recent message</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">10:28 AM</span>
-      </div>
-      <div class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white">
-        <div class="flex items-center gap-3">
-          <img src="img_5.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-          <div class="flex flex-col">
-            <span class="font-semibold text-sm">Ann</span>
-            <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span>recent message</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">10:28 AM</span>
-      </div>
-      <div class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white">
-        <div class="flex items-center gap-3">
-          <img src="img_6.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-          <div class="flex flex-col">
-            <span class="font-semibold text-sm">Ann</span>
-            <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span>recent message</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">10:28 AM</span>
-      </div>
-      <div class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white">
-        <div class="flex items-center gap-3">
-          <img src="img_7.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-          <div class="flex flex-col">
-            <span class="font-semibold text-sm">Ann</span>
-            <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span>recent message</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">10:28 AM</span>
-      </div>
-      <div class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white">
-        <div class="flex items-center gap-3">
-          <img src="img_8.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-          <div class="flex flex-col">
-            <span class="font-semibold text-sm">Ann</span>
-            <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span>recent message</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">10:28 AM</span>
-      </div>
     </div>
   </div>
 
   <div class="flex h-screen w-full bg-neutral-900 text-white">
-    <!-- Sidebar stays the same -->
     <div class="flex flex-col flex-1 relative">
       <div class="bg-black px-4 py-3 flex items-center gap-4">
         <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
         <div class="flex flex-col">
-          <h2 class="font-semibold text-white">Ann Emmanuel <span class="text-gray-300 text-sm">( 19/04/2024 )</span></h2>
-          <p class="text-sm text-gray-400">typing...</p>
+          <h2 class="font-semibold text-white">Occasio Support<span class="text-gray-300 text-sm">( Online )</span></h2>
+          <p class="text-sm text-gray-400">How can we help you today?</p>
         </div>
       </div>
 
-      <div class="flex-1 relative overflow-y-auto">
+      <div #messageContainer class="flex-1 relative overflow-y-auto">
         <img src="chatbg_1.jpg" alt="Chat Background" class="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none" />
         <div class="relative z-10 p-4 space-y-2">
           <!-- <p class="text-white">Sample message 1</p> -->
           <!-- <p class="text-white">Sample message 2</p> -->
+          <!-- Chat messages -->
+          <div *ngFor="let m of selectedConversation?.messages" class="flex mb-4" [ngClass]="{ 'justify-end': isEmplMessage(m), 'justify-start': !isEmplMessage(m) }">
+            <div
+              class="rounded-lg p-3 shadow-md max-w-xs lg:max-w-md"
+              [ngClass]="{ 'bg-white text-black': isEmplMessage(m), 'bg-neutral-800 text-white': !isEmplMessage(m) }">
+              <p>{{ m.message }}</p>
+              <p class="text-xs mt-1 opacity-75">{{ m.timestamp | date: 'short' }}</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -146,10 +70,11 @@
         </button> -->
         <input
           type="text"
-          [(ngModel)]="message"
-          placeholder="Type a Message"
+          [(ngModel)]="newMessage"
+          placeholder="Type a Message..."
+          (keydown.enter)="sendMessage()"
           class="flex-1 bg-neutral-800 text-white rounded-full px-4 py-1 focus:outline-none" />
-        <button *ngIf="message?.trim()" class="bg-white hover:bg-neutral-300 text-black h-8 w-8 rounded-full transition" (click)="sendMessage()">
+        <button *ngIf="newMessage?.trim()" class="bg-white hover:bg-neutral-300 text-black h-8 w-8 rounded-full transition" (click)="sendMessage()">
           <i class="fa-solid fa-paper-plane"></i>
         </button>
       </div>
