@@ -3,6 +3,9 @@ import { AfterViewChecked, Component, ElementRef, inject, OnInit, ViewChild } fr
 import { FormsModule } from '@angular/forms';
 import { ChatService } from '../../../core/services/common/chat/chat.service';
 import { IChatMessage } from '../../../core/models/IChat';
+import { CookieService } from 'ngx-cookie-service';
+import { Token } from '../../../core/models/commonAPIResponse';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-chat-with-employee',
@@ -18,8 +21,24 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked {
   chat: IChatMessage[] = [];
   messages: IChatMessage[] = [];
   conversationId!: string;
+  userId: string | undefined;
+  token: string = '';
+  decodedToken: Token | undefined;
+
+  constructor(private cookieService: CookieService) {}
 
   ngOnInit() {
+    this.token = this.cookieService.get('refresh_token');
+    console.log('Refresh Token:', this.userId);
+    if (this.token) {
+      this.decodedToken = jwtDecode(this.token);
+      console.log('Decoded Token:', this.decodedToken);
+      this.userId = this.decodedToken?.id;
+      console.log(this.userId, '000000000');
+    } else {
+      console.log('Unavailable token!');
+    }
+    console.log('Refresh Token:', this.token);
     this.chatService.connect();
 
     this.chatService.getEmployeeMessages().subscribe((data: IChatMessage) => {
@@ -32,6 +51,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked {
 
   getChats() {
     this.chatService.getChats().subscribe(chat => {
+      console.log(chat, '----');
       this.chat = chat;
     });
   }
@@ -54,7 +74,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked {
         timestamp: new Date(),
       };
       console.log(this.conversationId, message, 'vishnu');
-      this.chatService.sendMessageToEmployee(this.conversationId, message).subscribe();
+      this.chatService.sendMessageToEmployee(this.userId, this.conversationId, message).subscribe();
       this.messages.push(message);
       this.message = '';
     }

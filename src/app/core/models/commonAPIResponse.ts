@@ -10,6 +10,6 @@ export interface LogOut {
 }
 
 export interface Token {
-  _id: string;
+  id: string;
   role: string;
 }

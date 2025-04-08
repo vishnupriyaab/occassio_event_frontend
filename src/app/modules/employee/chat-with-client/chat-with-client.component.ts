@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IChatMessage, IConversation, IConversationwithUser } from '../../../core/models/IChat';
+import { IChatMessage, IConversationwithUser } from '../../../core/models/IChat';
 import { ChatService } from '../../../core/services/common/chat/chat.service';
+import { CookieService } from 'ngx-cookie-service';
+import { jwtDecode } from 'jwt-decode';
+import { Token } from '../../../core/models/commonAPIResponse';
 
 @Component({
   selector: 'app-chat-with-client',
@@ -16,17 +19,34 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
   conversations: IConversationwithUser[] = [];
   selectedConversation: IConversationwithUser | null = null;
   newMessage: string = '';
-  currentUser: string = 'admin';
-  defaultImageUrl!: string;
+  // currentUser: string = 'admin';
+  // defaultImageUrl!: string;
+  employeeId: string | undefined ;
+  token: string = '';
+  decodedToken: Token | undefined;
 
-  constructor(private _chatService: ChatService) {}
+  constructor(
+    private _chatService: ChatService,
+    private cookieService: CookieService
+  ) {}
 
   ngOnInit() {
+    // const accessToken = this.cookieService.get('access_token');
+    this.token = this.cookieService.get('refresh_token');
+    if (this.token) {
+      this.decodedToken = jwtDecode(this.token);
+      console.log('Decoded Token:', this.decodedToken);
+      this.employeeId = this.decodedToken?.id
+      console.log(this.employeeId,"000000000")
+    }else{
+      console.log("Unavailable token!")
+    }
+    // console.log('Access Token:', accessToken);
+    console.log('Refresh Token:', this.token);
+    this._chatService.connect();
     this.getConversations();
-    this._chatService.connect()
-    this.getEmplChatMessage();
+    this.getEmplChatMessage(); 
   }
-  
 
   ngAfterViewChecked() {
     this.scrollToBottom();
@@ -34,63 +54,62 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
 
   getConversations() {
     this._chatService.getConversationData().subscribe(conversations => {
-      this.conversations = conversations;
+      this.conversations = conversations.data;
       console.log(conversations, 'conversation');
-      
+      if (this.conversations.length > 0 && !this.selectedConversation) {
+        this.selectConversation(this.conversations[0]);
+      }
     });
   }
 
   getEmplChatMessage() {
     this._chatService.getEmployeeMessages().subscribe((data: any) => {
-      const newmess = this.conversations.map((res) => {
-        console.log(newmess,"newmess");
+      const updatedConversations  = this.conversations.map(res => {
+        console.log(updatedConversations , 'newmess');
         if (res.conversationid == data.conversationId) {
-          res.messages.push(data)
+          res.messages.push(data);
         }
-        return res
-      })
-      this.conversations = [...newmess]
-
+        return res;
+      });
+      this.conversations = [...updatedConversations ];
     });
   }
 
-
-  selectConversation(convo: IConversationwithUser): void {
-    this.selectedConversation = convo;
+  selectConversation(conversation: IConversationwithUser): void {
+    this.selectedConversation = conversation;
+    console.log(this.selectedConversation,"1234567")
     setTimeout(() => this.scrollToBottom(), 0);
   }
 
   sendMessage() {
-    if (this.selectedConversation && this.newMessage.trim()) {
+    console.log(this.selectedConversation, this.newMessage,this.employeeId,"00000000000") //here ehy i didnt got employeeId?
+    if (this.selectedConversation && this.newMessage.trim() && this.employeeId) {
       const message: IChatMessage = {
-        user: this.currentUser,
+        user: this.employeeId,
         message: this.newMessage,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
       this.selectedConversation.messages.push(message);
 
-      this._chatService.sendMessageToEmployee(this.selectedConversation.conversationid, message).subscribe(
+      this._chatService.sendMessageToEmployee(this.employeeId, this.selectedConversation.conversationid, message).subscribe(
         response => {
           if (this.selectedConversation) {
-
-            this.selectedConversation.messages.push(message);
-            console.log('fdjwksaljl');
-
+            this.selectedConversation?.messages.push(message);
+            console.log('fdjwksaljl',response);
           }
-
         },
         error => console.error('Error sending message:', error)
       );
 
       this.newMessage = '';
-      this.scrollToBottom()
+      this.scrollToBottom();
     }
   }
 
   scrollToBottom(): void {
     try {
       this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+    } catch (err) {}
   }
 
   // getImageUrl(user: IUser): string {
@@ -100,6 +119,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
   // }
 
   isEmplMessage(message: IChatMessage): boolean {
-    return message.user === this.currentUser;
+    return message.user === this.employeeId;
   }
 }

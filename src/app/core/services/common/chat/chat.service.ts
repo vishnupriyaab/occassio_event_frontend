@@ -19,33 +19,53 @@ export class ChatService {
     this._socket.connect();
   }
 
-  joinConversation(conversationId: string): Observable<{ status: string; conversation: IConversation }> {
+  joinConversation(activeConversationId: string): Observable<{ status: string; conversation: IConversation }> {
     return new Observable(observer => {
-      this._socket.emit('join-conversation', { conversationId }, (response: { status: string; conversation: IConversation }) => {
-        observer.next(response);
-        observer.complete();
-      });
+      this._socket.emit(
+        'join-conversation',
+        { conversationId: activeConversationId },
+        (response: { status: string; conversation: IConversation }) => {
+          observer.next(response);
+          observer.complete();
+        }
+      );
     });
   }
 
   // Send a new message
-  sendMessageToUser(conversationId: string, message: IChatMessage): Observable<{ status: string; message: IChatMessage }> {
+  sendMessageToUser(
+    currentEmployeeId: string,
+    activeConversationId: string,
+    message: IChatMessage
+  ): Observable<{ status: string; message: IChatMessage }> {
     return new Observable(observer => {
-      console.log("employeeeeeeeeeee")
-      this._socket.emit('employee-message', { conversationId, ...message }, (response: { status: string; message: IChatMessage }) => {
-        observer.next(response);
-        observer.complete();
-      });
+      console.log('employeeeeeeeeeee');
+      this._socket.emit(
+        'employee-message',
+        { employeeId: currentEmployeeId, conversationId: activeConversationId, message: message.message },
+        (response: { status: string; message: IChatMessage }) => {
+          observer.next(response);
+          observer.complete();
+        }
+      );
     });
   }
 
-  sendMessageToEmployee(conversationId: string, message: IChatMessage): Observable<{ status: string; message: IChatMessage }> {
+  sendMessageToEmployee(
+    currentEmplId: string | undefined,
+    activeConversationId: string,
+    message: IChatMessage
+  ): Observable<{ status: string; message: IChatMessage }> {
     return new Observable(observer => {
-      console.log( conversationId,'usersssssssssssss', message)
-      this._socket.emit('user-message', { conversationId, ...message }, (response: { status: string; message: IChatMessage }) => {
-        observer.next(response);
-        observer.complete();
-      });
+      console.log(activeConversationId, 'usersssssssssssss', message);
+      this._socket.emit(
+        'user-message',
+        { userId: currentEmplId, conversationId: activeConversationId, message: message.message },
+        (response: { status: string; message: IChatMessage }) => {
+          observer.next(response);
+          observer.complete();
+        }
+      );
     });
   }
 
@@ -66,8 +86,8 @@ export class ChatService {
     return this._http.get<IConversation>(`${this._baseUrl}chat/conversation`);
   }
 
-  getConversationData(): Observable<IConversationwithUser[]> {
-    return this._http.get<IConversationwithUser[]>(`${this._baseUrl}chat/getconversationdata`);
+  getConversationData(): Observable<ApiResponse<IConversationwithUser[]>> {
+    return this._http.get<ApiResponse<IConversationwithUser[]>>(`${this._baseUrl}chat/getconversationdata`);
   }
 
   getEmployeeMessages(): Observable<IChatMessage> {

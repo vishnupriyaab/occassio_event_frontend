@@ -7,7 +7,7 @@ export interface Conversation {
 }
 
 export interface IChatMessage {
-  user: string; 
+  user: string | undefined; 
   message: string;
   timestamp?: Date;
 }

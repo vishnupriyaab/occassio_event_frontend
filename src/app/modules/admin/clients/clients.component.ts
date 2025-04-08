@@ -135,7 +135,7 @@ export class ClientsComponent implements OnInit {
           const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
-            detail: `User ${response.data.isBlocked ? 'unblocked' : 'blocked'} successfully!`,
+            detail: `User ${response.data.isBlocked ? 'blocked' : 'unblocked'} successfully!`,
           };
           this._toastService.showToast(toastOption);
           // this.fetchUsers();
