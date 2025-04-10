@@ -29,20 +29,15 @@
           'bg-neutral-900 hover:bg-neutral-800': selectedConversation?.conversationid !== conversation.conversationid,
         }">
         <div class="flex items-center gap-3">
-          <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover"/>
+          <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
           <div class="flex flex-col">
             <span class="font-semibold text-sm">Ann</span>
             <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span
-                >{{ conversation.messages[conversation.messages.length - 1].message | slice: 0 : 15
-                }}{{ conversation.messages[conversation.messages.length - 1].message.length > 15 ? '...' : '' }}</span
-              >
+              <span>dummy</span>
             </div>
           </div>
         </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">{{
-          conversation.messages[conversation.messages.length - 1].timestamp | date: 'shortTime'
-        }}</span>
+        <span class="text-[10px] text-gray-300 whitespace-nowrap">11:12Am</span>
       </div>
     </div>
   </div>
@@ -50,8 +45,8 @@
   <!-- Main content area (will resize) -->
   <div class="flex-1 relative">
     <!-- Chat container -->
-    <div 
-      class="flex flex-col h-full bg-neutral-900 text-white transition-all duration-300 ease-in-out" 
+    <div
+      class="flex flex-col h-full bg-neutral-900 text-white transition-all duration-300 ease-in-out"
       [style.width]="isNoteVisible ? 'calc(100% - 50%)' : '100%'">
       <div class="bg-black px-4 py-3 flex items-center gap-4 justify-between">
         <div class="flex items-center gap-4">
@@ -66,11 +61,11 @@
         </button>
       </div>
 
-      <div #messageContainer class="flex-1 relative overflow-y-auto dark-scrollbar">
+      <div #chatContainer class="flex-1 relative overflow-y-auto dark-scrollbar">
         <img src="chatbg_1.jpg" alt="Chat Background" class="inset-0 w-full h-full object-cover opacity-5 pointer-events-none sticky" />
         <div class="relative z-10 p-4 space-y-2">
           <div
-            *ngFor="let m of selectedConversation?.messages"
+            *ngFor="let m of messages"
             class="flex mb-4"
             [ngClass]="{ 'justify-end': isEmplMessage(m), 'justify-start': !isEmplMessage(m) }">
             <div
@@ -99,15 +94,21 @@
         </button>
       </div>
     </div>
-    
+
     <!-- Note Panel -->
-    <div 
+    <div
       class="absolute top-0 right-0 h-screen overflow-hidden bg-black text-white w-1/2 shadow-xl transform transition-transform duration-300 ease-in-out"
-      [ngClass]="{'translate-x-0 ': isNoteVisible, 'translate-x-full hidden': !isNoteVisible}">
-      <div class="bg-baseYellow text-white p-4 font-bold text-center rounded-t-3xl">
-        Note
-      </div>
-        <textarea name="note" class="bg-black text-white h-screen w-full font-Roboto text-sm p-3" style="background-image: linear-gradient(to bottom, transparent, transparent 19px, rgb(32, 32, 32) 19px, rgb(70, 71, 72) 40px); background-size: 100% 20px; line-height: 20px; padding-top: 0;"></textarea>
-      </div>
+      [ngClass]="{ 'translate-x-0 ': isNoteVisible, 'translate-x-full hidden': !isNoteVisible }">
+      <div class="bg-baseYellow text-white p-4 font-bold text-center rounded-t-3xl">Note</div>
+      <textarea
+        name="note"
+        class="bg-black text-white h-screen w-full font-Roboto text-sm p-3"
+        style="
+          background-image: linear-gradient(to bottom, transparent, transparent 19px, rgb(32, 32, 32) 19px, rgb(70, 71, 72) 40px);
+          background-size: 100% 20px;
+          line-height: 20px;
+          padding-top: 0;
+        "></textarea>
+    </div>
   </div>
-</div> 
+</div>

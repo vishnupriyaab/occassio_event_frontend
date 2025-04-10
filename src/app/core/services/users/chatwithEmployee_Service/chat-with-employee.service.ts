@@ -79,7 +79,7 @@ export class ChatWithEmployeeService {
 
   getEmployeeMessages(): Observable<IChatMessage> {
     return new Observable(observer => {
-      this._socket.on('userMessage', (employeeMessage: IChatMessage) => {
+      this._socket.on('employeeMessage', (employeeMessage: IChatMessage) => {
         observer.next(employeeMessage);
       });
     });

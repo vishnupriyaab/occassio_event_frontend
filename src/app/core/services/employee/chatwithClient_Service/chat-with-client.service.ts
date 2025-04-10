@@ -31,6 +31,18 @@ export class ChatWithClientService {
       );
     });
   }
+  exitConversation(activeConversationId: string): Observable<{ status: string; conversation: IConversation }> {
+    return new Observable(observer => {
+      this._socket.emit(
+        'exit-conversation',
+        { conversationId: activeConversationId },
+        (response: { status: string; conversation: IConversation }) => {
+          observer.next(response);
+          observer.complete();
+        }
+      );
+    });
+  }
   
   sendMessageToEmployee(
     currentEmplId: string | undefined,
@@ -50,7 +62,7 @@ export class ChatWithClientService {
     });
   }
 
-  getEmployeeMessages(): Observable<IChatMessage> {
+  getUserMessages(): Observable<IChatMessage> {
     return new Observable(observer => {
       this._socket.on('userMessage', (employeeMessage: IChatMessage) => {
         observer.next(employeeMessage);
@@ -62,8 +74,10 @@ export class ChatWithClientService {
     return this._http.get<IChatMessage[]>(`${this._baseUrl}employee/getchats`);
   }
 
-  getConversationId(): Observable<IConversation> {
-    return this._http.get<IConversation>(`${this._baseUrl}employee/conversation`);
+  ///
+  getConversationId(conversationId:string): Observable<IConversation> {
+    console.log("11")
+    return this._http.get<IConversation>(`${this._baseUrl}employee/conversation/${conversationId}`);
   }
 
   getConversationData(): Observable<ApiResponse<IConversationwithUser[]>> {

@@ -20,40 +20,43 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
   selectedConversation: IConversationwithUser | null = null;
   newMessage: string = '';
   // defaultImageUrl!: string;
-  employeeId: string | undefined ;
+  employeeId: string | undefined;
   token: string = '';
   decodedToken: Token | undefined;
   isNoteVisible = false;
-  
-  
+  messages: IChatMessage[] = [];
+
   constructor(
     private _chatService: ChatWithClientService,
     private cookieService: CookieService
   ) {}
-  
+
   ngOnInit() {
     // const accessToken = this.cookieService.get('access_token');
     this.token = this.cookieService.get('refresh_token');
     if (this.token) {
       this.decodedToken = jwtDecode(this.token);
       console.log('Decoded Token:', this.decodedToken);
-      this.employeeId = this.decodedToken?.id
-      console.log(this.employeeId,"000000000")
-    }else{
-      console.log("Unavailable token!")
+      this.employeeId = this.decodedToken?.id;
+      console.log(this.employeeId, '000000000');
+    } else {
+      console.log('Unavailable token!');
     }
-    // console.log('Access Token:', accessToken);
     console.log('Refresh Token:', this.token);
     this._chatService.connect();
+    this._chatService.getUserMessages().subscribe((data: IChatMessage) => {
+      this.messages.push(data);
+      setTimeout(() => this.scrollToBottom(), 0);
+    });
     this.getConversations();
-    this.getEmplChatMessage(); 
+    // this.getEmplChatMessage();
   }
-  
+
   //note
   toggleNotePanel() {
     this.isNoteVisible = !this.isNoteVisible;
   }
-  
+
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
@@ -68,27 +71,41 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  getEmplChatMessage() {
-    this._chatService.getEmployeeMessages().subscribe((data: any) => {
-      const updatedConversations  = this.conversations.map(res => {
-        console.log(updatedConversations , 'newmess');
-        if (res.conversationid == data.conversationId) {
-          res.messages.push(data);
-        }
-        return res;
-      });
-      this.conversations = [...updatedConversations ];
+  // getEmplChatMessage() {
+  //   this._chatService.getEmployeeMessages().subscribe((data: any) => {
+  //     const updatedConversations  = this.conversations.map(res => {
+  //       console.log(updatedConversations , 'newmess');
+  //       if (res.conversationid == data.conversationId) {
+  //         res.messages.push(data);
+  //       }
+  //       return res;
+  //     });
+  //     this.conversations = [...updatedConversations ];
+  //   });
+  // }
+
+  selectConversation(conversation: IConversationwithUser): void {
+    if (this.selectedConversation) {
+      this._chatService.exitConversation(this.selectedConversation.conversationid).subscribe();
+    }
+    this.selectedConversation = conversation;
+    console.log(this.selectedConversation, '1234567');
+    this.getConversationId(this.selectedConversation.conversationid);
+  }
+
+  getConversationId(conversationId: string) {
+    console.log()
+    this._chatService.getConversationId(conversationId).subscribe((response: any) => {
+      console.log(response, '222222222');
+      this.messages = response.data.chatMessages
+      console.log(this.messages,"messaessssssss")
+      this._chatService.joinConversation(conversationId).subscribe();
+      setTimeout(() => this.scrollToBottom(), 0);
     });
   }
 
-  selectConversation(conversation: IConversationwithUser): void {
-    this.selectedConversation = conversation;
-    console.log(this.selectedConversation,"1234567")
-    setTimeout(() => this.scrollToBottom(), 0);
-  }
-
   sendMessage() {
-    console.log(this.selectedConversation, this.newMessage,this.employeeId,"00000000000") //here ehy i didnt got employeeId?
+    console.log(this.selectedConversation, this.newMessage, this.employeeId, '00000000000'); //here ehy i didnt got employeeId?
     if (this.selectedConversation && this.newMessage.trim() && this.employeeId) {
       const message: IChatMessage = {
         user: this.employeeId,
@@ -101,7 +118,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
         response => {
           if (this.selectedConversation) {
             this.selectedConversation?.messages.push(message);
-            console.log('fdjwksaljl',response);
+            console.log('fdjwksaljl', response);
           }
         },
         error => console.error('Error sending message:', error)
