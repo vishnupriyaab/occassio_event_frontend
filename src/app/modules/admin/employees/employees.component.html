@@ -110,14 +110,14 @@
               @if (employee.isBlocked) {
                 <button
                   (click)="blockStatus(employee._id!, employee.isBlocked!)"
-                  class="bg-red-500 hover:bg-red-600 text-white text-xs md:text-sm py-1 px-1 md:px-3 rounded-full">
-                  <i class="fa-solid fa-ban"></i>
+                  class="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm py-1 px-1 md:px-3 rounded-full">
+                  <i class="fa-solid fa-unlock"></i>
                 </button>
               } @else {
                 <button
-                  (click)="blockStatus(employee._id!, employee.isBlocked!)"
-                  class="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm py-1 px-1 md:px-3 rounded-full">
-                  <i class="fa-solid fa-unlock"></i>
+                (click)="blockStatus(employee._id!, employee.isBlocked!)"
+                class="bg-red-500 hover:bg-red-600 text-white text-xs md:text-sm py-1 px-1 md:px-3 rounded-full">
+                <i class="fa-solid fa-ban"></i>
                 </button>
               }
               <!-------- Delete -------->

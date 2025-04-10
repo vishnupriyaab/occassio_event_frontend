@@ -237,7 +237,7 @@ export class EmployeesComponent implements OnDestroy, OnInit {
           const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
-            detail: `Employee ${response.data.isBlocked ? 'unblocked' : 'blocked'} successfully!`,
+            detail: `Employee ${response.data.isBlocked ? 'blocked' : 'unblocked'} successfully!`,
           };
           this._toastService.showToast(toastOption);
         }

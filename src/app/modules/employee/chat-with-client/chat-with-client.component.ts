@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IChatMessage, IConversationwithUser } from '../../../core/models/IChat';
-import { ChatService } from '../../../core/services/common/chat/chat.service';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { Token } from '../../../core/models/commonAPIResponse';
+import { ChatWithClientService } from '../../../core/services/employee/chatwithClient_Service/chat-with-client.service';
 
 @Component({
   selector: 'app-chat-with-client',
@@ -19,17 +19,18 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
   conversations: IConversationwithUser[] = [];
   selectedConversation: IConversationwithUser | null = null;
   newMessage: string = '';
-  // currentUser: string = 'admin';
   // defaultImageUrl!: string;
   employeeId: string | undefined ;
   token: string = '';
   decodedToken: Token | undefined;
-
+  isNoteVisible = false;
+  
+  
   constructor(
-    private _chatService: ChatService,
+    private _chatService: ChatWithClientService,
     private cookieService: CookieService
   ) {}
-
+  
   ngOnInit() {
     // const accessToken = this.cookieService.get('access_token');
     this.token = this.cookieService.get('refresh_token');
@@ -47,7 +48,12 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
     this.getConversations();
     this.getEmplChatMessage(); 
   }
-
+  
+  //note
+  toggleNotePanel() {
+    this.isNoteVisible = !this.isNoteVisible;
+  }
+  
   ngAfterViewChecked() {
     this.scrollToBottom();
   }

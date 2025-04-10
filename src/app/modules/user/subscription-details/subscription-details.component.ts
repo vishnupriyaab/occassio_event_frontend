@@ -16,6 +16,8 @@ export class SubscriptionDetailsComponent implements OnInit {
   private _subscriptionService = inject(SubscriptionService);
   private _toastService = inject(ToastService);
   selectedClient: IClientData | null = null;
+  token: string = '';
+  access_token: string = '';
 
   ngOnInit(): void {
     this.fetchSubClientData();

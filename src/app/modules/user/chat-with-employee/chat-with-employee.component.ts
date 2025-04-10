@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ChatService } from '../../../core/services/common/chat/chat.service';
 import { IChatMessage } from '../../../core/models/IChat';
 import { CookieService } from 'ngx-cookie-service';
 import { Token } from '../../../core/models/commonAPIResponse';
 import { jwtDecode } from 'jwt-decode';
+import { ChatWithEmployeeService } from '../../../core/services/users/chatwithEmployee_Service/chat-with-employee.service';
 
 @Component({
   selector: 'app-chat-with-employee',
@@ -15,7 +15,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
-  private chatService = inject(ChatService);
+  private chatService = inject(ChatWithEmployeeService);
 
   message: string = '';
   chat: IChatMessage[] = [];
@@ -23,13 +23,16 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked {
   conversationId!: string;
   userId: string | undefined;
   token: string = '';
+  access_token: string = '';
   decodedToken: Token | undefined;
 
   constructor(private cookieService: CookieService) {}
 
   ngOnInit() {
     this.token = this.cookieService.get('refresh_token');
+    this.access_token = this.cookieService.get('access_token');
     console.log('Refresh Token:', this.userId);
+    console.log('access Token:', this.access_token);
     if (this.token) {
       this.decodedToken = jwtDecode(this.token);
       console.log('Decoded Token:', this.decodedToken);
@@ -73,7 +76,6 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked {
         message: this.message,
         timestamp: new Date(),
       };
-      console.log(this.conversationId, message, 'vishnu');
       this.chatService.sendMessageToEmployee(this.userId, this.conversationId, message).subscribe();
       this.messages.push(message);
       this.message = '';
@@ -81,11 +83,10 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked {
   }
 
   getConversationId() {
-    this.chatService.getConversationId().subscribe((conversationId: any) => {
-      console.log(conversationId, '222222222');
-      this.messages.push(...conversationId.messages);
-      this.conversationId = conversationId.data.conversationid;
-      console.log(this.conversationId, '333');
+    this.chatService.getConversationId().subscribe((response: any) => {
+      console.log(response, '222222222');
+      this.messages = response.data.chatMessages
+      this.conversationId = response.data.conversation.conversationid;
       this.chatService.joinConversation(this.conversationId).subscribe();
     });
   }

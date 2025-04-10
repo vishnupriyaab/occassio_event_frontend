@@ -15,9 +15,11 @@ export interface IChatMessage {
 
 export interface IConversation {
   _id: string; 
-  conversationid: string; 
-  participants: string[]; 
-  messages: IChatMessage[];   
+  conversationid: string;
+  userId: string;
+  employeeId: string;
+  lastUpdated?: Date; 
+  // createdAt:
 }
 
 export interface IConversationwithUser {

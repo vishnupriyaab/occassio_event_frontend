@@ -1,5 +1,6 @@
 <div class="bg-neutral-950 flex h-screen">
-  <div class="min-h-screen bg-neutral-950 border border-neutral-900 lg:w-72 w-32">
+  <!-- Sidebar (fixed width) -->
+  <div class="min-h-screen bg-neutral-950 border border-neutral-900 lg:w-72 w-32 flex-shrink-0">
     <header class="flex justify-center pt-5 pb-2">
       <div class="text-center mb-3">
         <img src="logo.png" alt="Occasio Events Logo" class="h-14 w-auto mx-auto" />
@@ -28,7 +29,7 @@
           'bg-neutral-900 hover:bg-neutral-800': selectedConversation?.conversationid !== conversation.conversationid,
         }">
         <div class="flex items-center gap-3">
-          <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+          <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover"/>
           <div class="flex flex-col">
             <span class="font-semibold text-sm">Ann</span>
             <div class="flex items-center gap-1 text-xs text-gray-300">
@@ -46,20 +47,28 @@
     </div>
   </div>
 
-  <div class="flex h-screen w-full bg-neutral-900 text-white">
-    <div class="flex flex-col flex-1 relative">
-      <div class="bg-black px-4 py-3 flex items-center gap-4">
-        <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-        <div class="flex flex-col">
-          <h2 class="font-semibold text-white">Occasio Support<span class="text-gray-300 text-sm">( Online )</span></h2>
-          <p class="text-sm text-gray-400">How can we help you today?</p>
+  <!-- Main content area (will resize) -->
+  <div class="flex-1 relative">
+    <!-- Chat container -->
+    <div 
+      class="flex flex-col h-full bg-neutral-900 text-white transition-all duration-300 ease-in-out" 
+      [style.width]="isNoteVisible ? 'calc(100% - 50%)' : '100%'">
+      <div class="bg-black px-4 py-3 flex items-center gap-4 justify-between">
+        <div class="flex items-center gap-4">
+          <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+          <div class="flex flex-col">
+            <h2 class="font-semibold text-white">Occasio Support<span class="text-gray-300 text-sm">( Online )</span></h2>
+            <p class="text-sm text-gray-400">How can we help you today?</p>
+          </div>
         </div>
+        <button (click)="toggleNotePanel()" class="text-black bg-white w-7 h-7 rounded-full flex justify-center items-center shadow-2xl">
+          <i class="fa-regular fa-clipboard"></i>
+        </button>
       </div>
 
-      <div #messageContainer class="flex-1 relative overflow-y-auto">
-        <img src="chatbg_1.jpg" alt="Chat Background" class="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none" />
+      <div #messageContainer class="flex-1 relative overflow-y-auto dark-scrollbar">
+        <img src="chatbg_1.jpg" alt="Chat Background" class="inset-0 w-full h-full object-cover opacity-5 pointer-events-none sticky" />
         <div class="relative z-10 p-4 space-y-2">
-          <!-- Chat messages -->
           <div
             *ngFor="let m of selectedConversation?.messages"
             class="flex mb-4"
@@ -75,12 +84,6 @@
       </div>
 
       <div class="bg-neutral-950 px-4 py-3 flex items-center gap-2 border-t border-neutral-800">
-        <!-- <button class="bg-neutral-800 hover:bg-neutral-700 h-10 w-10 rounded-full">
-          <i class="fa-solid fa-microphone text-white"></i>
-        </button>
-        <button class="bg-neutral-800 hover:bg-neutral-700 h-10 w-10 rounded-full">
-          <i class="fa-solid fa-camera"></i>
-        </button> -->
         <input
           type="text"
           [(ngModel)]="newMessage"
@@ -96,5 +99,15 @@
         </button>
       </div>
     </div>
+    
+    <!-- Note Panel -->
+    <div 
+      class="absolute top-0 right-0 h-screen overflow-hidden bg-black text-white w-1/2 shadow-xl transform transition-transform duration-300 ease-in-out"
+      [ngClass]="{'translate-x-0 ': isNoteVisible, 'translate-x-full hidden': !isNoteVisible}">
+      <div class="bg-baseYellow text-white p-4 font-bold text-center rounded-t-3xl">
+        Note
+      </div>
+        <textarea name="note" class="bg-black text-white h-screen w-full font-Roboto text-sm p-3" style="background-image: linear-gradient(to bottom, transparent, transparent 19px, rgb(32, 32, 32) 19px, rgb(70, 71, 72) 40px); background-size: 100% 20px; line-height: 20px; padding-top: 0;"></textarea>
+      </div>
   </div>
-</div>
+</div> 
