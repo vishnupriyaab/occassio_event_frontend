@@ -52,8 +52,8 @@ export class ChatWithClientService {
     return new Observable(observer => {
       console.log(activeConversationId, 'usersssssssssssss', message);
       this._socket.emit(
-        'user-message',
-        { userId: currentEmplId, conversationId: activeConversationId, message: message.message },
+        'employee-message',
+        { employeeId: currentEmplId, conversationId: activeConversationId, message: message.message, user:message.user },
         (response: { status: string; message: IChatMessage }) => {
           observer.next(response);
           observer.complete();

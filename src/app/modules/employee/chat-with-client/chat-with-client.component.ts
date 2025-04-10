@@ -18,7 +18,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
 
   conversations: IConversationwithUser[] = [];
   selectedConversation: IConversationwithUser | null = null;
-  newMessage: string = '';
+  message: string = '';
   // defaultImageUrl!: string;
   employeeId: string | undefined;
   token: string = '';
@@ -105,27 +105,15 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage() {
-    console.log(this.selectedConversation, this.newMessage, this.employeeId, '00000000000'); //here ehy i didnt got employeeId?
-    if (this.selectedConversation && this.newMessage.trim() && this.employeeId) {
-      const message: IChatMessage = {
-        user: this.employeeId,
-        message: this.newMessage,
+    if (this.message.trim()) {
+      let message = {
+        user: 'employee',
+        message: this.message,
         timestamp: new Date(),
       };
-      this.selectedConversation.messages.push(message);
-
-      this._chatService.sendMessageToEmployee(this.employeeId, this.selectedConversation.conversationid, message).subscribe(
-        response => {
-          if (this.selectedConversation) {
-            this.selectedConversation?.messages.push(message);
-            console.log('fdjwksaljl', response);
-          }
-        },
-        error => console.error('Error sending message:', error)
-      );
-
-      this.newMessage = '';
-      this.scrollToBottom();
+      this._chatService.sendMessageToEmployee(this.employeeId, this.selectedConversation!.conversationid, message).subscribe();
+      this.messages.push(message);
+      this.message = '';
     }
   }
 
@@ -142,6 +130,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
   // }
 
   isEmplMessage(message: IChatMessage): boolean {
-    return message.user === this.employeeId;
+    return message.user === 'employee';
   }
 }
