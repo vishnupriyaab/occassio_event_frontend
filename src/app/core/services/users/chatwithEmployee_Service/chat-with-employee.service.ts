@@ -32,7 +32,6 @@ export class ChatWithEmployeeService {
     });
   }
 
-  // Send a new message
   sendMessageToUser(
     currentEmployeeId: string,
     activeConversationId: string,

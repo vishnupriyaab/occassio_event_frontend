@@ -14,7 +14,7 @@
     </div>
 
     <div #messageContainer class="flex-1 relative overflow-y-auto">
-      <img src="chatbg_1.jpg" alt="Chat Background" class="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none" />
+      <img src="chatbg_1.jpg" alt="Chat Background" class="inset-0 w-full h-full object-cover opacity-5 pointer-events-none sticky" />
       <div class="relative z-10 p-4 space-y-2">
         <div *ngFor="let m of messages" class="flex mb-4" [ngClass]="{ 'justify-end': isUserMessage(m), 'justify-start': !isUserMessage(m) }">
           <div

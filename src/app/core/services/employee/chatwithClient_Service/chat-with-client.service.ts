@@ -43,7 +43,7 @@ export class ChatWithClientService {
       );
     });
   }
-  
+
   sendMessageToEmployee(
     currentEmplId: string | undefined,
     activeConversationId: string,
@@ -53,7 +53,7 @@ export class ChatWithClientService {
       console.log(activeConversationId, 'usersssssssssssss', message);
       this._socket.emit(
         'employee-message',
-        { employeeId: currentEmplId, conversationId: activeConversationId, message: message.message, user:message.user },
+        { employeeId: currentEmplId, conversationId: activeConversationId, message: message.message, user: message.user },
         (response: { status: string; message: IChatMessage }) => {
           observer.next(response);
           observer.complete();
@@ -75,8 +75,8 @@ export class ChatWithClientService {
   }
 
   ///
-  getConversationId(conversationId:string): Observable<IConversation> {
-    console.log("11")
+  getConversationId(conversationId: string): Observable<IConversation> {
+    console.log('11');
     return this._http.get<IConversation>(`${this._baseUrl}employee/conversation/${conversationId}`);
   }
 

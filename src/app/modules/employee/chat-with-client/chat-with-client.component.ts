@@ -32,11 +32,9 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit() {
-    // const accessToken = this.cookieService.get('access_token');
     this.token = this.cookieService.get('refresh_token');
     if (this.token) {
       this.decodedToken = jwtDecode(this.token);
-      console.log('Decoded Token:', this.decodedToken);
       this.employeeId = this.decodedToken?.id;
       console.log(this.employeeId, '000000000');
     } else {
@@ -49,7 +47,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
       setTimeout(() => this.scrollToBottom(), 0);
     });
     this.getConversations();
-    // this.getEmplChatMessage();
   }
 
   //note
@@ -71,19 +68,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  // getEmplChatMessage() {
-  //   this._chatService.getEmployeeMessages().subscribe((data: any) => {
-  //     const updatedConversations  = this.conversations.map(res => {
-  //       console.log(updatedConversations , 'newmess');
-  //       if (res.conversationid == data.conversationId) {
-  //         res.messages.push(data);
-  //       }
-  //       return res;
-  //     });
-  //     this.conversations = [...updatedConversations ];
-  //   });
-  // }
-
   selectConversation(conversation: IConversationwithUser): void {
     if (this.selectedConversation) {
       this._chatService.exitConversation(this.selectedConversation.conversationid).subscribe();
@@ -94,11 +78,11 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked {
   }
 
   getConversationId(conversationId: string) {
-    console.log()
+    console.log();
     this._chatService.getConversationId(conversationId).subscribe((response: any) => {
       console.log(response, '222222222');
-      this.messages = response.data.chatMessages
-      console.log(this.messages,"messaessssssss")
+      this.messages = response.data.chatMessages;
+      console.log(this.messages, 'messaessssssss');
       this._chatService.joinConversation(conversationId).subscribe();
       setTimeout(() => this.scrollToBottom(), 0);
     });

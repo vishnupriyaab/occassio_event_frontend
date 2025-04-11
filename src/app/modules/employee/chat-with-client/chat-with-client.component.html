@@ -21,29 +21,26 @@
 
     <div class="mt-3 px-4 max-h-[360px] overflow-y-hidden hover:overflow-y-auto space-y-2 dark-scrollbar">
       <div
-      *ngFor="let conversation of conversations"
-      (click)="selectConversation(conversation)"
-      class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white"
-      [ngClass]="{
-        'bg-neutral-800': selectedConversation?.conversationid === conversation.conversationid,
-        'bg-neutral-900 hover:bg-neutral-800': selectedConversation?.conversationid !== conversation.conversationid,
-      }">
-      <div class="flex items-center gap-3">
-        <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover"/>
-        <div class="flex flex-col">
-          <span class="font-semibold text-sm">Ann</span>
-          <div class="flex items-center gap-1 text-xs text-gray-300">
-            <span
-              >{{ messages[messages.length - 1].message | slice: 0 : 15
-              }}{{ messages[messages.length - 1].message.length > 15 ? '...' : '' }}</span
-            >
+        *ngFor="let conversation of conversations"
+        (click)="selectConversation(conversation)"
+        class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white"
+        [ngClass]="{
+          'bg-neutral-800': selectedConversation?.conversationid === conversation.conversationid,
+          'bg-neutral-900 hover:bg-neutral-800': selectedConversation?.conversationid !== conversation.conversationid,
+        }">
+        <div class="flex items-center gap-3">
+          <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+          <div class="flex flex-col">
+            <span class="font-semibold text-sm">Ann</span>
+            <div class="flex items-center gap-1 text-xs text-gray-300">
+              <span
+                >{{ messages[messages.length - 1].message | slice: 0 : 15 }}{{ messages[messages.length - 1].message.length > 15 ? '...' : '' }}</span
+              >
+            </div>
           </div>
         </div>
+        <span class="text-[10px] text-gray-300 whitespace-nowrap">{{ messages[messages.length - 1].timestamp | date: 'shortTime' }}</span>
       </div>
-      <span class="text-[10px] text-gray-300 whitespace-nowrap">{{
-        messages[messages.length - 1].timestamp | date: 'shortTime'
-      }}</span>
-    </div>
     </div>
   </div>
 
@@ -69,10 +66,7 @@
       <div #chatContainer class="flex-1 relative overflow-y-auto dark-scrollbar">
         <img src="chatbg_1.jpg" alt="Chat Background" class="inset-0 w-full h-full object-cover opacity-5 pointer-events-none sticky" />
         <div class="relative z-10 p-4 space-y-2">
-          <div
-            *ngFor="let m of messages"
-            class="flex mb-4"
-            [ngClass]="{ 'justify-end': isEmplMessage(m), 'justify-start': !isEmplMessage(m) }">
+          <div *ngFor="let m of messages" class="flex mb-4" [ngClass]="{ 'justify-end': isEmplMessage(m), 'justify-start': !isEmplMessage(m) }">
             <div
               class="rounded-lg p-3 shadow-md max-w-xs lg:max-w-md"
               [ngClass]="{ 'bg-white text-black': isEmplMessage(m), 'bg-neutral-800 text-white': !isEmplMessage(m) }">

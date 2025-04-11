@@ -1,4 +1,4 @@
-import { IUser } from "./IUser";
+import { IUser } from './IUser';
 
 export interface Conversation {
   id: string;
@@ -7,24 +7,23 @@ export interface Conversation {
 }
 
 export interface IChatMessage {
-  user: string | undefined; 
+  user: string | undefined;
   message: string;
   timestamp?: Date;
 }
 
-
 export interface IConversation {
-  _id: string; 
+  _id: string;
   conversationid: string;
   userId: string;
   employeeId: string;
-  lastUpdated?: Date; 
+  lastUpdated?: Date;
   // createdAt:
 }
 
 export interface IConversationwithUser {
-  _id: string; 
-  conversationid: string; 
-  participants: IUser[]; 
-  messages: IChatMessage[]; 
+  _id: string;
+  conversationid: string;
+  participants: IUser[];
+  messages: IChatMessage[];
 }
