@@ -1,5 +1,4 @@
 <div class="bg-neutral-950 flex h-screen">
-  <!-- Sidebar (fixed width) -->
   <div class="min-h-screen bg-neutral-950 border border-neutral-900 lg:w-72 w-32 flex-shrink-0">
     <header class="flex justify-center pt-5 pb-2">
       <div class="text-center mb-3">
@@ -44,7 +43,6 @@
     </div>
   </div>
 
-  <!-- Main content area (will resize) -->
   <div class="flex-1 relative">
     <!-- Chat container -->
     <div
@@ -54,8 +52,11 @@
         <div class="flex items-center gap-4">
           <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
           <div class="flex flex-col">
-            <h2 class="font-semibold text-white">Occasio Support<span class="text-gray-300 text-sm">( Online )</span></h2>
-            <p class="text-sm text-gray-400">How can we help you today?</p>
+            <h2 class="font-semibold text-white flex flex-col">
+              Ann
+              <span *ngIf="userOnlineStatus" class="text-green-400 text-xs font-light">Online</span>
+              <span *ngIf="!userOnlineStatus" class="text-gray-300 text-xs font-light">Offline</span>
+            </h2>
           </div>
         </div>
         <button (click)="toggleNotePanel()" class="text-black bg-white w-7 h-7 rounded-full flex justify-center items-center shadow-2xl">
@@ -66,12 +67,36 @@
       <div #chatContainer class="flex-1 relative overflow-y-auto dark-scrollbar">
         <img src="chatbg_1.jpg" alt="Chat Background" class="inset-0 w-full h-full object-cover opacity-5 pointer-events-none sticky" />
         <div class="relative z-10 p-4 space-y-2">
-          <div *ngFor="let m of messages" class="flex mb-4" [ngClass]="{ 'justify-end': isEmplMessage(m), 'justify-start': !isEmplMessage(m) }">
+          <div
+            *ngFor="let m of messages; let i = index"
+            class="flex mb-4 group relative"
+            [ngClass]="{ 'justify-end': isEmplMessage(m), 'justify-start': !isEmplMessage(m) }"
+            [hidden]="isMessageDeletedForMe(m)">
             <div
-              class="rounded-lg p-3 shadow-md max-w-xs lg:max-w-md"
+              class="rounded-lg p-3 shadow-md max-w-xs lg:max-w-md relative"
               [ngClass]="{ 'bg-white text-black': isEmplMessage(m), 'bg-neutral-800 text-white': !isEmplMessage(m) }">
-              <p>{{ m.message }}</p>
-              <p class="text-xs mt-1 opacity-75">{{ m.timestamp | date: 'short' }}</p>
+              <p *ngIf="!m.isDeleted">{{ m.message }}</p>
+              <p *ngIf="m.isDeleted" class="italic text-gray-500">This message was deleted</p>
+              <!-- <p class="text-xs mt-1 opacity-75">{{ m.timestamp | date: 'short' }}</p> -->
+              <p *ngIf="!m.isDeleted" class="text-xs mt-1 text-gray-500">{{ m.timestamp | date: 'short' }}</p>
+              <button
+                *ngIf="isEmplMessage(m) && !m.isDeleted"
+                class="absolute top-1 right-1 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                (click)="showDeleteOptions(i, $event)">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+            </div>
+            <div *ngIf="selectedMessageIndex === i" class="absolute right-0 top-0 mt-6 bg-white rounded shadow-lg z-20 p-2">
+              <button
+                class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm text-black"
+                (click)="deleteMessage(m); $event.stopPropagation()">
+                Delete message
+              </button>
+              <button
+                class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm text-black"
+                (click)="selectedMessageIndex = -1; $event.stopPropagation()">
+                Cancel
+              </button>
             </div>
           </div>
         </div>

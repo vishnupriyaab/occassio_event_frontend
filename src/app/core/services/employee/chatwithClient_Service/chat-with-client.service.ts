@@ -83,4 +83,44 @@ export class ChatWithClientService {
   getConversationData(): Observable<ApiResponse<IConversationwithUser[]>> {
     return this._http.get<ApiResponse<IConversationwithUser[]>>(`${this._baseUrl}employee/getconversationdata`);
   }
+
+  deleteMessage(conversationId: string, messageId: string): Observable<{ status: string; message: string }> {
+    return this._http.delete<{ status: string; message: string }>(`${this._baseUrl}employee/message/${conversationId}/${messageId}`);
+  }
+
+  notifyMessageDeleted(conversationId: string, messageId: string): Observable<{ status: string }> {
+    return new Observable(observer => {
+      this._socket.emit('delete-message', { conversationId, messageId }, (response: { status: string }) => {
+        observer.next(response);
+        observer.complete();
+      });
+    });
+  }
+
+  getDeletedMessages(): Observable<{ messageId: string; deleteType: string }> {
+    return new Observable(observer => {
+      this._socket.on('messageDeleted', (data: { messageId: string; deleteType: string }) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  setEmployeeOnline(employeeId: string | undefined): void {
+    console.log("0000")
+    this._socket.emit('employee-online', { employeeId });
+  }
+  
+  setEmployeeOffline(employeeId: string| undefined): void {
+    this._socket.emit('employee-offline', { employeeId });
+  }
+
+  onUserStatusChange(): Observable<{ userId: string; status: string }> {
+    console.log("111");
+    return new Observable(observer => {
+      this._socket.on('user-status-change', (data: { userId: string; status: string }) => {
+        observer.next(data);
+      });
+    });
+  }
+
 }

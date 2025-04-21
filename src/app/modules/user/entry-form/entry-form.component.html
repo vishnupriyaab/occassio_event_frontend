@@ -10,7 +10,11 @@
     <form *ngIf="step === 1" [formGroup]="step1Form" (ngSubmit)="nextStep()" class="space-y-4">
       <div class="space-y-1 mb-2">
         <label for="name" class="font-KayPhoDu">Full Name:</label>
-        <input type="text" formControlName="name" class="input-field w-full rounded-sm border h-8" (input)="step1Form.get('name')?.markAsTouched()" />
+        <input
+          type="text"
+          formControlName="name"
+          class="input-field w-full rounded-sm border h-8 p-2"
+          (input)="step1Form.get('name')?.markAsTouched()" />
         <small class="text-red-500" *ngIf="step1Form.get('name')?.hasError('required') && step1Form.get('name')?.touched"> Name is required. </small>
         <small class="text-red-500" *ngIf="step1Form.get('name')?.hasError('allSpaces') && step1Form.get('name')?.touched">
           Name cannot be just spaces.
@@ -22,7 +26,7 @@
         <input
           type="email"
           formControlName="email"
-          class="input-field w-full rounded-sm border h-8"
+          class="input-field w-full rounded-sm border h-8 p-2"
           (input)="step1Form.get('email')?.markAsTouched()" />
         <small class="text-red-500" *ngIf="step1Form.get('email')?.hasError('required') && step1Form.get('email')?.touched">
           Email is required
@@ -37,7 +41,7 @@
         <input
           type="number"
           formControlName="phone"
-          class="input-field w-full rounded-sm border h-8"
+          class="input-field w-full rounded-sm border h-8 p-2"
           (input)="step1Form.get('phone')?.markAsTouched()" />
         <small class="text-red-500" *ngIf="step1Form.get('phone')?.hasError('required') && step1Form.get('phone')?.touched">
           Phone number is required
@@ -52,7 +56,7 @@
         <input
           type="text"
           formControlName="eventName"
-          class="input-field w-full rounded-sm border h-8"
+          class="input-field w-full rounded-sm border h-8 p-2"
           (input)="step1Form.get('eventName')?.markAsTouched()" />
         <small class="text-red-500" *ngIf="step1Form.get('eventName')?.hasError('required') && step1Form.get('eventName')?.touched">
           Event name is required.
@@ -66,7 +70,7 @@
         <label for="date" class="font-KayPhoDu">Date of Event:</label>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>
-            <input type="date" formControlName="startDate" class="pl-2 input-field w-full rounded-sm border h-8" />
+            <input type="date" formControlName="startDate" class="pl-2 input-field w-full rounded-sm border h-8 p-2" />
             <small class="text-red-500" *ngIf="step1Form.get('startDate')?.hasError('required') && step1Form.get('startDate')?.touched">
               Start date is required.
             </small>
@@ -75,7 +79,7 @@
             </small>
           </div>
           <div>
-            <input type="date" formControlName="endDate" class="pl-2 input-field w-full rounded-sm border h-8" />
+            <input type="date" formControlName="endDate" class="pl-2 input-field w-full rounded-sm border h-8 p-2" />
             <small class="text-red-500" *ngIf="step1Form.get('endDate')?.hasError('required') && step1Form.get('endDate')?.touched">
               End date is required.
             </small>
@@ -94,7 +98,7 @@
               type="text"
               formControlName="district"
               placeholder="district"
-              class="pl-2 input-field w-full rounded-sm border h-8"
+              class="pl-2 input-field w-full rounded-sm border h-8 p-2"
               (input)="step1Form.get('district')?.markAsTouched()" />
             <small class="text-red-500" *ngIf="step1Form.get('district')?.hasError('required') && step1Form.get('district')?.touched">
               District is required.
@@ -108,7 +112,7 @@
               type="text"
               formControlName="state"
               placeholder="state"
-              class="pl-2 input-field w-full rounded-sm border h-8"
+              class="pl-2 input-field w-full rounded-sm border h-8 p-2"
               (input)="step1Form.get('state')?.markAsTouched()" />
             <small class="text-red-500" *ngIf="step1Form.get('state')?.hasError('required') && step1Form.get('state')?.touched">
               State is required.
@@ -122,7 +126,7 @@
               type="text"
               formControlName="pincode"
               placeholder="pincode"
-              class="pl-2 input-field w-full rounded-sm border h-8"
+              class="pl-2 input-field w-full rounded-sm border h-8 p-2"
               (input)="step1Form.get('pincode')?.markAsTouched()" />
             <small class="text-red-500" *ngIf="step1Form.get('pincode')?.hasError('required') && step1Form.get('pincode')?.touched">
               Pincode is required.
@@ -150,7 +154,7 @@
         <input
           type="number"
           formControlName="guestCount"
-          class="input-field w-full rounded-sm border h-8"
+          class="input-field w-full rounded-sm border h-8 p-2"
           (input)="step1Form.get('guestCount')?.markAsTouched()" />
         <small class="text-red-500" *ngIf="step2Form.get('guestCount')?.invalid && step2Form.get('guestCount')?.touched">
           Guest count is required.
@@ -162,7 +166,7 @@
         <input
           type="text"
           formControlName="venue"
-          class="input-field w-full rounded-sm border h-8"
+          class="input-field w-full rounded-sm border h-8 p-2"
           (input)="step1Form.get('venue')?.markAsTouched()" />
         <small class="text-red-500" *ngIf="step2Form.get('venue')?.invalid && step2Form.get('venue')?.touched"> Venue is required. </small>
         <small class="text-red-500" *ngIf="step1Form.get('venue')?.hasError('allSpaces') && step1Form.get('venue')?.touched">

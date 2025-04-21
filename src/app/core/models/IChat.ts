@@ -7,6 +7,10 @@ export interface Conversation {
 }
 
 export interface IChatMessage {
+  deletedFor?: any;
+  senderId?: string;
+  _id?: any;
+  isDeleted?: boolean;
   user: string | undefined;
   message: string;
   timestamp?: Date;
@@ -18,7 +22,6 @@ export interface IConversation {
   userId: string;
   employeeId: string;
   lastUpdated?: Date;
-  // createdAt:
 }
 
 export interface IConversationwithUser {
@@ -26,4 +29,5 @@ export interface IConversationwithUser {
   conversationid: string;
   participants: IUser[];
   messages: IChatMessage[];
+  userId?:string
 }

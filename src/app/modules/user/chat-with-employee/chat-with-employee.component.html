@@ -8,20 +8,44 @@
     <div class="bg-white pl-6 pr-5 py-3 flex items-center gap-2">
       <img src="img_2.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover border" />
       <div class="flex flex-col">
-        <h2 class="font-semibold text-adQuaternary">Roshan Alfredo</h2>
-        <span class="text-xs text-adQuaternary">typing...</span>
+        <h2 class="font-semibold text-adQuaternary">{{ employeeDetails?.name }}</h2>
+        <span *ngIf="employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Online</span>
+        <span *ngIf="!employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Offline</span>
       </div>
     </div>
 
     <div #messageContainer class="flex-1 relative overflow-y-auto">
       <img src="chatbg_1.jpg" alt="Chat Background" class="inset-0 w-full h-full object-cover opacity-5 pointer-events-none sticky" />
       <div class="relative z-10 p-4 space-y-2">
-        <div *ngFor="let m of messages" class="flex mb-4" [ngClass]="{ 'justify-end': isUserMessage(m), 'justify-start': !isUserMessage(m) }">
+        <div
+          *ngFor="let m of messages; let i = index"
+          class="flex mb-4 group relative"
+          [ngClass]="{ 'justify-end': isUserMessage(m), 'justify-start': !isUserMessage(m) }"
+          [hidden]="isMessageDeletedForMe(m)">
           <div
-            class="rounded-lg p-3 shadow-md max-w-xs"
-            [ngClass]="{ 'bg-adSecndary text-gray-800': isUserMessage(m), 'bg-white text-gray-800': !isUserMessage(m) }">
-            <p>{{ m.message }}</p>
-            <p class="text-xs mt-1 text-gray-500">{{ m.timestamp | date: 'short' }}</p>
+            class="rounded-lg p-3 shadow-md max-w-xs relative"
+            [ngClass]="{
+              'bg-adSecondary text-gray-800': isUserMessage(m),
+              'bg-white text-gray-800': !isUserMessage(m),
+            }">
+            <p *ngIf="!m.isDeleted">{{ m.message }}</p>
+            <p *ngIf="m.isDeleted" class="italic text-gray-500">This message was deleted</p>
+            <p *ngIf="!m.isDeleted" class="text-xs mt-1 text-gray-500">{{ m.timestamp | date: 'short' }}</p>
+            <button
+              *ngIf="isUserMessage(m) && !m.isDeleted"
+              class="absolute top-1 right-1 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
+              (click)="showDeleteOptions(i, $event)">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+          </div>
+
+          <div *ngIf="selectedMessageIndex === i" class="absolute right-0 top-0 mt-6 bg-white rounded shadow-lg z-20 p-2">
+            <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" (click)="deleteMessage(m); $event.stopPropagation()">
+              Delete message
+            </button>
+            <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" (click)="selectedMessageIndex = -1; $event.stopPropagation()">
+              Cancel
+            </button>
           </div>
         </div>
       </div>
@@ -42,16 +66,16 @@
   <div class="w-80 bg-white border-l flex flex-col shadow-md justify-center">
     <div class="m-4 p-4 text-center rounded-md">
       <img src="img_2.JPG" alt="Profile" class="w-20 h-20 rounded-full mx-auto border" />
-      <h2 class="text-lg text-adQuaternary font-bold">Rebecca</h2>
-      <p class="text-sm text-neutral-500 mb-1">vshnupryadevgmail.com</p>
-      <p class="text-sm text-neutral-500 mb-4">+91 2345344567</p>
+      <h2 class="text-lg text-adQuaternary font-bold">{{ employeeDetails?.name }}</h2>
+      <p class="text-sm text-neutral-500 mb-1">{{ employeeDetails?.email }}</p>
+      <p class="text-sm text-neutral-500 mb-4">{{ employeeDetails?.phone }}</p>
       <div class="flex items-center justify-center gap-4 mb-10">
-        <button class="border border-adQuaternary hover:bg-adQuaternary hover:text-white h-7 w-7 rounded-full">
+        <a [href]="'tel:' + employeeDetails?.phone" class="border border-adQuaternary hover:bg-adQuaternary hover:text-white h-7 w-7 rounded-full">
           <i class="fa-solid fa-phone-volume"></i>
-        </button>
-        <button class="border border-adQuaternary hover:bg-adQuaternary hover:text-white h-7 w-7 rounded-full">
+        </a>
+        <a [href]="'mailto:' + employeeDetails?.email" class="border border-adQuaternary hover:bg-adQuaternary hover:text-white h-7 w-7 rounded-full">
           <i class="fa-solid fa-envelope"></i>
-        </button>
+        </a>
       </div>
       <hr class="border-t border-adQuaternary my-8" />
       <header class="flex justify-center">

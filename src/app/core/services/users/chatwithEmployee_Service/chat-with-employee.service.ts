@@ -51,7 +51,7 @@ export class ChatWithEmployeeService {
   }
 
   sendMessageToEmployee(
-    currentEmplId: string | undefined,
+    currentUserId: string | undefined,
     activeConversationId: string,
     message: IChatMessage
   ): Observable<{ status: string; message: IChatMessage }> {
@@ -59,7 +59,7 @@ export class ChatWithEmployeeService {
       console.log(activeConversationId, 'usersssssssssssss', message);
       this._socket.emit(
         'user-message',
-        { userId: currentEmplId, conversationId: activeConversationId, message: message.message, user:message.user },
+        { userId: currentUserId, conversationId: activeConversationId, message: message.message, user: message.user },
         (response: { status: string; message: IChatMessage }) => {
           observer.next(response);
           observer.complete();
@@ -83,4 +83,47 @@ export class ChatWithEmployeeService {
       });
     });
   }
+
+  deleteMessage(conversationId: string, messageId: string): Observable<{ status: string; message: string }> {
+    console.log(conversationId, messageId, '00000000000000000');
+    return this._http.delete<{ status: string; message: string }>(
+      `${this._baseUrl}user/message/${conversationId}/${messageId}`
+    );
+  }
+
+  notifyMessageDeleted(conversationId: string, messageId: string): Observable<{ status: string }> {
+    return new Observable(observer => {
+      this._socket.emit('delete-message', { conversationId, messageId }, (response: { status: string }) => {
+        observer.next(response);
+        observer.complete();
+      });
+    });
+  }
+
+  getDeletedMessages(): Observable<{ messageId: string; deleteType: string }> {
+    return new Observable(observer => {
+      console.log("00000")
+      this._socket.on('messageDeleted', (data: { messageId: string; deleteType: string }) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  setUserOnline(userId: string | undefined): void {
+    this._socket.emit('user-online', { userId });
+  }
+  
+  setUserOffline(userId: string |undefined): void {
+    this._socket.emit('user-offline', { userId });
+  }
+  
+  onEmployeeStatusChange(): Observable<{ employeeId: string; status: string }> {
+    return new Observable(observer => {
+      this._socket.on('employee-status-change', (data: { employeeId: string; status: string }) => {
+        observer.next(data);
+      });
+    });
+  }
+  
+
 }
