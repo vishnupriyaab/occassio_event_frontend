@@ -6,7 +6,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { Token } from '../../../core/models/commonAPIResponse';
 import { ChatWithClientService } from '../../../core/services/employee/chatwithClient_Service/chat-with-client.service';
-import { response } from 'express';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
+import IToastOption from '../../../core/models/IToastOptions';
 
 @Component({
   selector: 'app-chat-with-client',
@@ -16,6 +17,9 @@ import { response } from 'express';
 })
 export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  isUploading: boolean = false;
 
   userOnlineStatus: Map<string, boolean> = new Map();
   selectedUserOnlineStatus: boolean = false;
@@ -33,7 +37,8 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
 
   constructor(
     private _chatService: ChatWithClientService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private _toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -216,6 +221,97 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
   //     ? user.imageUrl
   //     : this.defaultImageUrl;
   // }
+
+  sendImage() {
+    if (!this.selectedConversation) {
+      return;
+    }
+    this.fileInput.nativeElement.multiple = true;
+    this.fileInput.nativeElement.click();
+  }
+
+  handleFileInput(event: any) {
+    const fileList: FileList = event.target.files;
+    if (!fileList || fileList.length === 0) return;
+
+    if (fileList.length > 10) {
+      const toastOption: IToastOption = {
+        severity: 'danger-toast',
+        summary: 'Error',
+        detail: 'You can only upload up to 10 images at once',
+      };
+      this._toastService.showToast(toastOption);
+      return;
+    }
+
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      if (!file.type.match(/image\/*/) || file.size > 5000000) {
+        //5MB limit
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Please select a valid image file (max 5MB)',
+        };
+        this._toastService.showToast(toastOption);
+        // return;
+        continue;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64Image = reader.result as string;
+        const imageData = {
+          image: base64Image,
+          fileName: file.name,
+          employeeId: this.employeeId!,
+          conversationId: this.selectedConversation!.conversationid,
+        };
+        this.uploadAndSendImage(imageData);
+      };
+      reader.readAsDataURL(file);
+    }
+    event.target.value = '';
+  }
+
+  uploadAndSendImage(imageData: { image: string; fileName: string; employeeId: string; conversationId: string }) {
+    this.isUploading = true;
+
+    console.log(imageData,"Vishnuuuuuuuuu")
+
+    this._chatService.uploadChatImages(imageData).subscribe();
+    let imageMessage = {
+      user: 'employee',
+      message: imageData.image,
+      timestamp: new Date(),
+      // imageUrl: response.imageUrl,
+      type: 'image',
+      messageType: 'image'
+    };
+    this.messages.push(imageMessage);
+  }
+
+  // Method to determine if a message is an image
+  isImageUrl(message: string): boolean {
+    if (!message) return false;
+    return message.match(/\.(jpeg|jpg|gif|png)$/) != null || message.includes('cloudinary.com') || message.includes('image/upload');
+  }
+
+  // Get the correct image source
+  getImageSource(message: IChatMessage): string {
+    if (message.imageUrl) {
+      return message.imageUrl;
+    } else if (message.messageType === 'image') {
+      return message.message!;
+    } else if (this.isImageUrl(message.message!)) {
+      return message.message!;
+    }
+    return '';
+  }
+
+  openImagePreview(imageUrl: string) {
+    if (!imageUrl) return;
+    window.open(imageUrl, '_blank');
+  }
 
   ngOnDestroy() {
     this._chatService.setEmployeeOffline(this.employeeId);

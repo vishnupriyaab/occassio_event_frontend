@@ -106,16 +106,16 @@ export class ChatWithClientService {
   }
 
   setEmployeeOnline(employeeId: string | undefined): void {
-    console.log("0000")
+    console.log('0000');
     this._socket.emit('employee-online', { employeeId });
   }
-  
-  setEmployeeOffline(employeeId: string| undefined): void {
+
+  setEmployeeOffline(employeeId: string | undefined): void {
     this._socket.emit('employee-offline', { employeeId });
   }
 
   onUserStatusChange(): Observable<{ userId: string; status: string }> {
-    console.log("111");
+    console.log('111');
     return new Observable(observer => {
       this._socket.on('user-status-change', (data: { userId: string; status: string }) => {
         observer.next(data);
@@ -123,4 +123,17 @@ export class ChatWithClientService {
     });
   }
 
+  uploadChatImages(payload: {
+    image: string;
+    fileName: string;
+    employeeId: string;
+    conversationId: string;
+  }): Observable<{ status: string; message: IChatMessage }> {
+    return new Observable(observer => {
+      this._socket.emit('employee-image-message', payload, (response: { status: string; message: IChatMessage }) => {
+        observer.next(response);
+        observer.complete();
+      });
+    });
+  }
 }

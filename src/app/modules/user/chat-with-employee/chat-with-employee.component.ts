@@ -8,7 +8,8 @@ import { jwtDecode } from 'jwt-decode';
 import { ChatWithEmployeeService } from '../../../core/services/users/chatwithEmployee_Service/chat-with-employee.service';
 import { EmployeeService } from '../../../core/services/users/employee/employee.service';
 import { FetchEmployeeData } from '../../../core/models/IEmployee';
-import { response } from 'express';
+import IToastOption from '../../../core/models/IToastOptions';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 
 @Component({
   selector: 'app-chat-with-employee',
@@ -18,8 +19,11 @@ import { response } from 'express';
 })
 export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
-  private chatService = inject(ChatWithEmployeeService);
-  private employeeService = inject(EmployeeService);
+  private _chatService = inject(ChatWithEmployeeService);
+  private _employeeService = inject(EmployeeService);
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  isUploading: boolean = false;
 
   employeeOnlineStatus: boolean = false;
 
@@ -35,7 +39,10 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
   employeeDetails: FetchEmployeeData | undefined;
   selectedMessageIndex: number = -1;
 
-  constructor(private cookieService: CookieService) {}
+  constructor(
+    private cookieService: CookieService,
+    private _toastService: ToastService
+  ) {}
 
   ngOnInit() {
     this.token = this.cookieService.get('refresh_token');
@@ -48,27 +55,27 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
       console.log('Unavailable token!');
     }
     console.log('Refresh Token:', this.token);
-    this.chatService.connect();
-    this.chatService.setUserOnline(this.userId);
+    this._chatService.connect();
+    this._chatService.setUserOnline(this.userId);
 
-    this.chatService.onEmployeeStatusChange().subscribe({
+    this._chatService.onEmployeeStatusChange().subscribe({
       next: response => {
         console.log(response, 'responseee');
-          this.employeeOnlineStatus = response.status === 'online';
+        this.employeeOnlineStatus = response.status === 'online';
       },
       error: error => {
         console.log(error, 'error');
       },
     });
 
-    this.chatService.getEmployeeMessages().subscribe((data: IChatMessage) => {
+    this._chatService.getEmployeeMessages().subscribe((data: IChatMessage) => {
       this.messages.push(data);
       this.scrollToBottom();
     });
     this.getChats();
     this.getConversationId();
 
-    this.chatService.getDeletedMessages().subscribe((data: { messageId: string; deleteType: string }) => {
+    this._chatService.getDeletedMessages().subscribe((data: { messageId: string; deleteType: string }) => {
       const messageIndex = this.messages.findIndex(m => m._id === data.messageId);
       if (messageIndex !== -1) {
         // if (data.deleteType === 'everyone') {
@@ -116,7 +123,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
     }
     this.selectedMessageIndex = -1;
 
-    this.chatService.deleteMessage(this.conversationId, message._id.toString()).subscribe({
+    this._chatService.deleteMessage(this.conversationId, message._id.toString()).subscribe({
       next: response => {
         console.log('Delete message response:', response);
 
@@ -125,7 +132,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
           this.messages[index].isDeleted = true;
         }
 
-        this.chatService.notifyMessageDeleted(this.conversationId, message._id.toString()).subscribe({
+        this._chatService.notifyMessageDeleted(this.conversationId, message._id.toString()).subscribe({
           next: socketResponse => {
             console.log('Socket notification sent:', socketResponse);
           },
@@ -141,7 +148,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
   }
 
   getChats() {
-    this.chatService.getChats().subscribe(chat => {
+    this._chatService.getChats().subscribe(chat => {
       this.chat = chat;
     });
   }
@@ -163,14 +170,14 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
         message: this.message,
         timestamp: new Date(),
       };
-      this.chatService.sendMessageToEmployee(this.userId, this.conversationId, message).subscribe();
+      this._chatService.sendMessageToEmployee(this.userId, this.conversationId, message).subscribe();
       this.messages.push(message);
       this.message = '';
     }
   }
 
   getConversationId() {
-    this.chatService.getConversationId().subscribe((response: any) => {
+    this._chatService.getConversationId().subscribe((response: any) => {
       console.log(response, '222222222');
       console.log(response.data.conversation.employeeId);
       this.employeeId = response.data.conversation.employeeId;
@@ -180,7 +187,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
       this.messages = response.data.chatMessages;
       console.log(this.messages, 'ghjkl');
       this.conversationId = response.data.conversation.conversationid;
-      this.chatService.joinConversation(this.conversationId).subscribe();
+      this._chatService.joinConversation(this.conversationId).subscribe();
     });
   }
 
@@ -188,7 +195,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
     if (!this.employeeId) {
       return;
     }
-    this.employeeService.getEmployeeById(this.employeeId).subscribe({
+    this._employeeService.getEmployeeById(this.employeeId).subscribe({
       next: response => {
         console.log(response, 'response');
         this.employeeDetails = response.data;
@@ -199,8 +206,91 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
     });
   }
 
+  isImageUrl(message: string): boolean {
+    if (!message) return false;
+    return message.match(/\.(jpeg|jpg|gif|png)$/) != null || message.includes('cloudinary.com') || message.includes('image/upload');
+  }
+
+  getImageSource(message: IChatMessage): string {
+    if (message.imageUrl) {
+      return message.imageUrl;
+    } else if (message.messageType === 'image') {
+      return message.message!;
+    } else if (this.isImageUrl(message.message!)) {
+      return message.message!;
+    }
+    return '';
+  }
+
+  openImagePreview(imageUrl: string) {
+    if (!imageUrl) return;
+    window.open(imageUrl, '_blank');
+  }
+
+  sendImage() {
+    this.fileInput.nativeElement.multiple = true;
+    this.fileInput.nativeElement.click();
+  }
+
+  handleFileInput(event: any) {
+    const fileList: FileList = event.target.files;
+    if (!fileList || fileList.length === 0) return;
+
+    if (fileList.length > 10) {
+      const toastOption: IToastOption = {
+        severity: 'danger-toast',
+        summary: 'Error',
+        detail: 'You can only upload up to 10 images at once',
+      };
+      this._toastService.showToast(toastOption);
+      return;
+    }
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      if (!file.type.match(/image\/*/) || file.size > 5000000) {
+        //5MB limit
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Please select a valid image file (max 5MB)',
+        };
+        this._toastService.showToast(toastOption);
+        // return;
+        continue;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64Image = reader.result as string;
+        const imageData = {
+          image: base64Image,
+          fileName: file.name,
+          userId: this.userId!,
+          conversationId: this.conversationId,
+        };
+        this.uploadAndSendImage(imageData);
+      };
+      reader.readAsDataURL(file);
+    }
+    event.target.value = '';
+  }
+
+  uploadAndSendImage(imageData: { image: string; fileName: string; userId: string; conversationId: string }) {
+    this.isUploading = true;
+
+    this._chatService.uploadChatImages(imageData).subscribe();
+    let imageMessage = {
+      user: 'user',
+      message: imageData.image,
+      timestamp: new Date(),
+      // imageUrl: response.imageUrl,
+      type: 'image',
+      messageType: 'image',
+    };
+    this.messages.push(imageMessage);
+  }
+
   ngOnDestroy() {
-    this.chatService.setUserOffline(this.userId);
+    this._chatService.setUserOffline(this.userId);
   }
 
   isUserMessage(message: IChatMessage): boolean {

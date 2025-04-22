@@ -12,8 +12,10 @@ export interface IChatMessage {
   _id?: any;
   isDeleted?: boolean;
   user: string | undefined;
-  message: string;
+  message?: string;
+  messageType?: string;
   timestamp?: Date;
+  imageUrl?: any;
 }
 
 export interface IConversation {

@@ -86,9 +86,7 @@ export class ChatWithEmployeeService {
 
   deleteMessage(conversationId: string, messageId: string): Observable<{ status: string; message: string }> {
     console.log(conversationId, messageId, '00000000000000000');
-    return this._http.delete<{ status: string; message: string }>(
-      `${this._baseUrl}user/message/${conversationId}/${messageId}`
-    );
+    return this._http.delete<{ status: string; message: string }>(`${this._baseUrl}user/message/${conversationId}/${messageId}`);
   }
 
   notifyMessageDeleted(conversationId: string, messageId: string): Observable<{ status: string }> {
@@ -102,7 +100,7 @@ export class ChatWithEmployeeService {
 
   getDeletedMessages(): Observable<{ messageId: string; deleteType: string }> {
     return new Observable(observer => {
-      console.log("00000")
+      console.log('00000');
       this._socket.on('messageDeleted', (data: { messageId: string; deleteType: string }) => {
         observer.next(data);
       });
@@ -112,11 +110,11 @@ export class ChatWithEmployeeService {
   setUserOnline(userId: string | undefined): void {
     this._socket.emit('user-online', { userId });
   }
-  
-  setUserOffline(userId: string |undefined): void {
+
+  setUserOffline(userId: string | undefined): void {
     this._socket.emit('user-offline', { userId });
   }
-  
+
   onEmployeeStatusChange(): Observable<{ employeeId: string; status: string }> {
     return new Observable(observer => {
       this._socket.on('employee-status-change', (data: { employeeId: string; status: string }) => {
@@ -124,6 +122,18 @@ export class ChatWithEmployeeService {
       });
     });
   }
-  
 
+  uploadChatImages(payload: {
+    image: string;
+    fileName: string;
+    userId: string;
+    conversationId: string;
+  }): Observable<{ status: string; message: IChatMessage }> {
+    return new Observable(observer => {
+      this._socket.emit('user-image-message', payload, (response: { status: string; message: IChatMessage }) => {
+        observer.next(response);
+        observer.complete();
+      });
+    });
+  }
 }

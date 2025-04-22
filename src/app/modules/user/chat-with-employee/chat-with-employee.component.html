@@ -17,7 +17,7 @@
     <div #messageContainer class="flex-1 relative overflow-y-auto">
       <img src="chatbg_1.jpg" alt="Chat Background" class="inset-0 w-full h-full object-cover opacity-5 pointer-events-none sticky" />
       <div class="relative z-10 p-4 space-y-2">
-        <div
+        <!-- <div
           *ngFor="let m of messages; let i = index"
           class="flex mb-4 group relative"
           [ngClass]="{ 'justify-end': isUserMessage(m), 'justify-start': !isUserMessage(m) }"
@@ -47,11 +47,67 @@
               Cancel
             </button>
           </div>
+        </div> -->
+      
+        <div class="relative z-10 p-4 space-y-2">
+          <div
+            *ngFor="let m of messages; let i = index"
+            class="flex mb-4 group relative"
+            [ngClass]="{ 'justify-end': isUserMessage(m), 'justify-start': !isUserMessage(m) }"
+            [hidden]="isMessageDeletedForMe(m)">
+            <div
+              class="rounded-lg p-3 shadow-md max-w-xs relative"
+              [ngClass]="{
+                'bg-adSecondary text-gray-800': isUserMessage(m),
+                'bg-white text-gray-800': !isUserMessage(m),
+              }">
+              <!-- Deleted message placeholder -->
+              <p *ngIf="m.isDeleted" class="italic text-gray-500">This message was deleted</p>
+              
+              <!-- Text message -->
+              <p *ngIf="!m.isDeleted && !m.imageUrl && m.messageType !== 'image' && !isImageUrl(m.message!)">{{ m.message }}</p>
+              
+              <!-- Image message -->
+              <div *ngIf="!m.isDeleted && (m.imageUrl || m.messageType === 'image' || isImageUrl(m.message!))" class="message-image-container my-2">
+                <img
+                  [src]="getImageSource(m)"
+                  alt="Chat image" 
+                  class="rounded-lg cursor-pointer max-w-full w-48 h-auto object-cover"
+                  (click)="openImagePreview(getImageSource(m))" />
+              </div>
+              
+              <!-- Timestamp -->
+              <p *ngIf="!m.isDeleted" class="text-xs mt-1 text-gray-500">{{ m.timestamp | date: 'short' }}</p>
+              
+              <!-- Delete options button -->
+              <button
+                *ngIf="isUserMessage(m) && !m.isDeleted"
+                class="absolute top-1 right-1 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                (click)="showDeleteOptions(i, $event)">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+            </div>
+        
+            <!-- Delete options dropdown -->
+            <div *ngIf="selectedMessageIndex === i" class="absolute right-0 top-0 mt-6 bg-white rounded shadow-lg z-20 p-2">
+              <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" (click)="deleteMessage(m); $event.stopPropagation()">
+                Delete message
+              </button>
+              <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" (click)="selectedMessageIndex = -1; $event.stopPropagation()">
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
 
-    <div class="bg-white pl-7 pr-5 py-3 flex items-center gap-2 border-t border-neutral-200">
+    <input type="file" #fileInput (change)="handleFileInput($event)" accept="image/*" multiple style="display: none" />
+
+    <div class="bg-white pl-7 pr-5 py-3 flex items-center gap-4 border-t border-neutral-200">
+      <button class=" text-adQuaternary hover:text-gray-500"><i class="fa-solid fa-face-smile"></i></button>
+       <button class=" text-adQuaternary hover:text-gray-500" (click)="sendImage()"><i class="fa-solid fa-camera"></i></button>
       <input
         type="text"
         [(ngModel)]="message"
