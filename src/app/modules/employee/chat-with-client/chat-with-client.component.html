@@ -106,8 +106,13 @@
       <input type="file" #fileInput (change)="handleFileInput($event)" accept="image/*" multiple style="display: none" />
 
       <div class="bg-neutral-950 px-4 py-3 flex items-center gap-4 border-t border-neutral-800">
-        <div class="hover:text-gray-300"><i class="fa-solid fa-face-smile"></i></div>
+        <div class="hover:text-gray-300 cursor-pointer" (click)="toggleEmojiPicker()"><i class="fa-solid fa-face-smile"></i></div>
         <div class="hover:text-gray-300" (click)="sendImage()"><i class="fa-solid fa-camera"></i></div>
+
+        <div *ngIf="showEmojiPicker" class="absolute bottom-16 z-50 bg-black p-2 rounded-lg h-64 overflow-y-auto">
+          <emoji-mart [darkMode]="true" (emojiSelect)="addEmoji($event)"></emoji-mart>
+        </div>
+
         <input
           type="text"
           [(ngModel)]="message"

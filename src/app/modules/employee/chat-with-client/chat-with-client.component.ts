@@ -8,15 +8,19 @@ import { Token } from '../../../core/models/commonAPIResponse';
 import { ChatWithClientService } from '../../../core/services/employee/chatwithClient_Service/chat-with-client.service';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-chat-with-client',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, PickerModule],
   templateUrl: './chat-with-client.component.html',
   styleUrl: './chat-with-client.component.css',
 })
 export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
+
+  showEmojiPicker = false;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   isUploading: boolean = false;
@@ -84,7 +88,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
 
     this._chatService.getUserMessages().subscribe((data: IChatMessage) => {
       this.messages.push(data);
-      setTimeout(() => this.scrollToBottom(), 0);
+      setTimeout(() => this.scrollToBottom(), 30);
     });
     this.getConversations();
 
@@ -94,6 +98,17 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
         this.messages[messageIndex].isDeleted = true;
       }
     });
+  }
+
+  toggleEmojiPicker(): void {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+  
+  addEmoji(event: any): void {
+    console.log(event,"eventtt")
+    const emoji = event.emoji.native;
+    this.message += emoji;
+    this.showEmojiPicker = false;
   }
 
   isMessageDeletedForMe(message: IChatMessage): boolean {
@@ -193,7 +208,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       this.messages = response.data.chatMessages;
       console.log(this.messages, 'messaessssssss');
       this._chatService.joinConversation(conversationId).subscribe();
-      setTimeout(() => this.scrollToBottom(), 0);
+      setTimeout(() => this.scrollToBottom(), 30);
     });
   }
 
@@ -206,6 +221,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       };
       this._chatService.sendMessageToEmployee(this.employeeId, this.selectedConversation!.conversationid, message).subscribe();
       this.messages.push(message);
+      setTimeout(() => this.scrollToBottom(), 30);
       this.message = '';
     }
   }
@@ -288,15 +304,14 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       messageType: 'image'
     };
     this.messages.push(imageMessage);
+    setTimeout(() => this.scrollToBottom(), 30);
   }
 
-  // Method to determine if a message is an image
   isImageUrl(message: string): boolean {
     if (!message) return false;
     return message.match(/\.(jpeg|jpg|gif|png)$/) != null || message.includes('cloudinary.com') || message.includes('image/upload');
   }
 
-  // Get the correct image source
   getImageSource(message: IChatMessage): string {
     if (message.imageUrl) {
       return message.imageUrl;

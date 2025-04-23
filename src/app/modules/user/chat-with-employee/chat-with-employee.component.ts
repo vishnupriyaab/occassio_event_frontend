@@ -10,15 +10,19 @@ import { EmployeeService } from '../../../core/services/users/employee/employee.
 import { FetchEmployeeData } from '../../../core/models/IEmployee';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-chat-with-employee',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PickerModule],
   templateUrl: './chat-with-employee.component.html',
   styleUrl: './chat-with-employee.component.css',
 })
 export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
+
+  showEmojiPicker = false;
+
   private _chatService = inject(ChatWithEmployeeService);
   private _employeeService = inject(EmployeeService);
 
@@ -70,7 +74,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
 
     this._chatService.getEmployeeMessages().subscribe((data: IChatMessage) => {
       this.messages.push(data);
-      this.scrollToBottom();
+      setTimeout(() => this.scrollToBottom(), 30);
     });
     this.getChats();
     this.getConversationId();
@@ -172,6 +176,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
       };
       this._chatService.sendMessageToEmployee(this.userId, this.conversationId, message).subscribe();
       this.messages.push(message);
+      setTimeout(() => this.scrollToBottom(), 30);
       this.message = '';
     }
   }
@@ -188,6 +193,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
       console.log(this.messages, 'ghjkl');
       this.conversationId = response.data.conversation.conversationid;
       this._chatService.joinConversation(this.conversationId).subscribe();
+      setTimeout(() => this.scrollToBottom(), 30);
     });
   }
 
@@ -287,6 +293,18 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
       messageType: 'image',
     };
     this.messages.push(imageMessage);
+    setTimeout(() => this.scrollToBottom(), 30);
+  }
+
+  toggleEmojiPicker(): void {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+  
+  addEmoji(event: any): void {
+    console.log(event,"eventtt")
+    const emoji = event.emoji.native;
+    this.message += emoji;
+    this.showEmojiPicker = false;
   }
 
   ngOnDestroy() {
