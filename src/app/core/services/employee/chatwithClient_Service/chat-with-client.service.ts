@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environment';
 import io from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IChatMessage, IConversation, IConversationwithUser } from '../../../models/IChat';
+import { IChatMessage, IConversation, IConversationwithUser, IReaction } from '../../../models/IChat';
 import { ApiResponse } from '../../../models/commonAPIResponse';
 
 @Injectable({
@@ -48,13 +48,13 @@ export class ChatWithClientService {
     currentEmplId: string | undefined,
     activeConversationId: string,
     message: IChatMessage
-  ): Observable<{ status: string; message: IChatMessage }> {
+  ): Observable<{ status: number; message: IChatMessage }> {
     return new Observable(observer => {
       console.log(activeConversationId, 'usersssssssssssss', message);
       this._socket.emit(
         'employee-message',
         { employeeId: currentEmplId, conversationId: activeConversationId, message: message.message, user: message.user },
-        (response: { status: string; message: IChatMessage }) => {
+        (response: { status: number; message: IChatMessage }) => {
           observer.next(response);
           observer.complete();
         }
@@ -74,7 +74,6 @@ export class ChatWithClientService {
     return this._http.get<IChatMessage[]>(`${this._baseUrl}employee/getchats`);
   }
 
-  ///
   getConversationId(conversationId: string): Observable<IConversation> {
     console.log('11');
     return this._http.get<IConversation>(`${this._baseUrl}employee/conversation/${conversationId}`);
@@ -133,6 +132,33 @@ export class ChatWithClientService {
       this._socket.emit('employee-image-message', payload, (response: { status: string; message: IChatMessage }) => {
         observer.next(response);
         observer.complete();
+      });
+    });
+  }
+
+  sendReaction(conversationId: string, messageId: string, emoji: string, userId: string): Observable<{ status: string; reaction: IReaction }> {
+    return new Observable(observer => {
+      this._socket.emit(
+        'message-reaction',
+        {
+          conversationId,
+          messageId,
+          emoji,
+          userId,
+          userType: 'employee',
+        },
+        (response: { status: string; reaction: IReaction }) => {
+          observer.next(response);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  getMessageReactions(): Observable<IChatMessage> {
+    return new Observable(observer => {
+      this._socket.on('message-reaction-update', (data: IChatMessage) => {
+        observer.next(data);
       });
     });
   }

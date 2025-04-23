@@ -67,7 +67,7 @@
 
       <div #chatContainer class="flex-1 relative overflow-y-auto dark-scrollbar">
         <img src="chatbg_1.jpg" alt="Chat Background" class="inset-0 w-full h-full object-cover opacity-5 pointer-events-none sticky" />
-       <div class="relative z-10 p-4 space-y-2">
+        <div class="relative z-10 p-4 space-y-2">
           <div
             *ngFor="let m of messages; let i = index"
             class="flex mb-4 group relative"
@@ -96,8 +96,50 @@
                 (click)="showDeleteOptions(i, $event)">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
               </button>
-            </div>
-            <div *ngIf="selectedMessageIndex === i" class="absolute right-0 top-0 mt-6 bg-white rounded shadow-lg z-20 p-2">
+
+              <div *ngIf="selectedMessageIndex === i" class="absolute right-0 top-0 mt-6 bg-white rounded shadow-lg z-20 p-2">
+                <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" (click)="deleteMessage(m); $event.stopPropagation()">
+                  Delete message
+                </button>
+                <button
+                  class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm"
+                  (click)="selectedMessageIndex = -1; $event.stopPropagation()">
+                  Cancel
+                </button>
+              </div>
+
+              <div *ngIf="!m.isDeleted" class="flex flex-wrap gap-1 mt-1">
+                <div
+                  *ngFor="let emoji of getUniqueReactions(m)"
+                  class="flex items-center bg-neutral-800 hover:bg-neutral-700 rounded-full px-2 py-0.5 text-xs cursor-pointer transition-colors"
+                  [ngClass]="{ 'bg-neutral-700': hasReacted(m, emoji) }"
+                  (click)="addReaction(m, emoji)">
+                  <span>{{ emoji }}</span>
+                  <span class="ml-1 text-gray-300">{{ getReactionCount(m, emoji) }}</span>
+                </div>
+
+                <button
+                  class="text-gray-400 hover:text-gray-200 text-xs rounded-full px-2 py-0.5 hover:bg-neutral-700 transition-colors"
+                  (click)="showReactionPicker(i, $event)">
+                  <div class="flex gap-1">
+                    <i class="fa-solid fa-angle-right"></i>
+                    <i class="fa-regular fa-face-smile"></i>
+                  </div>
+                </button>
+              </div>
+
+              <div
+                *ngIf="showReactionPickerIndex === i"
+                class="absolute bottom-0 left-0 z-50 mb-10 bg-neutral-800 rounded-lg shadow-lg p-2 border border-neutral-700 transform transition-all duration-200">
+                <div class="grid grid-cols-5 gap-2">
+                  <span
+                    *ngFor="let emoji of commonEmojis"
+                    class="text-xl cursor-pointer hover:bg-neutral-700 p-1 rounded flex items-center justify-center transition-colors"
+                    (click)="addReaction(m, emoji)">
+                    {{ emoji }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

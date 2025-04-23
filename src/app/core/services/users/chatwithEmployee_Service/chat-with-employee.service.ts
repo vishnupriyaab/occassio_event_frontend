@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IChatMessage, IConversation } from '../../../models/IChat';
+import { IChatMessage, IConversation, IReaction } from '../../../models/IChat';
 import { ApiResponse } from '../../../models/commonAPIResponse';
 
 @Injectable({
@@ -54,13 +54,13 @@ export class ChatWithEmployeeService {
     currentUserId: string | undefined,
     activeConversationId: string,
     message: IChatMessage
-  ): Observable<{ status: string; message: IChatMessage }> {
+  ): Observable<{ status: number; message: IChatMessage }> {
     return new Observable(observer => {
       console.log(activeConversationId, 'usersssssssssssss', message);
       this._socket.emit(
         'user-message',
         { userId: currentUserId, conversationId: activeConversationId, message: message.message, user: message.user },
-        (response: { status: string; message: IChatMessage }) => {
+        (response: { status: number; message: IChatMessage }) => {
           observer.next(response);
           observer.complete();
         }
@@ -136,4 +136,32 @@ export class ChatWithEmployeeService {
       });
     });
   }
+
+   sendReaction(conversationId: string, messageId: string, emoji: string, userId: string): Observable<{ status: string; reaction: IReaction }> {
+     return new Observable(observer => {
+       this._socket.emit(
+         'message-reaction',
+         {
+           conversationId,
+           messageId,
+           emoji,
+           userId,
+           userType: 'user',
+         },
+         (response: { status: string; reaction: IReaction }) => {
+           observer.next(response);
+           observer.complete();
+         }
+       );
+     });
+   }
+ 
+   getMessageReactions(): Observable<IChatMessage> {
+     return new Observable(observer => {
+       this._socket.on('message-reaction-update', (data: IChatMessage) => {
+         observer.next(data);
+       });
+     });
+   } 
+
 }

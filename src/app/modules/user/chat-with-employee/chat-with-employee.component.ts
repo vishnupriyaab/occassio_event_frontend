@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IChatMessage } from '../../../core/models/IChat';
+import { IChatMessage, IReaction } from '../../../core/models/IChat';
 import { CookieService } from 'ngx-cookie-service';
 import { Token } from '../../../core/models/commonAPIResponse';
 import { jwtDecode } from 'jwt-decode';
@@ -20,6 +20,9 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 })
 export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
+
+  showReactionPickerIndex: number = -1;
+  commonEmojis: string[] = ['👍', '❤️', '😂', '😮', '😢', '👏', '🎉', '🔥', '👎', '✅'];
 
   showEmojiPicker = false;
 
@@ -82,14 +85,93 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
     this._chatService.getDeletedMessages().subscribe((data: { messageId: string; deleteType: string }) => {
       const messageIndex = this.messages.findIndex(m => m._id === data.messageId);
       if (messageIndex !== -1) {
-        // if (data.deleteType === 'everyone') {
         this.messages[messageIndex].isDeleted = true;
-        // } else if (data.deleteType === 'me' && this.messages[messageIndex].senderId !== this.userId) {
-        //   this.messages[messageIndex].deletedFor = this.messages[messageIndex].deletedFor || [];
-        //   this.messages[messageIndex].deletedFor.push(this.userId!);
-        // }
       }
     });
+
+    this._chatService.getMessageReactions().subscribe((data: IChatMessage) => {
+      console.log(data, '00000');
+      const message = this.messages.find(m => m._id === data._id);
+      console.log(this.messages, '---------------');
+      if (message) {
+        message.reactions = data.reactions;
+        console.log(data.reactions, '22222222222');
+      }
+      console.log(message, 'qwertyuiop');
+      // if (messageIndex !== -1) {
+      //   if (!this.messages[messageIndex].reactions) {
+      //     this.messages[messageIndex].reactions = [];
+      //   }
+
+      //   if (data.action === 'add') {
+      //     this.messages[messageIndex].reactions!.push(data.reaction);
+      //   } else {
+      //     const reactionIndex = this.messages[messageIndex].reactions!.findIndex(
+      //       r => r.userId.toString() === data.reaction.userId.toString() && r.emoji === data.reaction.emoji
+      //     );
+      //     if (reactionIndex !== -1) {
+      //       this.messages[messageIndex].reactions!.splice(reactionIndex, 1);
+      //     }
+      //   }
+      // }
+    });
+  }
+
+  showReactionPicker(index: number, event: MouseEvent): void {
+    event.stopPropagation();
+    this.showReactionPickerIndex = index;
+    this.showEmojiPicker = false;
+
+    setTimeout(() => {
+      document.addEventListener('click', this.closeReactionPicker);
+    }, 0);
+  }
+
+  closeReactionPicker = () => {
+    this.showReactionPickerIndex = -1;
+    document.removeEventListener('click', this.closeReactionPicker);
+  };
+
+  addReaction(message: IChatMessage, emoji: string): void {
+    if (!message._id || !this.userId) {
+      console.error('Cannot add reaction: Missing message ID or employee ID');
+      return;
+    }
+
+    this.closeReactionPicker();
+
+    if (!message.reactions) {
+      message.reactions = [];
+    }
+
+    const existingReactionIndex = message.reactions.findIndex(r => r.userId.toString() === this.employeeId && r.emoji === emoji);
+
+    if (existingReactionIndex !== -1) {
+      message.reactions.splice(existingReactionIndex, 1);
+    } else {
+      message.reactions.push({
+        userId: this.userId,
+        emoji: emoji,
+      });
+    }
+
+    this._chatService.sendReaction(this.conversationId, message._id.toString(), emoji, this.userId).subscribe();
+  }
+
+  getReactionCount(message: IChatMessage, emoji: string): number {
+    if (!message.reactions) return 0;
+    return message.reactions.filter(r => r.emoji === emoji).length;
+  }
+
+  getUniqueReactions(message: IChatMessage): string[] {
+    if (!message.reactions || message.reactions.length === 0) return [];
+    const uniqueEmojis = new Set(message.reactions.map(r => r.emoji));
+    return Array.from(uniqueEmojis);
+  }
+
+  hasReacted(message: IChatMessage, emoji: string): boolean {
+    if (!message.reactions || !this.userId) return false;
+    return message.reactions.some(r => r.userId.toString() === this.userId && r.emoji === emoji);
   }
 
   isMessageDeletedForMe(message: IChatMessage): boolean {
@@ -174,10 +256,19 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
         message: this.message,
         timestamp: new Date(),
       };
-      this._chatService.sendMessageToEmployee(this.userId, this.conversationId, message).subscribe();
-      this.messages.push(message);
-      setTimeout(() => this.scrollToBottom(), 30);
-      this.message = '';
+      this._chatService.sendMessageToEmployee(this.userId, this.conversationId, message).subscribe({
+        next: response => {
+          console.log(response);
+          if (response.status === 200) {
+            this.messages.push(response.message);
+            setTimeout(() => this.scrollToBottom(), 30);
+            this.message = '';
+          } 
+        },
+        error: error => {
+          console.error(error);
+        },
+      });
     }
   }
 
@@ -299,9 +390,9 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
   toggleEmojiPicker(): void {
     this.showEmojiPicker = !this.showEmojiPicker;
   }
-  
+
   addEmoji(event: any): void {
-    console.log(event,"eventtt")
+    console.log(event, 'eventtt');
     const emoji = event.emoji.native;
     this.message += emoji;
     this.showEmojiPicker = false;

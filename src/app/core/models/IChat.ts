@@ -6,6 +6,11 @@ export interface Conversation {
   messages: IChatMessage[];
 }
 
+export interface IReaction {
+  userId: string;
+  emoji: string;
+}
+
 export interface IChatMessage {
   deletedFor?: any;
   senderId?: string;
@@ -16,6 +21,7 @@ export interface IChatMessage {
   messageType?: string;
   timestamp?: Date;
   imageUrl?: any;
+  reactions?: IReaction[]
 }
 
 export interface IConversation {
