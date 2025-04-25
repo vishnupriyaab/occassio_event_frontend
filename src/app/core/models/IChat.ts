@@ -12,16 +12,17 @@ export interface IReaction {
 }
 
 export interface IChatMessage {
-  deletedFor?: any;
-  senderId?: string;
   _id?: any;
-  isDeleted?: boolean;
   user: string | undefined;
   message?: string;
-  messageType?: string;
   timestamp?: Date;
-  imageUrl?: any;
-  reactions?: IReaction[]
+  deletedFor?: any;
+  reactions?: IReaction[];
+  imageUrl?: string;
+  messageType?: string;
+  senderId?: string;
+  isDeleted?: boolean;
+  conversationId?: string;
 }
 
 export interface IConversation {
@@ -35,7 +36,9 @@ export interface IConversation {
 export interface IConversationwithUser {
   _id: string;
   conversationid: string;
+  username: string;
   participants: IUser[];
   messages: IChatMessage[];
-  userId?:string
+  lastMessage?: any;
+  userId?: string;
 }

@@ -19,27 +19,42 @@
     </div>
 
     <div class="mt-3 px-4 max-h-[360px] overflow-y-hidden hover:overflow-y-auto space-y-2 dark-scrollbar">
+      <!-- Replace the conversation div in your HTML template with this updated version -->
       <div
         *ngFor="let conversation of conversations"
         (click)="selectConversation(conversation)"
-        class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white"
+        class="flex items-center justify-between bg-neutral-900 hover:bg-neutral-800 p-3 rounded-md text-white relative"
         [ngClass]="{
           'bg-neutral-800': selectedConversation?.conversationid === conversation.conversationid,
           'bg-neutral-900 hover:bg-neutral-800': selectedConversation?.conversationid !== conversation.conversationid,
         }">
         <div class="flex items-center gap-3">
-          <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+          <div class="relative">
+            <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+          </div>
           <div class="flex flex-col">
-            <span class="font-semibold text-sm">Ann</span>
+            <!-------sideName-------->
+            <span class="font-semibold text-sm">{{ conversation.username || 'Unknown User' }}</span>
             <div class="flex items-center gap-1 text-xs text-gray-300">
-              <span
-                >{{ messages[messages.length - 1].message | slice: 0 : 15
+              <!-- <span
+              >{{ messages[messages.length - 1].message | slice: 0 : 15
                 }}{{ messages[messages.length - 1].message!.length > 15 ? '...' : '' }}</span
-              >
+              > -->
+              <span *ngIf="conversation.lastMessage?.message">
+                {{ conversation.lastMessage.message | slice: 0 : 15 }}
+                {{ conversation.lastMessage.message.length > 15 ? '...' : '' }}
+              </span>
             </div>
           </div>
         </div>
-        <span class="text-[10px] text-gray-300 whitespace-nowrap">{{ messages[messages.length - 1].timestamp | date: 'shortTime' }}</span>
+        <div class="flex flex-col items-end">
+          <span class="text-[10px] text-gray-300 whitespace-nowrap">{{ messages[messages.length - 1].timestamp | date: 'shortTime' }}</span>
+          <div
+            *ngIf="getUnreadCount(conversation.conversationid) > 0"
+            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+            {{ getUnreadCount(conversation.conversationid) > 1 ? '1+' : getUnreadCount(conversation.conversationid) }}
+          </div>
+        </div>
       </div>
     </div>
   </div>

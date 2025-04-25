@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IChatMessage, IConversationwithUser, IReaction } from '../../../core/models/IChat';
+import { IChatMessage, IConversationwithUser } from '../../../core/models/IChat';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { Token } from '../../../core/models/commonAPIResponse';
@@ -19,6 +19,10 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 })
 export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
+  @ViewChild('fileInput') fileInput!: ElementRef; // for note
+
+  private notificationSound: HTMLAudioElement;
+  private unreadMessages: Map<string, number> = new Map();
 
   showReactionPickerIndex: number = -1;
   commonEmojis: string[] = ['👍', '❤️', '😂', '😮', '😢', '👏', '🎉', '🔥', '👎', '✅'];
@@ -26,8 +30,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
   showEmojiPicker = false;
 
   noteContent: string = '';
-
-  @ViewChild('fileInput') fileInput!: ElementRef;
   isUploading: boolean = false;
 
   userOnlineStatus: Map<string, boolean> = new Map();
@@ -48,7 +50,13 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     private _chatService: ChatWithClientService,
     private cookieService: CookieService,
     private _toastService: ToastService
-  ) {}
+  ) {
+    // Initialize notification sound
+    this.notificationSound = new Audio();
+    this.notificationSound.src = '/chat-notification.mp3';
+    console.log(this.notificationSound.src, 'Vishnupriya');
+    this.notificationSound.load();
+  }
 
   ngOnInit() {
     this.token = this.cookieService.get('refresh_token');
@@ -75,7 +83,20 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
 
     this._chatService.getUserMessages().subscribe((data: IChatMessage) => {
       this.messages.push(data);
+      const conversation = this.conversations.find(c => c.conversationid === this.selectedConversation?.conversationid);
+      if (conversation) {
+        conversation.lastMessage = data;
+      }
       setTimeout(() => this.scrollToBottom(), 30);
+    });
+    this._chatService.getMessageNotifications().subscribe(notification => {
+      if (
+        notification.message.user !== 'employee' &&
+        (!this.selectedConversation || this.selectedConversation.conversationid !== notification.conversationId)
+      ) {
+        this.playNotificationSound();
+        this.updateUnreadCount(notification.conversationId);
+      }
     });
     this.getConversations();
 
@@ -87,17 +108,50 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     });
 
     this._chatService.getMessageReactions().subscribe((data: IChatMessage) => {
-      console.log(data,"00000")
+      console.log(data, '00000');
       const message = this.messages.find(m => m._id === data._id);
-      console.log(this.messages,"---------------")
-      if(message){
+      console.log(this.messages, '---------------');
+      if (message) {
         message.reactions = data.reactions;
-        console.log(data.reactions,"22222222222")
+        console.log(data.reactions, '22222222222');
       }
-      console.log(message,"qwertyuiop")
+      console.log(message, 'qwertyuiop');
     });
   }
 
+  // Play notification sound
+  playNotificationSound(): void {
+    if (this.notificationSound) {
+      console.log(this.notificationSound, 'qwertyui');
+      this.notificationSound.play().catch(error => {
+        console.error('Error playing notification sound:', error);
+      });
+    }
+  }
+
+  // Update unread messages count
+  updateUnreadCount(conversationId: string): void {
+    console.log(conversationId, 'conversationId');
+    if (!this.unreadMessages.has(conversationId)) {
+      this.unreadMessages.set(conversationId, 1);
+    } else {
+      const currentCount = this.unreadMessages.get(conversationId) || 0;
+      this.unreadMessages.set(conversationId, currentCount + 1);
+    }
+  }
+
+  // Reset unread count when conversation is selected
+  resetUnreadCount(conversationId: string): void {
+    console.log(conversationId, 'conversationId');
+    this.unreadMessages.set(conversationId, 0);
+  }
+
+  // Get unread count for a conversation
+  getUnreadCount(conversationId: string): number {
+    const unreadCount = this.unreadMessages.get(conversationId) || 0;
+    console.log(unreadCount, 'unreadCount');
+    return unreadCount;
+  }
 
   showReactionPicker(index: number, event: MouseEvent): void {
     event.stopPropagation();
@@ -233,9 +287,9 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     this.isNoteVisible = !this.isNoteVisible;
   }
 
-  saveNote():void{
-    if(!this.noteContent.trim()){
-      return
+  saveNote(): void {
+    if (!this.noteContent.trim()) {
+      return;
     }
     ///passing to service layer
   }
@@ -248,6 +302,13 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     this._chatService.getConversationData().subscribe(conversations => {
       this.conversations = conversations.data;
       console.log(conversations, 'conversation');
+      // If you also need last messages, you can fetch them here
+    this.conversations.forEach(conversation => {
+      this._chatService.getLastMessage(conversation.conversationid).subscribe(lastMessage => {
+        console.log(lastMessage,"lastMessage");
+        conversation.lastMessage = lastMessage;
+      });
+    });
       if (this.conversations.length > 0 && !this.selectedConversation) {
         this.selectConversation(this.conversations[0]);
       }
@@ -259,6 +320,8 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       this._chatService.exitConversation(this.selectedConversation.conversationid).subscribe();
     }
     this.selectedConversation = conversation;
+
+    this.resetUnreadCount(conversation.conversationid);
 
     console.log(conversation, '123456789034567893456789023456789012345678901234567890234567890-');
     this.selectedUserOnlineStatus = this.userOnlineStatus.get(conversation.userId!) || false;
@@ -285,16 +348,20 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
         timestamp: new Date(),
       };
       this._chatService.sendMessageToEmployee(this.employeeId, this.selectedConversation!.conversationid, message).subscribe({
-        next:(response)=>{
-          console.log(response)
-          if(response.status === 200){
+        next: response => {
+          console.log(response);
+          if (response.status === 200) {
             this.messages.push(response.message);
+            if (this.selectedConversation) {
+              this.selectedConversation.lastMessage = response.message;
+            }
             setTimeout(() => this.scrollToBottom(), 30);
             this.message = '';
           }
-        },error:(error)=>{
+        },
+        error: error => {
           console.error(error);
-        }
+        },
       });
     }
   }

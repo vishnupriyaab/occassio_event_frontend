@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import io from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IChatMessage, IConversation, IConversationwithUser, IReaction } from '../../../models/IChat';
 import { ApiResponse } from '../../../models/commonAPIResponse';
 
@@ -12,6 +12,7 @@ import { ApiResponse } from '../../../models/commonAPIResponse';
 export class ChatWithClientService {
   private _socket = io(environment.url);
   private _baseUrl = environment.baseUrl;
+  private _notificationSubject = new Subject<{message: IChatMessage, conversationId: string}>();
 
   constructor(private _http: HttpClient) {}
 
@@ -65,9 +66,18 @@ export class ChatWithClientService {
   getUserMessages(): Observable<IChatMessage> {
     return new Observable(observer => {
       this._socket.on('userMessage', (employeeMessage: IChatMessage) => {
+        //for notification
+        this._notificationSubject.next({
+          message: employeeMessage, 
+          conversationId: employeeMessage.conversationId || ''
+        });//
         observer.next(employeeMessage);
       });
     });
+  }
+
+  getMessageNotifications(): Observable<{message: IChatMessage, conversationId: string}> {
+    return this._notificationSubject.asObservable();
   }
 
   getChats(): Observable<IChatMessage[]> {
@@ -81,6 +91,10 @@ export class ChatWithClientService {
 
   getConversationData(): Observable<ApiResponse<IConversationwithUser[]>> {
     return this._http.get<ApiResponse<IConversationwithUser[]>>(`${this._baseUrl}employee/getconversationdata`);
+  }
+
+  getLastMessage(conversationId: string) {
+    return this._http.get<any>(`${this._baseUrl}employee/lastMessage/${conversationId}`);
   }
 
   deleteMessage(conversationId: string, messageId: string): Observable<{ status: string; message: string }> {
