@@ -20,6 +20,8 @@ import { ChatWithClientComponent } from './modules/employee/chat-with-client/cha
 import { SubscriptionHomeComponent } from './modules/user/subscription-home/subscription-home.component';
 import { SubscriptionDetailsComponent } from './modules/user/subscription-details/subscription-details.component';
 import { ChatWithEmployeeComponent } from './modules/user/chat-with-employee/chat-with-employee.component';
+import { EstimationComponent } from './modules/employee/estimation/estimation.component';
+import { VideoCallComponent } from './shared/components/common/video-call/video-call.component';
 
 export const routes: Routes = [
   //user-side
@@ -114,5 +116,13 @@ export const routes: Routes = [
   {
     path: 'chat-with-client',
     component: ChatWithClientComponent,
+  },
+  {
+    path: 'estimation',
+    component: EstimationComponent,
+  },
+  {
+    path: 'video-call',
+    component: VideoCallComponent,
   },
 ];

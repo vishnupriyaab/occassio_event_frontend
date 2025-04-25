@@ -5,13 +5,17 @@
     </div>
   </div>
   <div class="flex flex-col flex-1 relative">
-    <div class="bg-white pl-6 pr-5 py-3 flex items-center gap-2">
-      <img src="img_2.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover border" />
-      <div class="flex flex-col">
-        <h2 class="font-semibold text-adQuaternary">{{ employeeDetails?.name }}</h2>
-        <span *ngIf="employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Online</span>
-        <span *ngIf="!employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Offline</span>
+    <div class="flex items-center justify-between pr-6">
+      <div class="bg-white pl-6 pr-5 py-3 flex items-center gap-2">
+        <img src="img_2.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover border" />
+        <div class="flex flex-col">
+          <h2 class="font-semibold text-adQuaternary">{{ employeeDetails?.name }}</h2>
+          <span *ngIf="employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Online</span>
+          <span *ngIf="!employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Offline</span>
+        </div>
       </div>
+      <!------videocall button------>
+      <button class="border rounded-md p-2 hover:bg-slate-100"><i class="fa-solid fa-video"></i></button>
     </div>
 
     <div #messageContainer class="flex-1 relative overflow-y-auto">

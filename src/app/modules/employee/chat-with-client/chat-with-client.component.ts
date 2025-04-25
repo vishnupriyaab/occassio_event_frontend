@@ -25,6 +25,8 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
 
   showEmojiPicker = false;
 
+  noteContent: string = '';
+
   @ViewChild('fileInput') fileInput!: ElementRef;
   isUploading: boolean = false;
 
@@ -65,24 +67,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     this._chatService.onUserStatusChange().subscribe({
       next: response => {
         console.log(response, 'respose');
-        // if (response.userId) {
-        //   console.log('000');
-        //   this.userOnlineStatus.set(response.userId, response.status === 'online');
-        //   console.log('000');
-
-        //   if (this.selectedConversation) {
-        //     if (this.selectedConversation.userId === response.userId) {
-        //       this.selectedUserOnlineStatus = response.status === 'online';
-        //     } else {
-        //       const participant = this.selectedConversation.participants.find(
-        //         p => p._id === response.userId
-        //       );
-        //       if (participant) {
-        //         this.selectedUserOnlineStatus = response.status === 'online';
-        //       }
-        //     }
-        //   }
-        // }
       },
       error: error => {
         console.log(error, 'error');
@@ -111,26 +95,9 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
         console.log(data.reactions,"22222222222")
       }
       console.log(message,"qwertyuiop")
-      // if (messageIndex !== -1) {
-      //   if (!this.messages[messageIndex].reactions) {
-      //     this.messages[messageIndex].reactions = [];
-      //   }
-
-      //   if (data.action === 'add') {
-      //     this.messages[messageIndex].reactions!.push(data.reaction);
-      //   } else {
-      //     const reactionIndex = this.messages[messageIndex].reactions!.findIndex(
-      //       r => r.userId.toString() === data.reaction.userId.toString() && r.emoji === data.reaction.emoji
-      //     );
-      //     if (reactionIndex !== -1) {
-      //       this.messages[messageIndex].reactions!.splice(reactionIndex, 1);
-      //     }
-      //   }
-      // }
     });
   }
 
-  //////////////////////////
 
   showReactionPicker(index: number, event: MouseEvent): void {
     event.stopPropagation();
@@ -264,6 +231,13 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
   //note
   toggleNotePanel() {
     this.isNoteVisible = !this.isNoteVisible;
+  }
+
+  saveNote():void{
+    if(!this.noteContent.trim()){
+      return
+    }
+    ///passing to service layer
   }
 
   ngAfterViewChecked() {

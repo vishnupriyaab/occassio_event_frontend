@@ -34,15 +34,15 @@
           <td class="py-1 md:py-3 px-2 md:px-4 text-xs md:text-base">{{ client.guestCount }}</td>
           <td class="py-1 md:py-3 px-2 md:px-4">
             <div class="flex flex-row xs:flex-row justify-start gap-1">
-              <button class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
+              <a href="/estimation" class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
                 <i class="fa-solid fa-file-pen"></i>
-              </button>
+              </a>
               <button (click)="openEventDetails(client.clientId)" class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
                 <i class="fa-solid fa-circle-info"></i>
               </button>
-              <button class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
+              <!-- <button class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
                 <i class="fa-solid fa-message"></i>
-              </button>
+              </button> -->
             </div>
           </td>
         </tr>

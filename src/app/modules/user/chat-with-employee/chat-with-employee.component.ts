@@ -246,7 +246,9 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
   scrollToBottom(): void {
     try {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-    } catch (err) {}
+    } catch (err) {
+      throw err
+    }
   }
 
   sendMessage() {
