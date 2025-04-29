@@ -111,15 +111,15 @@ export const routes: Routes = [
         path: 'clients',
         component: MyClientsComponent,
       },
+      {
+        path: 'estimation/:clientId',
+        component: EstimationComponent,
+      },
     ],
   },
   {
     path: 'chat-with-client',
     component: ChatWithClientComponent,
-  },
-  {
-    path: 'estimation',
-    component: EstimationComponent,
   },
   {
     path: 'video-call',

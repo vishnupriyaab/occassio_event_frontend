@@ -19,7 +19,6 @@
     </div>
 
     <div class="mt-3 px-4 max-h-[360px] overflow-y-hidden hover:overflow-y-auto space-y-2 dark-scrollbar">
-      <!-- Replace the conversation div in your HTML template with this updated version -->
       <div
         *ngFor="let conversation of conversations"
         (click)="selectConversation(conversation)"
@@ -30,16 +29,11 @@
         }">
         <div class="flex items-center gap-3">
           <div class="relative">
-            <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+            <img src="client.png" alt="Profile" class="w-10 h-10 rounded-full object-cover bg-white" />
           </div>
           <div class="flex flex-col">
-            <!-------sideName-------->
             <span class="font-semibold text-sm">{{ conversation.username || 'Unknown User' }}</span>
             <div class="flex items-center gap-1 text-xs text-gray-300">
-              <!-- <span
-              >{{ messages[messages.length - 1].message | slice: 0 : 15
-                }}{{ messages[messages.length - 1].message!.length > 15 ? '...' : '' }}</span
-              > -->
               <span *ngIf="conversation.lastMessage?.message">
                 {{ conversation.lastMessage.message | slice: 0 : 15 }}
                 {{ conversation.lastMessage.message.length > 15 ? '...' : '' }}
@@ -48,11 +42,16 @@
           </div>
         </div>
         <div class="flex flex-col items-end">
-          <span class="text-[10px] text-gray-300 whitespace-nowrap">{{ messages[messages.length - 1].timestamp | date: 'shortTime' }}</span>
-          <div
+          <span class="text-[10px] text-gray-300 whitespace-nowrap">{{ conversation.lastMessage.timestamp | date: 'shortTime' }}</span>
+          <!-- <div
             *ngIf="getUnreadCount(conversation.conversationid) > 0"
             class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
             {{ getUnreadCount(conversation.conversationid) > 1 ? '1+' : getUnreadCount(conversation.conversationid) }}
+          </div> -->
+          <div
+            *ngIf="getUnreadCount(conversation.conversationid) > 0"
+            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+            {{ getUnreadCount(conversation.conversationid) }}
           </div>
         </div>
       </div>
@@ -66,10 +65,10 @@
       [style.width]="isNoteVisible ? 'calc(100% - 50%)' : '100%'">
       <div class="bg-black px-4 py-3 flex items-center gap-4 justify-between">
         <div class="flex items-center gap-4">
-          <img src="img_1.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+          <img src="client.png" alt="client" class="w-9 h-9 rounded-full object-cover bg-white" />
           <div class="flex flex-col">
             <h2 class="font-semibold text-white flex flex-col">
-              Ann
+              {{ selectedConversation?.username || 'No conversation selected' }}
               <span *ngIf="userOnlineStatus" class="text-green-400 text-xs font-light">Online</span>
               <span *ngIf="!userOnlineStatus" class="text-gray-300 text-xs font-light">Offline</span>
             </h2>
@@ -198,18 +197,38 @@
       class="absolute top-0 right-0 h-screen overflow-hidden bg-black text-white w-1/2 shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col"
       [ngClass]="{ 'translate-x-0 ': isNoteVisible, 'translate-x-full hidden': !isNoteVisible }">
       <div class="bg-baseYellow text-white p-4 font-bold text-center rounded-t-3xl">Note</div>
+      <div *ngIf="isEditing" class="flex flex-col flex-grow">
       <textarea
         name="note"
+        [(ngModel)]="noteContent"
         class="bg-black text-white w-full font-Roboto text-sm p-3 flex-grow"
         style="
           background-image: linear-gradient(to bottom, transparent, transparent 19px, rgb(32, 32, 32) 19px, rgb(70, 71, 72) 40px);
           background-size: 100% 20px;
           line-height: 20px;
           padding-top: 0;
-        "></textarea>
+        "
+        placeholder="Type your notes here..."></textarea>
       <div class="flex items-center justify-center bg-black p-3 w-full">
-        <button (click)="saveNote()" class="text-white font-bold bg-neutral-900 w-20 h-8 rounded-lg hover:bg-neutral-800">Save</button>
+        <button (click)="saveNote()" class="text-white font-bold bg-neutral-900 w-20 h-8 rounded-lg hover:bg-neutral-800" [disabled]="isUploading">
+          <span *ngIf="!isUploading">Save</span>
+          <span *ngIf="isUploading">Saving...</span>
+        </button> 
       </div>
     </div>
+
+    <!---- editing ---->
+    <div *ngIf="!isEditing" class="flex flex-col flex-grow">
+      <div class="flex-grow p-3 overflow-auto whitespace-pre-wrap">
+        {{ noteContent || 'No notes yet' }}
+      </div>
+      <div class="flex items-center justify-center bg-black p-3 w-full">
+        <button (click)="editNote()" class="text-white font-bold bg-neutral-900 w-20 h-8 rounded-lg hover:bg-neutral-800">
+          Edit
+        </button>
+      </div>
+    </div>
+    </div>
+
   </div>
 </div>

@@ -9,6 +9,8 @@ import { ChatWithClientService } from '../../../core/services/employee/chatwithC
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { NoteService } from '../../../core/services/employee/noteService/note.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-chat-with-client',
@@ -19,7 +21,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 })
 export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
-  @ViewChild('fileInput') fileInput!: ElementRef; // for note
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   private notificationSound: HTMLAudioElement;
   private unreadMessages: Map<string, number> = new Map();
@@ -31,6 +33,9 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
 
   noteContent: string = '';
   isUploading: boolean = false;
+  isEditing: boolean = false;
+
+  noteId: string | null = null;
 
   userOnlineStatus: Map<string, boolean> = new Map();
   selectedUserOnlineStatus: boolean = false;
@@ -49,12 +54,11 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
   constructor(
     private _chatService: ChatWithClientService,
     private cookieService: CookieService,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private _noteService: NoteService
   ) {
-    // Initialize notification sound
     this.notificationSound = new Audio();
     this.notificationSound.src = '/chat-notification.mp3';
-    console.log(this.notificationSound.src, 'Vishnupriya');
     this.notificationSound.load();
   }
 
@@ -63,11 +67,11 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     if (this.token) {
       this.decodedToken = jwtDecode(this.token);
       this.employeeId = this.decodedToken?.id;
-      console.log(this.employeeId, '000000000');
+      // console.log(this.employeeId, '000000000');
     } else {
-      console.log('Unavailable token!');
+      // console.log('Unavailable token!');
     }
-    console.log('Refresh Token:', this.token);
+    // console.log('Refresh Token:', this.token);
     this._chatService.connect();
 
     this._chatService.setEmployeeOnline(this.employeeId);
@@ -89,8 +93,36 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       }
       setTimeout(() => this.scrollToBottom(), 30);
     });
+    // this._chatService.getMessageNotifications().subscribe(notification => {
+    //   console.log(notification,"notification");
+    //   if (
+    //     notification.message.user !== 'employee' &&
+    //     (!this.selectedConversation || this.selectedConversation.conversationid !== notification.conversationId)
+    //   ) {
+    //     this.playNotificationSound();
+    //     this.updateUnreadCount(notification.conversationId);
+    //   }
+    // });
     this._chatService.getMessageNotifications().subscribe(notification => {
+      console.log('Notification conversationId:', notification.conversationId);
+      // const shouldUpdateUnread =
+      //   notification.message &&
+      //   notification.message.user !== 'employee' &&
+      //   (!this.selectedConversation || this.selectedConversation.conversationid !== notification.message?.conversationId);
+
+      // console.log('Should update unread count?', shouldUpdateUnread);
+
+      // if (shouldUpdateUnread) {
+      //   this.playNotificationSound();
+      //   this.updateUnreadCount(notification.conversationId);
+      // }
+      if (!notification.conversationId) {
+        console.error('Empty conversationId in notification', notification);
+        return;
+      }
+
       if (
+        notification.message &&
         notification.message.user !== 'employee' &&
         (!this.selectedConversation || this.selectedConversation.conversationid !== notification.conversationId)
       ) {
@@ -119,7 +151,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     });
   }
 
-  // Play notification sound
   playNotificationSound(): void {
     if (this.notificationSound) {
       console.log(this.notificationSound, 'qwertyui');
@@ -129,27 +160,34 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     }
   }
 
-  // Update unread messages count
   updateUnreadCount(conversationId: string): void {
-    console.log(conversationId, 'conversationId');
+    if (!conversationId) {
+      // console.error('Empty conversationId provided to updateUnreadCount');
+      return;
+    }
+    // console.log('Before update, unread count:', this.unreadMessages.get(conversationId) || 0);
+
     if (!this.unreadMessages.has(conversationId)) {
       this.unreadMessages.set(conversationId, 1);
     } else {
       const currentCount = this.unreadMessages.get(conversationId) || 0;
       this.unreadMessages.set(conversationId, currentCount + 1);
     }
+
+    // console.log('After update, unread count:', this.unreadMessages.get(conversationId));
   }
 
-  // Reset unread count when conversation is selected
   resetUnreadCount(conversationId: string): void {
-    console.log(conversationId, 'conversationId');
+    // console.log(conversationId, 'conversationId');
     this.unreadMessages.set(conversationId, 0);
   }
 
-  // Get unread count for a conversation
   getUnreadCount(conversationId: string): number {
+    // console.log('GETTING - conversationId:', conversationId);
+    // console.log('GETTING - Current unread map:', Object.fromEntries(this.unreadMessages));
+
     const unreadCount = this.unreadMessages.get(conversationId) || 0;
-    console.log(unreadCount, 'unreadCount');
+    // console.log(unreadCount, 'unreadCount');
     return unreadCount;
   }
 
@@ -287,11 +325,116 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     this.isNoteVisible = !this.isNoteVisible;
   }
 
+  editNote(): void {
+    this.isEditing = true;
+  }
+
   saveNote(): void {
     if (!this.noteContent.trim()) {
+      const toastOption: IToastOption = {
+        severity: 'warning-toast',
+        summary: 'Warning',
+        detail: 'Note content cannot be empty',
+      };
+      this._toastService.showToast(toastOption);
       return;
     }
-    ///passing to service layer
+
+    this.isUploading = true;
+    const userId = this.selectedConversation?.userId!;
+
+    console.log('werty');
+    // this._noteService.saveNote(this.noteContent, this.employeeId, this.selectedConversation?.conversationid, userId).subscribe({
+    //   next: response => {
+    //     this.isUploading = false;
+    //     this.isEditing = false;
+    //     console.log(response, 'data');
+    //     const toastOption: IToastOption = {
+    //       severity: 'success-toast',
+    //       summary: 'Success',
+    //       detail: 'Note saved successfully',
+    //     };
+    //     this._toastService.showToast(toastOption);
+    //     // this.noteContent = '';
+    //   },
+    //   error: error => {
+    //     console.log(error, 'error');
+    //     this.isUploading = false;
+    //     const toastOption: IToastOption = {
+    //       severity: 'danger-toast',
+    //       summary: 'Error',
+    //       detail: 'Failed to save Note',
+    //     };
+    //     this._toastService.showToast(toastOption);
+    //     console.log(error, 'error');
+    //   },
+    // });
+
+    // If we have a noteId, update the existing note, otherwise create a new one
+    const noteObservable = this.noteId
+      ? this._noteService.editNote(this.noteId, this.noteContent)
+      : this._noteService.saveNote(this.noteContent, this.employeeId, this.selectedConversation?.conversationid, userId);
+
+    noteObservable.subscribe({
+      next: response => {
+        this.isUploading = false;
+        this.isEditing = false;
+        if (response.data && response.data._id) {
+          this.noteId = response.data._id;
+        }
+
+        const toastOption: IToastOption = {
+          severity: 'success-toast',
+          summary: 'Success',
+          detail: this.noteId ? 'Note updated successfully' : 'Note saved successfully',
+        };
+        this._toastService.showToast(toastOption);
+      },
+      error: error => {
+        console.log(error, 'error');
+        this.isUploading = false;
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: this.noteId ? 'Failed to update Note' : 'Failed to save Note',
+        };
+        this._toastService.showToast(toastOption);
+      },
+    });
+  }
+
+  loadNotes(): void {
+    if (!this.selectedConversation || !this.employeeId) return;
+
+    const userId = this.selectedConversation?.userId!;
+    console.log(this.selectedConversation.conversationid, this.employeeId, userId, 'all filedss');
+
+    this._noteService.getNotes(userId).subscribe({
+      next: response => {
+        if (response.data) {
+          this.noteContent = response.data.content;
+          this.noteId = response.data._id!;
+          console.log(this.noteContent, 'note-content');
+          this.isEditing = false;
+        } else {
+          this.noteContent = '';
+          this.noteId = null;
+          this.isEditing = true;
+        }
+      },
+      error: error => {
+        console.error('Error loading notes:', error);
+        this.isEditing = true;
+        this.noteId = null;
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Failed to fetch Note',
+        };
+        this._toastService.showToast(toastOption);
+        return;
+      },
+    });
   }
 
   ngAfterViewChecked() {
@@ -303,12 +446,12 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       this.conversations = conversations.data;
       console.log(conversations, 'conversation');
       // If you also need last messages, you can fetch them here
-    this.conversations.forEach(conversation => {
-      this._chatService.getLastMessage(conversation.conversationid).subscribe(lastMessage => {
-        console.log(lastMessage,"lastMessage");
-        conversation.lastMessage = lastMessage;
+      this.conversations.forEach(conversation => {
+        this._chatService.getLastMessage(conversation.conversationid).subscribe(lastMessage => {
+          console.log(lastMessage, 'lastMessage');
+          conversation.lastMessage = lastMessage;
+        });
       });
-    });
       if (this.conversations.length > 0 && !this.selectedConversation) {
         this.selectConversation(this.conversations[0]);
       }
@@ -327,14 +470,15 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     this.selectedUserOnlineStatus = this.userOnlineStatus.get(conversation.userId!) || false;
 
     this.getConversationId(this.selectedConversation.conversationid);
+    this.loadNotes();
   }
 
   getConversationId(conversationId: string) {
     console.log();
     this._chatService.getConversationId(conversationId).subscribe((response: any) => {
-      console.log(response, '222222222');
+      // console.log(response, '222222222');
       this.messages = response.data.chatMessages;
-      console.log(this.messages, 'messaessssssss');
+      // console.log(this.messages, 'messaessssssss');
       this._chatService.joinConversation(conversationId).subscribe();
       setTimeout(() => this.scrollToBottom(), 30);
     });

@@ -10,8 +10,8 @@
         <img src="img_2.JPG" alt="Profile" class="w-10 h-10 rounded-full object-cover border" />
         <div class="flex flex-col">
           <h2 class="font-semibold text-adQuaternary">{{ employeeDetails?.name }}</h2>
-          <span *ngIf="employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Online</span>
-          <span *ngIf="!employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Offline</span>
+          <span *ngIf="!employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Online</span>
+          <span *ngIf="employeeOnlineStatus" class="text-adQuaternary text-xs font-light">Offline</span>
         </div>
       </div>
       <!------videocall button------>

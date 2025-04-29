@@ -1,6 +1,8 @@
-interface Note {
-    id?: string;
-    content: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-  }
+export interface INote {
+  _id?: string;
+  content: string;
+  employeeId?: string;
+  userId?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

@@ -8,6 +8,7 @@ module.exports = {
         KayPhoDu: ['Kay Pho Du', 'serif'],
         Roboto: ['Roboto', 'serif'],
         Katibeh: ['Katibeh', 'serif'],
+        kalam: ['Kalam', 'cursive']
       },
       colors: {
         adLight: '#F9F7EE',
@@ -16,6 +17,7 @@ module.exports = {
         adTertiary: '#B9B28A',
         adQuaternary: '#504B38',
         baseYellow: '#b8860b',
+        estimationBlue: '#090841'
       },
     },
   },

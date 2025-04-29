@@ -24,9 +24,6 @@
     background-color: #4b5563;
     border-radius: 10px;
   }
-  /* Add this to your chat-with-client.component.css file */
-
-  /* Ensure proper hover transitions for the reaction button */
   .group:hover .opacity-0.group-hover\:opacity-100 {
     visibility: visible;
     opacity: 1;

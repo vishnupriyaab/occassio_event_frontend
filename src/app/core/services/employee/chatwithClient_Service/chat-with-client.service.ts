@@ -12,7 +12,7 @@ import { ApiResponse } from '../../../models/commonAPIResponse';
 export class ChatWithClientService {
   private _socket = io(environment.url);
   private _baseUrl = environment.baseUrl;
-  private _notificationSubject = new Subject<{message: IChatMessage, conversationId: string}>();
+  private _notificationSubject = new Subject<{ message: IChatMessage; conversationId: string }>();
 
   constructor(private _http: HttpClient) {}
 
@@ -66,17 +66,21 @@ export class ChatWithClientService {
   getUserMessages(): Observable<IChatMessage> {
     return new Observable(observer => {
       this._socket.on('userMessage', (employeeMessage: IChatMessage) => {
-        //for notification
+        console.log('Received message:', employeeMessage);
+        console.log('Message conversationId:', employeeMessage.conversationId);
+        if (!employeeMessage.conversationId) {
+          console.error('Message missing conversationId:', employeeMessage);
+        }
         this._notificationSubject.next({
-          message: employeeMessage, 
-          conversationId: employeeMessage.conversationId || ''
-        });//
+          message: employeeMessage,
+          conversationId: employeeMessage.conversationId || '',
+        });
         observer.next(employeeMessage);
       });
     });
   }
 
-  getMessageNotifications(): Observable<{message: IChatMessage, conversationId: string}> {
+  getMessageNotifications(): Observable<{ message: IChatMessage; conversationId: string }> {
     return this._notificationSubject.asObservable();
   }
 

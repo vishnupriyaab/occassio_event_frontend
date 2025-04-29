@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer utilities {
+  .dark-scrollbar {
+    scrollbar-color: #4b5563 #171717;
+    scrollbar-width: thin;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    opacity: 0;
+  }
+
+  .dark-scrollbar:hover::-webkit-scrollbar {
+    opacity: 1;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-track {
+    background: #171717;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+    border-radius: 10px;
+  }
+  .group:hover .opacity-0.group-hover\:opacity-100 {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .opacity-0.group-hover\:opacity-100 {
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      visibility 0s,
+      opacity 0.2s linear;
+  }
+
+  /* Dark scrollbar styles (already in your HTML) */
+  .dark-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-track {
+    background: #262626;
+    border-radius: 4px;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-thumb {
+    background: #525252;
+    border-radius: 4px;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #737373;
+  }
+}
