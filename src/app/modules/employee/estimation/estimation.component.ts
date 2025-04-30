@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NoteService } from '../../../core/services/employee/noteService/note.service';
-import { response } from 'express';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
+import { EstimationService } from '../../../core/services/employee/estimationService/estimation.service';
+import IEstimation from '../../../core/models/IEstimation';
 
 @Component({
   selector: 'app-estimation',
@@ -27,7 +28,8 @@ export class EstimationComponent {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private _noteService: NoteService,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private _estimationService: EstimationService
   ) {}
 
   ngOnInit() {
@@ -35,8 +37,8 @@ export class EstimationComponent {
     this.setupValueChanges();
     this.route.params.subscribe(params => {
       this.userId = params['clientId'];
-      console.log(this.userId,"123456789")
-      if(this.userId){
+      console.log(this.userId, '123456789');
+      if (this.userId) {
         this.loadNote();
       }
     });
@@ -134,7 +136,7 @@ export class EstimationComponent {
   nextStep(): void {
     if (this.step < this.totalSteps) {
       if (this.step === 1) {
-        const step1Items = ['venue', 'seating', 'welcomeDrink', 'mainCourse', 'dessert', 'decoration'];
+        const step1Items = ['venue', 'seating', 'welcomeDrink', 'mainCourse', 'dessert'];
         const isStep1Valid = step1Items.every(item => this.estimationForm.get(item)!.valid);
 
         if (!isStep1Valid) {
@@ -154,7 +156,7 @@ export class EstimationComponent {
   }
 
   saveEstimation(): void {
-    const step2Items = ['soundSystem', 'photography'];
+    const step2Items = ['soundSystem', 'photography', 'decoration'];
     const isStep2Valid = step2Items.every(item => this.estimationForm.get(item)!.valid);
 
     if (!isStep2Valid) {
@@ -163,8 +165,83 @@ export class EstimationComponent {
     }
 
     console.log('Saving estimation:', this.estimationForm.value);
+    console.log('TypeOf estimation:', typeof this.estimationForm.value);
+    console.log('Estimation saved successfully! Total: ', this.grandTotal);
 
-    alert('Estimation saved successfully! Total: ' + this.grandTotal);
+    const formValue = this.estimationForm.value;
+    const estimationData: IEstimation = {
+      userId: this.userId,
+      venue: {
+        details: formValue.venue.details,
+        noOf: formValue.venue.quantity,
+        cost: formValue.venue.cost,
+      },
+      seating: {
+        details: formValue.seating.details,
+        noOf: formValue.seating.quantity,
+        cost: formValue.seating.cost,
+      },
+      food: {
+        welcomeDrink: {
+          details: formValue.welcomeDrink.details,
+          noOf: formValue.welcomeDrink.quantity,
+          cost: formValue.welcomeDrink.cost,
+        },
+        mainCourse: {
+          details: formValue.mainCourse.details,
+          noOf: formValue.mainCourse.quantity,
+          cost: formValue.mainCourse.cost,
+        },
+        dessert: {
+          details: formValue.dessert.details,
+          noOf: formValue.dessert.quantity,
+          cost: formValue.dessert.cost,
+        },
+      },
+      soundSystem: {
+        details: formValue.soundSystem.details,
+        noOf: formValue.soundSystem.quantity,
+        cost: formValue.soundSystem.cost,
+      },
+      PhotoAndVideo: {
+        details: formValue.photography.details,
+        noOf: formValue.photography.quantity,
+        cost: formValue.photography.cost,
+      },
+      Decoration: {
+        details: formValue.decoration.details,
+        noOf: formValue.decoration.quantity,
+        cost: formValue.decoration.cost,
+      },
+      grandTotal: this.grandTotal.toString(), // Convert to string as per interface
+    };
+
+    console.log(estimationData, '1234567890-');
+
+    this._estimationService.saveEstimation(estimationData, this.grandTotal, this.userId).subscribe({
+      next: response => {
+        console.log(response, 'resposnseee');
+        if (response) {
+          const toastOption: IToastOption = {
+            severity: 'success-toast',
+            summary: 'Success',
+            detail: 'Estimation is added',
+          };
+          this._toastService.showToast(toastOption);
+          return;
+        }
+      },
+      error: error => {
+        console.log(error, 'error');
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Failed to add Estimation',
+        };
+        this._toastService.showToast(toastOption);
+        return;
+      },
+    });
   }
 
   cancelEstimation(): void {
@@ -199,7 +276,7 @@ export class EstimationComponent {
   }
 
   loadNote(): void {
-    console.log(this.userId,"userIddddd")
+    console.log(this.userId, 'userIddddd');
     this._noteService.getNotes(this.userId).subscribe({
       next: response => {
         console.log(response, 'response');

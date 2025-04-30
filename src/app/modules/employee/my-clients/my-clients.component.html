@@ -34,7 +34,7 @@
           <td class="py-1 md:py-3 px-2 md:px-4 text-xs md:text-base">{{ client.guestCount }}</td>
           <td class="py-1 md:py-3 px-2 md:px-4">
             <div class="flex flex-row xs:flex-row justify-start gap-1">
-              <a href="/employee/estimation/{{client.clientId}}" class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
+              <a href="/employee/estimation/{{ client.clientId }}" class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
                 <i class="fa-solid fa-file-pen"></i>
               </a>
               <button (click)="openEventDetails(client.clientId)" class="text-adLight text-sm md:text-lg py-1 px-1 md:px-3 rounded-full">
@@ -122,7 +122,92 @@
       </div>
     </div>
 
-    <div class="flex justify-end">
+    <div *ngIf="estimation" class="text-adLight mb-4">
+      <p class="text-lg font-semibold">{{ estimation.fetchUserDetails.name }}'s Event: {{ estimation.fetchEntryDataDetails.eventName }}</p>
+      <p class="text-sm">{{ estimation.fetchEntryDataDetails.startDate }} to {{ estimation.fetchEntryDataDetails.endDate }}</p>
+      <div class="mt-4 bg-neutral-700 p-4 rounded-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p class="font-semibold mb-2">Expecting Guests: {{ estimation.fetchEntryDataDetails.guestCount }}</p>
+            <div class="mb-4">
+              <p class="font-semibold">Location:</p>
+              <p class="text-sm">
+                {{ estimation.fetchEntryDataDetails.district }}, {{ estimation.fetchEntryDataDetails.state }},
+                {{ estimation.fetchEntryDataDetails.pincode }}
+              </p>
+            </div>
+            <div class="mb-3">
+              <p class="font-semibold">Venue</p>
+              <p class="text-sm">
+                {{ estimation.fetchEstimation.venue.details }}, {{ estimation.fetchEstimation.venue.noOf }},
+                {{ estimation.fetchEstimation.venue.cost }}
+              </p>
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Seating</p>
+              <p class="text-sm">
+                {{ estimation.fetchEstimation.seating.details }}, {{ estimation.fetchEstimation.seating.noOf }},
+                {{ estimation.fetchEstimation.seating.cost }}
+              </p>
+            </div>
+
+            <div class="mt-24 mb-0">
+              <p class="font-semibold">Grand Total</p>
+              <p class="text-md font-bold">
+                Rs. {{ estimation.fetchEstimation.grandTotal }}/-
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-3">
+              <p class="font-semibold">Food Options</p>
+              <div class="ml-2">
+                <p class="text-sm">
+                  Welcome drink: {{ estimation.fetchEstimation.food.welcomeDrink.details }}, {{ estimation.fetchEstimation.food.welcomeDrink.noOf }},
+                  {{ estimation.fetchEstimation.food.welcomeDrink.cost }}
+                </p>
+                <p class="text-sm">
+                  Main course: {{ estimation.fetchEstimation.food.mainCourse.details }}, {{ estimation.fetchEstimation.food.mainCourse.noOf }},
+                  {{ estimation.fetchEstimation.food.mainCourse.cost }}
+                </p>
+                <p class="text-sm">
+                  Dessert: {{ estimation.fetchEstimation.food.dessert.details }}, {{ estimation.fetchEstimation.food.dessert.noOf }},
+                  {{ estimation.fetchEstimation.food.dessert.cost }}
+                </p>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Decoration</p>
+              {{ estimation.fetchEstimation.Decoration.details }}, {{ estimation.fetchEstimation.Decoration.noOf }},
+              {{ estimation.fetchEstimation.Decoration.cost }}
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Sound & Entertainment</p>
+              {{ estimation.fetchEstimation.soundSystem.details }}, {{ estimation.fetchEstimation.soundSystem.noOf }},
+              {{ estimation.fetchEstimation.soundSystem.cost }}
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">Photography</p>
+              {{ estimation.fetchEstimation.PhotoAndVideo.details }}, {{ estimation.fetchEstimation.PhotoAndVideo.noOf }},
+              {{ estimation.fetchEstimation.PhotoAndVideo.cost }}
+            </div>
+
+            <div class="mb-3">
+              <p class="font-semibold">User Details</p>
+              <p>Email: {{ estimation.fetchEntryDataDetails.email }}</p>
+              <p>Phone: {{ estimation.fetchEntryDataDetails.phone }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center">
       <button (click)="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Close</button>
     </div>
   </div>

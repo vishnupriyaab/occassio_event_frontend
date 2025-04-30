@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
+import { EstimationService } from '../../../core/services/employee/estimationService/estimation.service';
 
 @Component({
   selector: 'app-subscription-details',
@@ -15,6 +16,7 @@ import { ToastService } from '../../../core/services/common/toaster/toast.servic
 export class SubscriptionDetailsComponent implements OnInit {
   private _subscriptionService = inject(SubscriptionService);
   private _toastService = inject(ToastService);
+  // private _estimationService = inject(EstimationService);
   selectedClient: IClientData | null = null;
   token: string = '';
   access_token: string = '';
@@ -24,6 +26,14 @@ export class SubscriptionDetailsComponent implements OnInit {
   }
 
   fetchSubClientData() {
+    this._subscriptionService.fetchEstimation().subscribe({
+      next: response => {
+        console.log(response, 'response');
+      },
+      error: error => {
+        console.log(error, 'error');
+      },
+    });
     this._subscriptionService.fetchSubscribedUser().subscribe({
       next: response => {
         console.log(response, 'response');

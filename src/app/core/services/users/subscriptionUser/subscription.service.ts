@@ -16,4 +16,9 @@ export class SubscriptionService {
   fetchSubscribedUser(): Observable<ApiResponse<IClientData>> {
     return this._http.get<ApiResponse<IClientData>>(`${this._baseUrl}user/sub-details`, {});
   }
+
+  fetchEstimation(): Observable<ApiResponse<any>> {
+    return this._http.get<ApiResponse<any>>(`${this._baseUrl}user/estimation`, {});
+  }
+
 }
