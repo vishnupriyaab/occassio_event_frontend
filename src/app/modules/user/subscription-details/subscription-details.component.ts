@@ -16,10 +16,10 @@ import { EstimationService } from '../../../core/services/employee/estimationSer
 export class SubscriptionDetailsComponent implements OnInit {
   private _subscriptionService = inject(SubscriptionService);
   private _toastService = inject(ToastService);
-  // private _estimationService = inject(EstimationService);
   selectedClient: IClientData | null = null;
   token: string = '';
   access_token: string = '';
+  estimation: any;
 
   ngOnInit(): void {
     this.fetchSubClientData();
@@ -28,25 +28,30 @@ export class SubscriptionDetailsComponent implements OnInit {
   fetchSubClientData() {
     this._subscriptionService.fetchEstimation().subscribe({
       next: response => {
-        console.log(response, 'response');
+        // console.log(response, 'response');
+        if (response.data.fetchEstimation === null) {
+          this._subscriptionService.fetchSubscribedUser().subscribe({
+            next: response => {
+              console.log(response, 'response');
+              this.selectedClient = response.data;
+            },
+            error: error => {
+              console.log(error);
+              const toastOption: IToastOption = {
+                severity: 'danger-toast',
+                summary: 'Error',
+                detail: 'Failed to fetch user.',
+              };
+              this._toastService.showToast(toastOption);
+            },
+          });
+        } else {
+          console.log(response.data, '12345678900987654321');
+          this.estimation = response.data;
+        }
       },
       error: error => {
         console.log(error, 'error');
-      },
-    });
-    this._subscriptionService.fetchSubscribedUser().subscribe({
-      next: response => {
-        console.log(response, 'response');
-        this.selectedClient = response.data;
-      },
-      error: error => {
-        console.log(error);
-        const toastOption: IToastOption = {
-          severity: 'danger-toast',
-          summary: 'Error',
-          detail: 'Failed to fetch user.',
-        };
-        this._toastService.showToast(toastOption);
       },
     });
   }

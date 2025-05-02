@@ -1,86 +1,191 @@
-<div class="container min-h-screen bg-adLight px-10 py-6 text-black">
-  <div class="bg-adLight shadow-md rounded-xl">
-  <div class="flex flex-col lg:flex-row gap-6 p-10">
-    <div class="lg:w-3/4 w-full bg-white shadow-md rounded-xl p-6">
-      <h2 class="text-3xl font-bold mb-4 font-kaushan text-baseYellow">Your Booking Details</h2>
+<div class="container min-h-screen bg-adLight px-10 py-3 text-black flex justify-center items-center">
+  <div class="bg-adLight shadow-md max-w-6xl w-full">
+    <div class="flex flex-col lg:flex-row gap-6 p-5">
+      <div class="lg:w-3/4 w-full bg-white shadow-md rounded-xl p-6 ">
+        <h2 class="text-3xl font-bold mb-4 font-kaushan text-baseYellow">Your Booking Details</h2>
 
-      <div *ngIf="selectedClient as client">
-        <p class="text-lg font-semibold mb-2 font-KayPhoDu text-blue-950">Client Name: {{ client.name }}</p>
-        <p class="mb-4 font-KayPhoDu text-blue-950">Event: {{ client.eventName }} | Guests: {{ client.guestCount }}</p>
+        <div *ngIf="selectedClient as client">
+          <p class="text-lg font-semibold mb-2 font-KayPhoDu text-blue-950">Client Name: {{ client.name }}</p>
+          <p class="mb-4 font-KayPhoDu text-blue-950">Event: {{ client.eventName }} | Guests: {{ client.guestCount }}</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <p class="font-semibold font-KayPhoDu text-blue-950">Venue:</p>
-            <p class="font-KayPhoDu text-blue-950">{{ client.venue }}</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="font-semibold font-KayPhoDu text-blue-950">Venue:</p>
+              <p class="font-KayPhoDu text-blue-950">{{ client.venue }}</p>
+            </div>
+
+            <div>
+              <p class="font-semibold font-KayPhoDu text-blue-950">Location:</p>
+              <p class="font-KayPhoDu text-blue-950">{{ client.district }},</p>
+              <p class="font-KayPhoDu text-blue-950">{{ client.state }} - {{ client.pincode }}</p>
+            </div>
+
+            <div>
+              <p class="font-semibold font-KayPhoDu text-blue-950">Event Duration:</p>
+              <p class="font-KayPhoDu text-blue-950">{{ client.startDate | date: 'mediumDate' }} to {{ client.endDate | date: 'mediumDate' }}</p>
+            </div>
           </div>
 
-          <div>
-            <p class="font-semibold font-KayPhoDu text-blue-950">Location:</p>
-            <p class="font-KayPhoDu text-blue-950">{{ client.district }},</p>
-            <p class="font-KayPhoDu text-blue-950">{{ client.state }} - {{ client.pincode }}</p>
+          <div class="mt-6 font-KayPhoDu text-blue-950">
+            <h3 class="text-lg font-semibold">Selected Services:</h3>
+            <ng-container *ngIf="client.decoration || client.sound || client.seating || client.photography; else noServices">
+              <ul class="list-disc ml-6 space-y-1">
+                <li *ngIf="client.decoration">Decoration</li>
+                <li *ngIf="client.sound">Sound & Entertainment</li>
+                <li *ngIf="client.seating">Seating</li>
+                <li *ngIf="client.photography">Photography</li>
+              </ul>
+            </ng-container>
+            <ng-template #noServices>
+              <p class="">No services selected</p>
+            </ng-template>
           </div>
 
-          <div>
-            <p class="font-semibold font-KayPhoDu text-blue-950">Event Duration:</p>
-            <p class="font-KayPhoDu text-blue-950">{{ client.startDate | date: 'mediumDate' }} to {{ client.endDate | date: 'mediumDate' }}</p>
-          </div>
+          <div class="mt-4 font-KayPhoDu text-blue-950">
+            <h3 class="text-lg font-semibold">Food Options:</h3>
+            <ng-container
+              *ngIf="
+                client.foodOptions.welcomeDrink || client.foodOptions.starters || client.foodOptions.mainCourse || client.foodOptions.dessert;
+                else noFood
+              ">
+              <ul class="list-disc ml-6 space-y-1">
+                <li *ngIf="client.foodOptions.welcomeDrink">Welcome Drink</li>
+                <li *ngIf="client.foodOptions.starters">Starters</li>
+                <li *ngIf="client.foodOptions.mainCourse">Main Course</li>
+                <li *ngIf="client.foodOptions.dessert">Dessert</li>
+              </ul>
+            </ng-container>
 
+            <ng-template #noFood>
+              <p class="text-gray-600 italic">No food options selected</p>
+            </ng-template>
+          </div>
         </div>
 
-        <div class="mt-6 font-KayPhoDu text-blue-950">
-          <h3 class="text-lg font-semibold">Selected Services:</h3>
-          <ng-container *ngIf="client.decoration || client.sound || client.seating || client.photography; else noServices">
-            <ul class="list-disc ml-6 space-y-1">
-              <li *ngIf="client.decoration">Decoration</li>
-              <li *ngIf="client.sound">Sound & Entertainment</li>
-              <li *ngIf="client.seating">Seating</li>
-              <li *ngIf="client.photography">Photography</li>
-            </ul>
-          </ng-container>
-          <ng-template #noServices>
-            <p class="">No services selected</p>
-          </ng-template>
-        </div>
+        <div *ngIf="estimation">
+          <p class="text-lg font-semibold mb-2 font-KayPhoDu text-blue-950">Client Name: {{ estimation.fetchUserDetails.name }}</p>
+          <p class="mb-4 font-KayPhoDu text-blue-950">
+            Event: {{ estimation.fetchUserDetails.eventName }} | Guests: {{ estimation.fetchEntryDataDetails.guestCount }}
+          </p>
 
-        <div class="mt-4 font-KayPhoDu text-blue-950">
-          <h3 class="text-lg font-semibold">Food Options:</h3>
-          <ng-container
-            *ngIf="
-              client.foodOptions.welcomeDrink || client.foodOptions.starters || client.foodOptions.mainCourse || client.foodOptions.dessert;
-              else noFood
-            ">
-            <ul class="list-disc ml-6 space-y-1">
-              <li *ngIf="client.foodOptions.welcomeDrink">Welcome Drink</li>
-              <li *ngIf="client.foodOptions.starters">Starters</li>
-              <li *ngIf="client.foodOptions.mainCourse">Main Course</li>
-              <li *ngIf="client.foodOptions.dessert">Dessert</li>
-            </ul>
-          </ng-container>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div>
+                <p class="font-semibold font-KayPhoDu text-blue-950">Venue:</p>
+                <p class="font-KayPhoDu text-blue-950">
+                  {{ estimation.fetchEstimation.venue.details }}, {{ estimation.fetchEstimation.venue.noOf }},
+                  {{ estimation.fetchEstimation.venue.cost }}
+                </p>
+              </div>
 
-          <ng-template #noFood>
-            <p class="text-gray-600 italic">No food options selected</p>
-          </ng-template>
+              <div>
+                <p class="font-semibold font-KayPhoDu text-blue-950">Event Duration:</p>
+                <p class="font-KayPhoDu text-blue-950">
+                  {{ estimation.fetchEntryDataDetails.startDate | date: 'mediumDate' }} to
+                  {{ estimation.fetchEntryDataDetails.endDate | date: 'mediumDate' }}
+                </p>
+              </div>
+
+              <div class="mt-6 font-KayPhoDu text-blue-950">
+                <h3 class="text-lg font-semibold">Selected Services:</h3>
+                <ng-container
+                  *ngIf="
+                    estimation.fetchEstimation.Decoration ||
+                      estimation.fetchEstimation.soundSystem ||
+                      estimation.fetchEstimation.seating ||
+                      estimation.fetchEstimation.PhotoAndVideo;
+                    else noServices
+                  ">
+                  <ul class="list-disc ml-6 space-y-1">
+                    <li *ngIf="estimation.fetchEstimation.Decoration">
+                      Decoration :- 
+                      <div class="flex">
+                        <div class=" flex gap-4">
+                          <p class="text-md">details:- {{ estimation.fetchEstimation.Decoration.details }},</p>
+                          <p>{{ estimation.fetchEstimation.Decoration.noOf }},</p>
+                        </div>
+                        <p>Rs.{{ estimation.fetchEstimation.Decoration.cost }}/-</p>
+                      </div>
+                    </li>
+                    <li *ngIf="estimation.fetchEstimation.soundSystem">
+                      Sound and system :- {{ estimation.fetchEstimation.soundSystem.details }}, {{ estimation.fetchEstimation.soundSystem.noOf }},
+                      Rs.{{ estimation.fetchEstimation.soundSystem.cost }}/-
+                    </li>
+                    <li *ngIf="estimation.fetchEstimation.seating">
+                      Seating :- {{ estimation.fetchEstimation.seating.details }}, {{ estimation.fetchEstimation.seating.noOf }},
+                      Rs.{{ estimation.fetchEstimation.seating.cost }}/-
+                    </li>
+                    <li *ngIf="estimation.fetchEstimation.PhotoAndVideo">
+                      Photo and video :- {{ estimation.fetchEstimation.PhotoAndVideo.details }}, {{ estimation.fetchEstimation.PhotoAndVideo.noOf }},
+                      Rs.{{ estimation.fetchEstimation.PhotoAndVideo.cost }}/-
+                    </li>
+                  </ul>
+                </ng-container>
+                <ng-template #noServices>
+                  <p class="">No services selected</p>
+                </ng-template>
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <p class="font-semibold font-KayPhoDu text-blue-950">Location:</p>
+                <p class="font-KayPhoDu text-blue-950">{{ estimation.fetchEntryDataDetails.district }},</p>
+                <p class="font-KayPhoDu text-blue-950">
+                  {{ estimation.fetchEntryDataDetails.state }} - {{ estimation.fetchEntryDataDetails.pincode }}
+                </p>
+              </div>
+              <div class="mt-4 font-KayPhoDu text-blue-950">
+                <h3 class="text-lg font-semibold">Food Options:</h3>
+                <ng-container
+                  *ngIf="
+                    estimation.fetchEstimation.food.welcomeDrink ||
+                      estimation.fetchEstimation.food.mainCourse ||
+                      estimation.fetchEstimation.food.dessert;
+                    else noFood
+                  ">
+                  <ul class="list-disc ml-6 space-y-1">
+                    <li *ngIf="estimation.fetchEstimation.food.welcomeDrink">
+                      Welcome Drink:- {{ estimation.fetchEstimation.food.welcomeDrink.details }},
+                      {{ estimation.fetchEstimation.food.welcomeDrink.noOf }},
+                      Rs.{{ estimation.fetchEstimation.food.welcomeDrink.cost }}/-
+                    </li>
+                    <li *ngIf="estimation.fetchEstimation.food.mainCourse">
+                      Main Course:- {{ estimation.fetchEstimation.food.mainCourse.details }}, {{ estimation.fetchEstimation.food.mainCourse.noOf }},
+                      Rs.{{ estimation.fetchEstimation.food.mainCourse.cost }}/-
+                    </li>
+                    <li *ngIf="estimation.fetchEstimation.food.dessert">
+                      Dessert:- {{ estimation.fetchEstimation.food.dessert.details }}, {{ estimation.fetchEstimation.food.dessert.noOf }},
+                      Rs.{{ estimation.fetchEstimation.food.dessert.cost }}/-
+                    </li>
+                  </ul>
+                </ng-container>
+
+                <ng-template #noFood>
+                  <p class="text-gray-600 italic">No food options selected</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Right Section: Chat CTA -->
-    <div class="lg:w-1/4 w-full bg-gray-800 p-6 flex flex-col justify-between">
-      <div class="text-white text-center text-xl font-semibold mb-2">Need Assistance?</div>
+      <!-- Right Section: Chat CTA -->
+      <div class="lg:w-1/4 w-full bg-gray-800 p-6 flex flex-col justify-between">
+        <div class="text-white text-center text-xl font-semibold mb-2">Need Assistance?</div>
 
-      <div>
-        <p class="text-sm text-neutral-400 font-Roboto">Chat demo :</p>
-        <div class="flex-grow flex items-center justify-center">
-          <img src="chat.png" />
-          <!----------------------------------------------------------------------------------------------------------------------------------------->
+        <div>
+          <p class="text-sm text-neutral-400 font-Roboto">Chat demo :</p>
+          <div class="flex-grow flex items-center justify-center">
+            <img src="chat.png" />
+          </div>
         </div>
-      </div>
-      <p class="text-gray-300 text-center">Click the below button and use our employee's help to make your date perfectly</p>
+        <p class="text-gray-300 text-center">Click the below button and use our employee's help to make your date perfectly</p>
 
-      <div class="text-center mt-6">
-        <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" [routerLink]="['/chat-with-employee']">Chat Now</button>
+        <div class="text-center mt-6">
+          <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" [routerLink]="['/chat-with-employee']">Chat Now</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
