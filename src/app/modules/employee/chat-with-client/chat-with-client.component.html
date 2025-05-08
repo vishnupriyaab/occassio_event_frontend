@@ -76,7 +76,9 @@
         </div>
         <div class="flex items-center gap-1">
           <!------videocall button------>
-          <button class="border border-neutral-600 rounded-md p-1 hover:bg-white hover:text-black"><i class="fa-solid fa-video"></i></button>
+          <button (click)="startVideoCall()" class="border border-neutral-600 rounded-md p-1 hover:bg-white hover:text-black">
+            <i class="fa-solid fa-video"></i>
+          </button>
           <!------Note button------>
           <button
             (click)="toggleNotePanel()"
@@ -191,6 +193,8 @@
         </button>
       </div>
     </div>
+    <!-----------VideoCall template------------>
+    <div id="zegocloud-container" class="absolute top-0 left-0 w-full h-full z-50" *ngIf="isInCall"></div>
 
     <!-- Note Panel -->
     <div
@@ -198,37 +202,34 @@
       [ngClass]="{ 'translate-x-0 ': isNoteVisible, 'translate-x-full hidden': !isNoteVisible }">
       <div class="bg-baseYellow text-white p-4 font-bold text-center rounded-t-3xl">Note</div>
       <div *ngIf="isEditing" class="flex flex-col flex-grow">
-      <textarea
-        name="note"
-        [(ngModel)]="noteContent"
-        class="bg-black text-white w-full font-Roboto text-sm p-3 flex-grow"
-        style="
-          background-image: linear-gradient(to bottom, transparent, transparent 19px, rgb(32, 32, 32) 19px, rgb(70, 71, 72) 40px);
-          background-size: 100% 20px;
-          line-height: 20px;
-          padding-top: 0;
-        "
-        placeholder="Type your notes here..."></textarea>
-      <div class="flex items-center justify-center bg-black p-3 w-full">
-        <button (click)="saveNote()" class="text-white font-bold bg-neutral-900 w-20 h-8 rounded-lg hover:bg-neutral-800" [disabled]="isUploading">
-          <span *ngIf="!isUploading">Save</span>
-          <span *ngIf="isUploading">Saving...</span>
-        </button> 
+        <textarea
+          name="note"
+          [(ngModel)]="noteContent"
+          class="bg-black text-white w-full font-Roboto text-sm p-3 flex-grow"
+          style="
+            background-image: linear-gradient(to bottom, transparent, transparent 19px, rgb(32, 32, 32) 19px, rgb(70, 71, 72) 40px);
+            background-size: 100% 20px;
+            line-height: 20px;
+            padding-top: 0;
+          "
+          placeholder="Type your notes here..."></textarea>
+        <div class="flex items-center justify-center bg-black p-3 w-full">
+          <button (click)="saveNote()" class="text-white font-bold bg-neutral-900 w-20 h-8 rounded-lg hover:bg-neutral-800" [disabled]="isUploading">
+            <span *ngIf="!isUploading">Save</span>
+            <span *ngIf="isUploading">Saving...</span>
+          </button>
+        </div>
       </div>
-    </div>
 
-    <!---- editing ---->
-    <div *ngIf="!isEditing" class="flex flex-col flex-grow">
-      <div class="flex-grow p-3 overflow-auto whitespace-pre-wrap">
-        {{ noteContent || 'No notes yet' }}
-      </div>
-      <div class="flex items-center justify-center bg-black p-3 w-full">
-        <button (click)="editNote()" class="text-white font-bold bg-neutral-900 w-20 h-8 rounded-lg hover:bg-neutral-800">
-          Edit
-        </button>
+      <!---- editing ---->
+      <div *ngIf="!isEditing" class="flex flex-col flex-grow">
+        <div class="flex-grow p-3 overflow-auto whitespace-pre-wrap">
+          {{ noteContent || 'No notes yet' }}
+        </div>
+        <div class="flex items-center justify-center bg-black p-3 w-full">
+          <button (click)="editNote()" class="text-white font-bold bg-neutral-900 w-20 h-8 rounded-lg hover:bg-neutral-800">Edit</button>
+        </div>
       </div>
     </div>
-    </div>
-
   </div>
 </div>

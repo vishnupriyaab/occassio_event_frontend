@@ -10,7 +10,8 @@ import { ToastService } from '../../../core/services/common/toaster/toast.servic
 import IToastOption from '../../../core/models/IToastOptions';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { NoteService } from '../../../core/services/employee/noteService/note.service';
-import { response } from 'express';
+import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
+import { VideoCallService } from '../../../core/services/employee/videoCall/video-call.service';
 
 @Component({
   selector: 'app-chat-with-client',
@@ -40,22 +41,26 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
   userOnlineStatus: Map<string, boolean> = new Map();
   selectedUserOnlineStatus: boolean = false;
 
+  currentCallId: string | null = null;
+  callStartTime: Date | null = null;
+
   conversations: IConversationwithUser[] = [];
   selectedConversation: IConversationwithUser | null = null;
   message: string = '';
-  // defaultImageUrl!: string;
   employeeId: string | undefined;
   token: string = '';
   decodedToken: Token | undefined;
   isNoteVisible = false;
   messages: IChatMessage[] = [];
   selectedMessageIndex: number = -1;
+  isInCall: boolean = false;
 
   constructor(
     private _chatService: ChatWithClientService,
     private cookieService: CookieService,
     private _toastService: ToastService,
-    private _noteService: NoteService
+    private _noteService: NoteService,
+    private _videoCallService: VideoCallService
   ) {
     this.notificationSound = new Audio();
     this.notificationSound.src = '/chat-notification.mp3';
@@ -68,10 +73,9 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       this.decodedToken = jwtDecode(this.token);
       this.employeeId = this.decodedToken?.id;
       // console.log(this.employeeId, '000000000');
-    } else {
+      // } else {
       // console.log('Unavailable token!');
     }
-    // console.log('Refresh Token:', this.token);
     this._chatService.connect();
 
     this._chatService.setEmployeeOnline(this.employeeId);
@@ -149,6 +153,9 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       }
       console.log(message, 'qwertyuiop');
     });
+
+    this.checkForActiveCall();
+    setInterval(() => this.checkForActiveCall(), 10000); // Check every 10 seconds
   }
 
   playNotificationSound(): void {
@@ -157,6 +164,222 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       this.notificationSound.play().catch(error => {
         console.error('Error playing notification sound:', error);
       });
+    }
+  }
+
+  startVideoCall() {
+    // this.isInCall = true;
+    if (!this.selectedConversation || !this.employeeId) {
+      const toastOption: IToastOption = {
+        severity: 'warning-toast',
+        summary: 'Warning',
+        detail: 'No conversation selected',
+      };
+      this._toastService.showToast(toastOption);
+      return;
+    }
+
+    // Generate a room ID based on the conversation ID
+    const roomID = this.selectedConversation.conversationid;
+
+    // Generate a unique call ID
+    const callId = Date.now().toString();
+
+    // First, store call data in the database
+    const callData = {
+      conversationId: this.selectedConversation.conversationid,
+      callerId: this.employeeId,
+      receiverId: this.selectedConversation.userId!,
+      callerModel: 'Employee' as 'Employee',
+      receiverModel: 'User' as 'User',
+      callId: callId,
+      roomId: roomID,
+    };
+
+    this._videoCallService.initiateCall(callData).subscribe({
+      next: response => {
+        console.log(response, 'responsee');
+        this.currentCallId = callId;
+        this.callStartTime = new Date();
+        this.isInCall = true;
+
+        const appID = 400914278;
+        const serverSecret = '274a74430adad287bc946c7a2e7fdb85';
+        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+          appID,
+          serverSecret,
+          roomID,
+          this.employeeId!, // Your user ID
+          this.decodedToken?.name || 'Employee' // Your username
+        );
+
+        console.log(kitToken, 'kitToken11111111111111111111111111111111111111111');
+
+        // Create an instance of ZegoUIKit
+        const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+        // Join the room
+        zp.joinRoom({
+          container: document.getElementById('zegocloud-container'),
+          sharedLinks: [
+            {
+              name: 'Join call',
+              url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID,
+            },
+          ],
+          scenario: {
+            mode: ZegoUIKitPrebuilt.OneONoneCall, // 1-on-1 call mode
+          },
+          showScreenSharingButton: true,
+          onLeaveRoom: () => this.endCall(),
+          onUserJoin: users => {
+            const otherUser = users.find(user => user.userID !== this.employeeId);
+            if (otherUser) {
+              this._videoCallService.updateCallStatus(this.currentCallId!, 'accepted').subscribe({
+                next: response => {
+                  console.log('Call accepted:', response);
+                },
+                error: error => {
+                  console.error('Error updating call status:', error);
+                },
+              });
+            }
+          },
+        });
+        // Set a timeout to mark call as missed if not answered within 30 seconds
+        setTimeout(() => {
+          if (this.isInCall && this.currentCallId === callId) {
+            // Check if the call is still in initiated state
+            this._videoCallService.getCallHistory(this.selectedConversation!.conversationid).subscribe({
+              next: response => {
+                const activeCall = response.data?.find((call: any) => call.callId === callId);
+                if (activeCall && activeCall.status === 'initiated') {
+                  // Mark as missed and end the call
+                  this._videoCallService.updateCallStatus(callId, 'missed').subscribe();
+                  this.endCall();
+
+                  const toastOption: IToastOption = {
+                    severity: 'info-toast',
+                    summary: 'Call',
+                    detail: 'Call not answered',
+                  };
+                  this._toastService.showToast(toastOption);
+                }
+              },
+            });
+          }
+        }, 30000); // 30 seconds timeout
+      },
+      error: error => {
+        console.log(error, 'error');
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Failed to initiate call',
+        };
+        this._toastService.showToast(toastOption);
+      },
+    });
+  }
+
+  endCall() {
+    if (this.currentCallId && this.callStartTime) {
+      const endTime = new Date();
+      const durationMs = endTime.getTime() - this.callStartTime.getTime();
+      const durationSeconds = Math.floor(durationMs / 1000);
+
+      this._videoCallService.updateCallStatus(this.currentCallId, 'ended', endTime, durationSeconds).subscribe({
+        next: response => {
+          console.log('Call ended:', response);
+          // Add notification in chat
+          const callMessage = {
+            user: 'employee',
+            message: `Call ended. Duration: ${this.formatCallDuration(durationSeconds)}`,
+            timestamp: new Date(),
+          };
+
+          this._chatService.sendMessageToEmployee(this.employeeId!, this.selectedConversation!.conversationid, callMessage).subscribe();
+        },
+        error: error => {
+          console.error('Error ending call:', error);
+        },
+      });
+    }
+
+    this.isInCall = false;
+    this.currentCallId = null;
+    this.callStartTime = null;
+  }
+
+  // Helper function to format call duration
+  formatCallDuration(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  }
+
+  // Add this method to check for active calls when component initializes
+  checkForActiveCall() {
+    if (!this.selectedConversation) return;
+
+    this._videoCallService.getCallHistory(this.selectedConversation.conversationid).subscribe({
+      next: response => {
+        const activeCalls = response.data?.filter((call: any) => call.status !== 'ended' && call.status !== 'missed' && call.status !== 'rejected');
+
+        if (activeCalls && activeCalls.length > 0) {
+          const activeCall = activeCalls[0];
+
+          // If there's an active call where this employee is the receiver, show join option
+          if (activeCall.receiverId === this.employeeId && activeCall.status === 'initiated') {
+            this.showIncomingCallModal(activeCall);
+          }
+        }
+      },
+      error: error => {
+        console.error('Error checking for active calls:', error);
+      },
+    });
+  }
+
+  // Add this method to handle incoming calls
+  showIncomingCallModal(callData: any) {
+    // This would typically be implemented with a modal component
+    // For now, we'll use a simple confirmation
+    const willAnswer = confirm('Incoming call. Would you like to answer?');
+
+    if (willAnswer) {
+      // Join the call
+      this.currentCallId = callData.callId;
+      this.callStartTime = new Date();
+      this.isInCall = true;
+
+      // Update call status
+      this._videoCallService.updateCallStatus(callData.callId, 'accepted').subscribe();
+
+      // Join the room
+      const appID = 400914278;
+      const serverSecret = '274a74430adad287bc946c7a2e7fdb85';
+
+      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+        appID,
+        serverSecret,
+        callData.roomId,
+        this.employeeId!,
+        this.decodedToken?.name || 'Employee'
+      );
+
+      const zp = ZegoUIKitPrebuilt.create(kitToken);
+      zp.joinRoom({
+        container: document.getElementById('zegocloud-container'),
+        scenario: {
+          mode: ZegoUIKitPrebuilt.OneONoneCall,
+        },
+        showScreenSharingButton: true,
+        onLeaveRoom: () => this.endCall(),
+      });
+    } else {
+      // Reject the call
+      this._videoCallService.updateCallStatus(callData.callId, 'rejected').subscribe();
     }
   }
 
@@ -183,9 +406,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
   }
 
   getUnreadCount(conversationId: string): number {
-    // console.log('GETTING - conversationId:', conversationId);
-    // console.log('GETTING - Current unread map:', Object.fromEntries(this.unreadMessages));
-
     const unreadCount = this.unreadMessages.get(conversationId) || 0;
     // console.log(unreadCount, 'unreadCount');
     return unreadCount;
@@ -247,8 +467,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     if (!message.reactions || !this.employeeId) return false;
     return message.reactions.some(r => r.userId.toString() === this.employeeId && r.emoji === emoji);
   }
-
-  /////////////////////////
 
   toggleEmojiPicker(): void {
     this.showEmojiPicker = !this.showEmojiPicker;

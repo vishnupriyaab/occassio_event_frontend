@@ -1,302 +1,306 @@
 <div class="bg-black p-4">
   <div class="flex flex-col md:flex-row gap-4 max-w-6xl mx-auto">
-    <!-- Left side - Note list -->
-    <div class="w-full md:w-1/3 bg-yellow-50 rounded-lg p-4 min-h-screen md:min-h-0">
-      <h2 class="text-2xl font-bold text-center mb-6 font-kaushan">Note list</h2>
-      <div class="space-y-2 overflow-y-hidden hover:overflow-y-auto dark-scrollbar font-Roboto">
-        <div *ngIf="noteContent; else noNotes">
-          <div *ngFor="let line of noteContent.split('\n')">
-            {{ line }}
+    <!-- left side - Estimation form -->
+    <div class="w-full flex gap-3 bg-estimationBlue rounded-lg p-4">
+      <div class="w-full md:w-2/3">
+        <h2 class="text-2xl font-bold mb-2 text-white text-center">Calculation for Estimation</h2>
+  
+        <div class="flex justify-center mb-2">
+          <div class="flex items-center">
+            <div
+              [ngClass]="{ 'bg-white': step >= 1, 'bg-gray-400': step < 1 }"
+              class="w-6 h-6 rounded-full flex items-center justify-center text-estimationBlue font-bold">
+              1
+            </div>
+            <div class="h-1 w-8 bg-gray-300"></div>
+            <div
+              [ngClass]="{ 'bg-white': step >= 2, 'bg-gray-400': step < 2 }"
+              class="w-6 h-6 rounded-full flex items-center justify-center text-estimationBlue font-bold">
+              2
+            </div>
           </div>
         </div>
-        <ng-template #noNotes>No notes yet</ng-template>
+  
+        <form [formGroup]="estimationForm" *ngIf="estimationForm">
+          <div *ngIf="step === 1" class="bg-gray-600 rounded-lg pt-4 px-4 pb-2 h-96 overflow-y-hidden hover:overflow-y-auto space-y-2 dark-scrollbar">
+            <div class="grid grid-cols-12 gap-2 mb-1 text-white">
+              <div class="col-span-5 text-center">Details</div>
+              <div class="col-span-2 text-center">No.of</div>
+              <div class="col-span-2 text-center">Cost</div>
+              <div class="col-span-1 text-center">:</div>
+              <div class="col-span-2 text-center">Total</div>
+            </div>
+  
+            <!-- Venue row -->
+            <div class="grid grid-cols-12 gap-2 mb-4 items-center" formGroupName="venue">
+              <div class="col-span-2 text-white font-medium">Venue :</div>
+              <div class="col-span-3">
+                <input
+                  type="text"
+                  formControlName="details"
+                  placeholder="Details..."
+                  class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
+                <div *ngIf="isInvalid('venue', 'details')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('venue', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('venue', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-2">
+                <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
+              </div>
+            </div>
+  
+            <!-- Seating -->
+            <div class="grid grid-cols-12 gap-2 mb-4 items-center" formGroupName="seating">
+              <div class="col-span-2 text-white font-medium">Seating :</div>
+              <div class="col-span-3">
+                <input
+                  type="text"
+                  formControlName="details"
+                  placeholder="Details..."
+                  class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
+                <div *ngIf="isInvalid('seating', 'details')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('seating', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('seating', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-2">
+                <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
+              </div>
+            </div>
+  
+            <!-- Food section -->
+            <!-- Welcome drink -->
+            <div class="grid grid-cols-12 gap-2 text-white">
+              <div class="col-span-6 text-center text-sm font-kalam">Welcome drink</div>
+              <div class="col-span-2 text-center"></div>
+              <div class="col-span-2 text-center"></div>
+              <div class="col-span-1 text-center"></div>
+              <div class="col-span-3 text-center"></div>
+            </div>
+            <div class="grid grid-cols-12 gap-2 mb-1 items-center" formGroupName="welcomeDrink">
+              <div class="col-span-2 text-white font-medium">Food :</div>
+              <div class="col-span-3">
+                <input
+                  type="text"
+                  formControlName="details"
+                  placeholder="Details..."
+                  class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
+                <div *ngIf="isInvalid('welcomeDrink', 'details')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('welcomeDrink', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('welcomeDrink', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-2">
+                <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
+              </div>
+            </div>
+  
+            <!-- Main course -->
+            <div class="grid grid-cols-12 gap-1 text-white">
+              <div class="col-span-6 text-center text-sm font-kalam">Main course</div>
+              <div class="col-span-2 text-center"></div>
+              <div class="col-span-2 text-center"></div>
+              <div class="col-span-1 text-center"></div>
+              <div class="col-span-3 text-center"></div>
+            </div>
+            <div class="grid grid-cols-12 gap-2 items-center" formGroupName="mainCourse">
+              <div class="col-span-2 text-white font-medium"></div>
+              <div class="col-span-3">
+                <input
+                  type="text"
+                  formControlName="details"
+                  placeholder="Details..."
+                  class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
+                <div *ngIf="isInvalid('mainCourse', 'details')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('mainCourse', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('mainCourse', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-2">
+                <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
+              </div>
+            </div>
+  
+            <!-- Dessert -->
+            <div class="grid grid-cols-12 gap-1 text-white">
+              <div class="col-span-6 text-center text-sm font-kalam">Dessert</div>
+              <div class="col-span-2 text-center"></div>
+              <div class="col-span-2 text-center"></div>
+              <div class="col-span-1 text-center"></div>
+              <div class="col-span-3 text-center"></div>
+            </div>
+            <div class="grid grid-cols-12 gap-2 items-center" formGroupName="dessert">
+              <div class="col-span-2 text-white font-medium"></div>
+              <div class="col-span-3">
+                <input
+                  type="text"
+                  formControlName="details"
+                  placeholder="Details..."
+                  class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
+                <div *ngIf="isInvalid('dessert', 'details')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('dessert', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('dessert', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-2">
+                <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
+              </div>
+            </div>
+  
+            <!-- Next button -->
+            <div class="flex items-center justify-center mt-6">
+              <button type="button" (click)="nextStep()" class="bg-black hover:bg-estimationBlue text-white px-4 py-2 rounded-md">Next</button>
+            </div>
+          </div>
+  
+          <div *ngIf="step === 2" class="bg-gray-600 rounded-lg pt-4 px-4 pb-2 h-96 overflow-y-hidden hover:overflow-y-auto space-y-2 dark-scrollbar">
+            <div class="grid grid-cols-12 gap-2 mb-1 text-white">
+              <div class="col-span-5 text-center">Details</div>
+              <div class="col-span-2 text-center">No.of</div>
+              <div class="col-span-2 text-center">Cost</div>
+              <div class="col-span-1 text-center">:</div>
+              <div class="col-span-2 text-center">Total</div>
+            </div>
+  
+            <!-- Sound System -->
+            <div class="grid grid-cols-12 gap-2 mb-4 items-center" formGroupName="soundSystem">
+              <div class="col-span-2 text-white font-medium">Sound System :</div>
+              <div class="col-span-3">
+                <input
+                  type="text"
+                  formControlName="details"
+                  placeholder="Details..."
+                  class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
+                <div *ngIf="isInvalid('soundSystem', 'details')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('soundSystem', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('soundSystem', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-2">
+                <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
+              </div>
+            </div>
+  
+            <!-- Photography -->
+            <div class="grid grid-cols-12 gap-2 mb-4 items-center" formGroupName="photography">
+              <div class="col-span-2 text-white font-medium">Photo & Video :</div>
+              <div class="col-span-3">
+                <input
+                  type="text"
+                  formControlName="details"
+                  placeholder="Details..."
+                  class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
+                <div *ngIf="isInvalid('photography', 'details')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('photography', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('photography', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-2">
+                <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
+              </div>
+            </div>
+  
+            <!-- Decoration -->
+            <div class="grid grid-cols-12 gap-2 mt-4 items-center" formGroupName="decoration">
+              <div class="col-span-2 text-white font-medium">Decoration :</div>
+              <div class="col-span-3">
+                <input
+                  type="text"
+                  formControlName="details"
+                  placeholder="Details..."
+                  class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
+                <div *ngIf="isInvalid('decoration', 'details')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('decoration', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-2">
+                <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
+                <div *ngIf="isInvalid('decoration', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
+              </div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-2">
+                <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
+              </div>
+            </div>
+  
+            <!-- Grand Total -->
+            <div class="grid grid-cols-12 gap-2 mt-8 items-center">
+              <div class="col-span-8 text-white font-medium text-right pr-4">Grand Total:</div>
+              <div class="col-span-1 text-center text-white">:</div>
+              <div class="col-span-3">
+                <input type="number" [value]="grandTotal" readonly class="w-full p-1 bg-gray-500 rounded text-white font-bold" />
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-8">
+              <button (click)="prevStep()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md">Back</button>
+              <div class="space-x-3">
+                <button (click)="cancelEstimation()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md">Cancel</button>
+                <button (click)="saveEstimation()" class="bg-neutral-950 hover:bg-estimationBlue text-white px-4 py-2 rounded-md">Save</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
       </div>
-    </div>
-
-    <!-- Right side - Estimation form -->
-    <div class="w-full md:w-2/3 bg-estimationBlue rounded-lg p-4">
-      <h2 class="text-2xl font-bold mb-2 text-white text-center">Calculation for Estimation</h2>
-
-      <div class="flex justify-center mb-2">
-        <div class="flex items-center">
-          <div
-            [ngClass]="{ 'bg-white': step >= 1, 'bg-gray-400': step < 1 }"
-            class="w-6 h-6 rounded-full flex items-center justify-center text-estimationBlue font-bold">
-            1
+      <!-- right side - Note list -->
+      <div class="w-full md:w-1/3 bg-yellow-50 rounded-lg p-4 min-h-screen md:min-h-0">
+        <div class="border-b text-neutral-700 mb-6">
+          <h2 class="text-2xl font-bold text-center mb-1 font-kaushan">Note list</h2>
+        </div>
+        <div class="space-y-2 overflow-y-hidden hover:overflow-y-auto dark-scrollbar font-Roboto">
+          <div *ngIf="noteContent; else noNotes">
+            <div *ngFor="let line of noteContent.split('\n')" >
+              <i class="fa-solid fa-arrow-right"></i>  {{ line }}
+            </div>
           </div>
-          <div class="h-1 w-8 bg-gray-300"></div>
-          <div
-            [ngClass]="{ 'bg-white': step >= 2, 'bg-gray-400': step < 2 }"
-            class="w-6 h-6 rounded-full flex items-center justify-center text-estimationBlue font-bold">
-            2
-          </div>
+          <ng-template #noNotes>No notes yet</ng-template>
         </div>
       </div>
-
-      <form [formGroup]="estimationForm" *ngIf="estimationForm">
-        <div *ngIf="step === 1" class="bg-gray-600 rounded-lg pt-4 px-4 pb-2 h-96 overflow-y-hidden hover:overflow-y-auto space-y-2 dark-scrollbar">
-          <div class="grid grid-cols-12 gap-2 mb-1 text-white">
-            <div class="col-span-5 text-center">Details</div>
-            <div class="col-span-2 text-center">No.of</div>
-            <div class="col-span-2 text-center">Cost</div>
-            <div class="col-span-1 text-center">:</div>
-            <div class="col-span-2 text-center">Total</div>
-          </div>
-
-          <!-- Venue row -->
-          <div class="grid grid-cols-12 gap-2 mb-4 items-center" formGroupName="venue">
-            <div class="col-span-2 text-white font-medium">Venue :</div>
-            <div class="col-span-3">
-              <input
-                type="text"
-                formControlName="details"
-                placeholder="Details..."
-                class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
-              <div *ngIf="isInvalid('venue', 'details')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('venue', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('venue', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-2">
-              <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
-            </div>
-          </div>
-
-          <!-- Seating -->
-          <div class="grid grid-cols-12 gap-2 mb-4 items-center" formGroupName="seating">
-            <div class="col-span-2 text-white font-medium">Seating :</div>
-            <div class="col-span-3">
-              <input
-                type="text"
-                formControlName="details"
-                placeholder="Details..."
-                class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
-              <div *ngIf="isInvalid('seating', 'details')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('seating', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('seating', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-2">
-              <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
-            </div>
-          </div>
-
-          <!-- Food section -->
-          <!-- Welcome drink -->
-          <div class="grid grid-cols-12 gap-2 text-white">
-            <div class="col-span-6 text-center text-sm font-kalam">Welcome drink</div>
-            <div class="col-span-2 text-center"></div>
-            <div class="col-span-2 text-center"></div>
-            <div class="col-span-1 text-center"></div>
-            <div class="col-span-3 text-center"></div>
-          </div>
-          <div class="grid grid-cols-12 gap-2 mb-1 items-center" formGroupName="welcomeDrink">
-            <div class="col-span-2 text-white font-medium">Food :</div>
-            <div class="col-span-3">
-              <input
-                type="text"
-                formControlName="details"
-                placeholder="Details..."
-                class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
-              <div *ngIf="isInvalid('welcomeDrink', 'details')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('welcomeDrink', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('welcomeDrink', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-2">
-              <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
-            </div>
-          </div>
-
-          <!-- Main course -->
-          <div class="grid grid-cols-12 gap-1 text-white">
-            <div class="col-span-6 text-center text-sm font-kalam">Main course</div>
-            <div class="col-span-2 text-center"></div>
-            <div class="col-span-2 text-center"></div>
-            <div class="col-span-1 text-center"></div>
-            <div class="col-span-3 text-center"></div>
-          </div>
-          <div class="grid grid-cols-12 gap-2 items-center" formGroupName="mainCourse">
-            <div class="col-span-2 text-white font-medium"></div>
-            <div class="col-span-3">
-              <input
-                type="text"
-                formControlName="details"
-                placeholder="Details..."
-                class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
-              <div *ngIf="isInvalid('mainCourse', 'details')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('mainCourse', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('mainCourse', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-2">
-              <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
-            </div>
-          </div>
-
-          <!-- Dessert -->
-          <div class="grid grid-cols-12 gap-1 text-white">
-            <div class="col-span-6 text-center text-sm font-kalam">Dessert</div>
-            <div class="col-span-2 text-center"></div>
-            <div class="col-span-2 text-center"></div>
-            <div class="col-span-1 text-center"></div>
-            <div class="col-span-3 text-center"></div>
-          </div>
-          <div class="grid grid-cols-12 gap-2 items-center" formGroupName="dessert">
-            <div class="col-span-2 text-white font-medium"></div>
-            <div class="col-span-3">
-              <input
-                type="text"
-                formControlName="details"
-                placeholder="Details..."
-                class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
-              <div *ngIf="isInvalid('dessert', 'details')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('dessert', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('dessert', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-2">
-              <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
-            </div>
-          </div>
-
-          <!-- Next button -->
-          <div class="flex items-center justify-center mt-6">
-            <button type="button" (click)="nextStep()" class="bg-black hover:bg-estimationBlue text-white px-4 py-2 rounded-md">Next</button>
-          </div>
-        </div>
-
-        <div *ngIf="step === 2" class="bg-gray-600 rounded-lg pt-4 px-4 pb-2 h-96 overflow-y-hidden hover:overflow-y-auto space-y-2 dark-scrollbar">
-          <div class="grid grid-cols-12 gap-2 mb-1 text-white">
-            <div class="col-span-5 text-center">Details</div>
-            <div class="col-span-2 text-center">No.of</div>
-            <div class="col-span-2 text-center">Cost</div>
-            <div class="col-span-1 text-center">:</div>
-            <div class="col-span-2 text-center">Total</div>
-          </div>
-
-          <!-- Sound System -->
-          <div class="grid grid-cols-12 gap-2 mb-4 items-center" formGroupName="soundSystem">
-            <div class="col-span-2 text-white font-medium">Sound System :</div>
-            <div class="col-span-3">
-              <input
-                type="text"
-                formControlName="details"
-                placeholder="Details..."
-                class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
-              <div *ngIf="isInvalid('soundSystem', 'details')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('soundSystem', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('soundSystem', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-2">
-              <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
-            </div>
-          </div>
-
-          <!-- Photography -->
-          <div class="grid grid-cols-12 gap-2 mb-4 items-center" formGroupName="photography">
-            <div class="col-span-2 text-white font-medium">Photo & Video :</div>
-            <div class="col-span-3">
-              <input
-                type="text"
-                formControlName="details"
-                placeholder="Details..."
-                class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
-              <div *ngIf="isInvalid('photography', 'details')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('photography', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('photography', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-2">
-              <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
-            </div>
-          </div>
-
-          <!-- Decoration -->
-          <div class="grid grid-cols-12 gap-2 mt-4 items-center" formGroupName="decoration">
-            <div class="col-span-2 text-white font-medium">Decoration :</div>
-            <div class="col-span-3">
-              <input
-                type="text"
-                formControlName="details"
-                placeholder="Details..."
-                class="w-full p-1 bg-gray-500 rounded text-white placeholder-gray-300" />
-              <div *ngIf="isInvalid('decoration', 'details')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="quantity" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('decoration', 'quantity')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-2">
-              <input type="number" formControlName="cost" class="w-full p-1 bg-gray-500 rounded text-white" />
-              <div *ngIf="isInvalid('decoration', 'cost')" class="text-red-300 text-xs mt-1">Required</div>
-            </div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-2">
-              <input type="number" formControlName="total" readonly class="w-full p-1 bg-gray-500 rounded text-white" />
-            </div>
-          </div>
-
-          <!-- Grand Total -->
-          <div class="grid grid-cols-12 gap-2 mt-8 items-center">
-            <div class="col-span-8 text-white font-medium text-right pr-4">Grand Total:</div>
-            <div class="col-span-1 text-center text-white">:</div>
-            <div class="col-span-3">
-              <input type="number" [value]="grandTotal" readonly class="w-full p-1 bg-gray-500 rounded text-white font-bold" />
-            </div>
-          </div>
-          <div class="flex items-center justify-between mt-8">
-            <button (click)="prevStep()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md">Back</button>
-            <div class="space-x-3">
-              <button (click)="cancelEstimation()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md">Cancel</button>
-              <button (click)="saveEstimation()" class="bg-neutral-950 hover:bg-estimationBlue text-white px-4 py-2 rounded-md">Save</button>
-            </div>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
-<div class="container min-h-screen bg-adLight px-10 py-3 text-black flex justify-center items-center">
+<div class="container min-h-screen bg-adLight px-10 text-black flex justify-center items-center">
   <div class="bg-adLight shadow-md max-w-6xl w-full">
     <div class="flex flex-col lg:flex-row gap-6 p-5">
-      <div class="lg:w-3/4 w-full bg-white shadow-md rounded-xl p-6 ">
+      <div class="lg:w-3/4 w-full bg-white shadow-md rounded-xl p-6">
         <h2 class="text-3xl font-bold mb-4 font-kaushan text-baseYellow">Your Booking Details</h2>
 
         <div *ngIf="selectedClient as client">
@@ -78,7 +78,7 @@
                 </p>
               </div>
 
-              <div>
+              <div class="mt-3">
                 <p class="font-semibold font-KayPhoDu text-blue-950">Event Duration:</p>
                 <p class="font-KayPhoDu text-blue-950">
                   {{ estimation.fetchEntryDataDetails.startDate | date: 'mediumDate' }} to
@@ -86,7 +86,17 @@
                 </p>
               </div>
 
-              <div class="mt-6 font-KayPhoDu text-blue-950">
+              <div class="mt-3">
+                <p class="font-semibold font-KayPhoDu text-blue-950">Location:</p>
+                <p class="font-KayPhoDu text-blue-950">{{ estimation.fetchEntryDataDetails.district }},</p>
+                <p class="font-KayPhoDu text-blue-950">
+                  {{ estimation.fetchEntryDataDetails.state }} - {{ estimation.fetchEntryDataDetails.pincode }}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <div class="font-KayPhoDu text-blue-950">
                 <h3 class="text-lg font-semibold">Selected Services:</h3>
                 <ng-container
                   *ngIf="
@@ -98,22 +108,18 @@
                   ">
                   <ul class="list-disc ml-6 space-y-1">
                     <li *ngIf="estimation.fetchEstimation.Decoration">
-                      Decoration :- 
-                      <div class="flex">
-                        <div class=" flex gap-4">
-                          <p class="text-md">details:- {{ estimation.fetchEstimation.Decoration.details }},</p>
-                          <p>{{ estimation.fetchEstimation.Decoration.noOf }},</p>
-                        </div>
-                        <p>Rs.{{ estimation.fetchEstimation.Decoration.cost }}/-</p>
-                      </div>
+                      Decoration :- {{ estimation.fetchEstimation.Decoration.details }}, {{ estimation.fetchEstimation.Decoration.noOf }}, Rs.{{
+                        estimation.fetchEstimation.Decoration.cost
+                      }}/-
                     </li>
                     <li *ngIf="estimation.fetchEstimation.soundSystem">
                       Sound and system :- {{ estimation.fetchEstimation.soundSystem.details }}, {{ estimation.fetchEstimation.soundSystem.noOf }},
                       Rs.{{ estimation.fetchEstimation.soundSystem.cost }}/-
                     </li>
                     <li *ngIf="estimation.fetchEstimation.seating">
-                      Seating :- {{ estimation.fetchEstimation.seating.details }}, {{ estimation.fetchEstimation.seating.noOf }},
-                      Rs.{{ estimation.fetchEstimation.seating.cost }}/-
+                      Seating :- {{ estimation.fetchEstimation.seating.details }}, {{ estimation.fetchEstimation.seating.noOf }}, Rs.{{
+                        estimation.fetchEstimation.seating.cost
+                      }}/-
                     </li>
                     <li *ngIf="estimation.fetchEstimation.PhotoAndVideo">
                       Photo and video :- {{ estimation.fetchEstimation.PhotoAndVideo.details }}, {{ estimation.fetchEstimation.PhotoAndVideo.noOf }},
@@ -124,16 +130,6 @@
                 <ng-template #noServices>
                   <p class="">No services selected</p>
                 </ng-template>
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <p class="font-semibold font-KayPhoDu text-blue-950">Location:</p>
-                <p class="font-KayPhoDu text-blue-950">{{ estimation.fetchEntryDataDetails.district }},</p>
-                <p class="font-KayPhoDu text-blue-950">
-                  {{ estimation.fetchEntryDataDetails.state }} - {{ estimation.fetchEntryDataDetails.pincode }}
-                </p>
               </div>
               <div class="mt-4 font-KayPhoDu text-blue-950">
                 <h3 class="text-lg font-semibold">Food Options:</h3>
@@ -147,16 +143,16 @@
                   <ul class="list-disc ml-6 space-y-1">
                     <li *ngIf="estimation.fetchEstimation.food.welcomeDrink">
                       Welcome Drink:- {{ estimation.fetchEstimation.food.welcomeDrink.details }},
-                      {{ estimation.fetchEstimation.food.welcomeDrink.noOf }},
-                      Rs.{{ estimation.fetchEstimation.food.welcomeDrink.cost }}/-
+                      {{ estimation.fetchEstimation.food.welcomeDrink.noOf }}, Rs.{{ estimation.fetchEstimation.food.welcomeDrink.cost }}/-
                     </li>
                     <li *ngIf="estimation.fetchEstimation.food.mainCourse">
                       Main Course:- {{ estimation.fetchEstimation.food.mainCourse.details }}, {{ estimation.fetchEstimation.food.mainCourse.noOf }},
                       Rs.{{ estimation.fetchEstimation.food.mainCourse.cost }}/-
                     </li>
                     <li *ngIf="estimation.fetchEstimation.food.dessert">
-                      Dessert:- {{ estimation.fetchEstimation.food.dessert.details }}, {{ estimation.fetchEstimation.food.dessert.noOf }},
-                      Rs.{{ estimation.fetchEstimation.food.dessert.cost }}/-
+                      Dessert:- {{ estimation.fetchEstimation.food.dessert.details }}, {{ estimation.fetchEstimation.food.dessert.noOf }}, Rs.{{
+                        estimation.fetchEstimation.food.dessert.cost
+                      }}/-
                     </li>
                   </ul>
                 </ng-container>
@@ -166,6 +162,60 @@
                 </ng-template>
               </div>
             </div>
+
+            <p class="font-bold font-KayPhoDu text-blue-950 text-lg">Grand Total :- {{ estimation.fetchEstimation.grandTotal }}/-</p>
+          </div>
+          <div>
+            <label class="items-center space-x-2 flex justify-between">
+              <div class="flex gap-1">
+                <input type="checkbox" class="form-checkbox h-4 w-3 text-blue-600 rounded" />
+                <span class="text-gray-700">I agree to the</span>
+                <span (click)="toggleTermsAndCondition()" class="text-blue-800 underline hover:text-blue-600">Terms and Conditions</span>
+              </div>
+              <button class="h-7 w-36 bg-yellow-600 text-lg rounded-sm hover:bg-baseYellow">Make your Day</button>
+            </label>
+            <p class="text-sm text-red-500 hidden">check your email for payment!!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terms & Conditions Modal -->
+      <div *ngIf="showTermsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full relative">
+          <button class="absolute top-2 right-2 text-gray-500 hover:text-black" (click)="toggleTermsAndCondition()">✕</button>
+          <h2 class="text-2xl font-bold mb-4 text-yellow-700">Occassio - Terms and Conditions</h2>
+          <div class="text-gray-700 text-sm space-y-3 max-h-[60vh] overflow-y-auto">
+            <p>
+              <strong>1. Booking and Payment Policy</strong><br />
+              To confirm your event with Occassio, you are required to pay 1/3rd of the total estimated cost at the time of booking.<br />
+              The remaining balance must be paid within 2 days after the event date.<br />
+              A late payment fee of ₹50 per day will be charged for any overdue payments beyond this 2-day window.
+            </p>
+
+            <p>
+              <strong>2. Customization and Estimate Changes</strong><br />
+              Occassio allows event customization at any time before the event.<br />
+              Any customization may affect the total cost, and your updated estimate will reflect those changes accordingly.
+            </p>
+
+            <p>
+              <strong>3. Cancellation and Refund Policy</strong><br />
+              The entry fee of ₹100 is non-refundable, under any circumstances.<br />
+              Cancellations are not permitted within 3 days of the event date. No refund or rescheduling will be provided in such cases.
+            </p>
+
+            <p>
+              <strong>4. Client Responsibility</strong><br />
+              Clients are advised to plan and communicate their requirements clearly and well in advance.<br />
+              Occassio is committed to delivering quality service, but the ultimate success of your event also depends on mutual cooperation and
+              timely communication.
+            </p>
+
+            <p>
+              <strong>Disclaimer</strong><br />
+              Occassio reserves the right to update these terms and conditions at any time without prior notice.<br />
+              Continued use of our services following any changes indicates acceptance of those changes.
+            </p>
           </div>
         </div>
       </div>

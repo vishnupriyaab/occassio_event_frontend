@@ -20,6 +20,7 @@ export class SubscriptionDetailsComponent implements OnInit {
   token: string = '';
   access_token: string = '';
   estimation: any;
+  showTermsModal: boolean = false;
 
   ngOnInit(): void {
     this.fetchSubClientData();
@@ -55,4 +56,9 @@ export class SubscriptionDetailsComponent implements OnInit {
       },
     });
   }
+
+  toggleTermsAndCondition(){
+    this.showTermsModal = !this.showTermsModal;
+  }
+
 }
