@@ -1,0 +1,106 @@
+<app-nav-bar2></app-nav-bar2>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+  <div class="w-full max-w-6xl flex flex-col md:flex-row gap-24 justify-center items-center">
+    <!-- Left: Payment Success Message -->
+    <div class="md:w-1/2 text-center md:text-center">
+      <i class="fa fa-check-circle text-green-600 text-6xl mb-4" aria-hidden="true"></i>
+      <h2 class="text-2xl font-bold mb-2 font-Roboto">Your First - Payment was successful!</h2>
+      <p class="text-gray-700 text-sm font-Roboto">
+        Thank you for your payment. If you have any questions or need assistance, feel free to contact our customer care team — we're here to help
+        make your event experience seamless and memorable!
+      </p>
+    </div>
+
+    <!-- Right: Booking Details Table -->
+    <div class="md:w-1/2 font-Roboto py-7">
+      <h3 class="text-3xl font-semibold mb-4 text-gray-800 text-center md:text-center font-kaushan">Booking Details</h3>
+      <div class="flex min-w-full gap-28 items-center justify-between mb-2 text-sm">
+        <p>Name:{{ bookingDetails.name }}</p>
+        <div>
+          <p>Event name:{{ bookingDetails.eventName }}</p>
+          <p>Guest number:{{ bookingDetails.guestNumber }}</p>
+        </div>
+      </div>
+      <table class="min-w-full text-left border-gray-200 text-xs mt-3">
+        <thead class="bg-green-100 text-green-800 uppercase">
+          <tr>
+            <th class="px-4 py-2 border-b text-center">Item</th>
+            <th class="px-4 py-2 border-b text-center">Details</th>
+            <th class="px-4 py-2 border-b text-center">Price</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700 text-center">
+          <tr *ngIf="bookingDetails?.venue">
+            <td class="px-4 py-2">Venue</td>
+            <td class="px-4 py-2">{{ bookingDetails.venue.details }},<br />Number of: {{ bookingDetails.venue.noOf }}</td>
+            <td class="px-4 py-2">{{ bookingDetails.venue.cost }}</td>
+          </tr>
+          <tr *ngIf="bookingDetails?.seating">
+            <td class="px-4 py-2">Seating</td>
+            <td class="px-4 py-2">{{ bookingDetails.seating.details }},<br />Number of: {{ bookingDetails.seating.noOf }}</td>
+            <td class="px-4 py-2">{{ bookingDetails.seating.cost }}</td>
+          </tr>
+          <tr *ngIf="bookingDetails?.soundSystem">
+            <td class="px-4 py-2">Sound System</td>
+            <td class="px-4 py-2">{{ bookingDetails.soundSystem.details }},<br />Number of: {{ bookingDetails.soundSystem.noOf }}</td>
+            <td class="px-4 py-2">{{ bookingDetails.soundSystem.cost }}</td>
+          </tr>
+          <tr *ngIf="bookingDetails?.Decoration">
+            <td class="px-4 py-2">Decoration</td>
+            <td class="px-4 py-2">{{ bookingDetails.Decoration.details }},<br />Number of: {{ bookingDetails.Decoration.noOf }}</td>
+            <td class="px-4 py-2">{{ bookingDetails.Decoration.cost }}</td>
+          </tr>
+          <tr *ngIf="bookingDetails.PhotoAndVideo">
+            <td class="px-4 py-2">Photo & Video</td>
+            <td class="px-4 py-2">{{ bookingDetails.PhotoAndVideo.details }},<br />Number of: {{ bookingDetails.PhotoAndVideo.noOf }}</td>
+            <td class="px-4 py-2">{{ bookingDetails.PhotoAndVideo.cost }}</td>
+          </tr>
+          <tr class="bg-green-50 text-green-800" *ngIf="bookingDetails?.food">
+            <td class="px-4 py-2 font-bold">Foods :-</td>
+            <td class="px-4 py-2"></td>
+            <td class="px-4 py-2"></td>
+          </tr>
+          <tr *ngIf="bookingDetails.food.welcomeDrink">
+            <td class="px-4 py-2">Welcome drink</td>
+            <td class="px-4 py-2">
+              {{ bookingDetails.food.welcomeDrink.details }},<br />Number of: {{ bookingDetails.food.welcomeDrink.noOf }}
+            </td>
+            <td class="px-4 py-2">{{ bookingDetails.food.welcomeDrink.cost }}</td>
+          </tr>
+          <tr *ngIf="bookingDetails.food.mainCourse">
+            <td class="px-4 py-2">Main Course</td>
+            <td class="px-4 py-2">{{ bookingDetails.food.mainCourse.details }},<br />Number of: {{ bookingDetails.food.mainCourse.noOf }}</td>
+            <td class="px-4 py-2">{{ bookingDetails.food.mainCourse.cost }}</td>
+          </tr>
+          <tr *ngIf="bookingDetails.food.dessert">
+            <td class="px-4 py-2">Dessert</td>
+            <td class="px-4 py-2">{{ bookingDetails.food.dessert.details }},<br />Number of: {{ bookingDetails.food.dessert.noOf }}</td>
+            <td class="px-4 py-2">{{ bookingDetails.food.dessert.cost }}</td>
+          </tr>
+          <tr class="bg-white font-semibold">
+            <td class="px-3 py-1"></td>
+            <td class="px-3 py-1 text-end">Paid amount :-</td>
+            <td class="px-3 py-1">{{ bookingDetails.paidAmount }}/-</td>
+          </tr>
+          <tr class="bg-white font-semibold">
+            <td class="px-3 py-1"></td>
+            <td class="px-3 py-1 text-end">Balance amount :-</td>
+            <td class="px-3 py-1">{{ balanceAmount }}/-</td>
+          </tr>
+          <tr class="bg-white font-semibold">
+            <td class="px-3 py-1"></td>
+            <td class="px-3 py-1 text-end">Additional charge :-</td>
+            <td class="px-3 py-1">{{bookingDetails.additionalCharge}}/-</td>
+          </tr>
+          <tr class="bg-white border-b text-sm font-semibold">
+            <td class="px-3 py-1"></td>
+            <td class="px-3 py-1 text-end">Grand total :-</td>
+            <td class="px-3 py-1">{{bookingDetails.grandTotal}}/-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -168,11 +168,21 @@
           <div>
             <label class="items-center space-x-2 flex justify-between">
               <div class="flex gap-1">
-                <input type="checkbox" class="form-checkbox h-4 w-3 text-blue-600 rounded" />
+                <input
+                  type="checkbox"
+                  class="form-checkbox h-4 w-3 text-blue-600 rounded"
+                  [(ngModel)]="termsAccepted"
+                  (change)="onTermsAcceptedChange($event)" />
                 <span class="text-gray-700">I agree to the</span>
                 <span (click)="toggleTermsAndCondition()" class="text-blue-800 underline hover:text-blue-600">Terms and Conditions</span>
               </div>
-              <button class="h-7 w-36 bg-yellow-600 text-lg rounded-sm hover:bg-baseYellow">Make your Day</button>
+              <button
+                class="h-11 w-36 text-lg rounded-sm"
+                [ngClass]="{ 'bg-yellow-600 hover:bg-baseYellow': termsAccepted, 'bg-gray-400 cursor-not-allowed': !termsAccepted }"
+                [disabled]="!termsAccepted"
+                (click)="makeYourDay()">
+                Make your Day 
+              </button>
             </label>
             <p class="text-sm text-red-500 hidden">check your email for payment!!</p>
           </div>

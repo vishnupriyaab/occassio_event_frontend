@@ -13,4 +13,9 @@ export class PaymentService {
   entryPaymentLink(email: string, entryId: string) {
     return this._http.post<{ success: boolean; message: string }>(`${this._baseUrl}user/entry-payment-link`, { email, entryId });
   }
+
+  oneByThirdPayment(estimatedId:string){
+    return this._http.post<{success:boolean; message:string}>(`${this._baseUrl}user/one-third-payment`,{estimatedId});
+  }
+
 }
