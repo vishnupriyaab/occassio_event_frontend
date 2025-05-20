@@ -1,9 +1,12 @@
 <div class="px-4">
-  <header class="mb-8">
+  <div class="mb-8">
     <h1 class="text-3xl font-bold text-white">My Clients</h1>
-  </header>
+  </div>
 </div>
 <div class="container mx-auto py-4 px-5 pl-10 pr-10">
+  <!-- <div class="flex items-center mb-5">
+  <app-search [placeholder]="'Search clients...'" (searchQuery)="handleSearch($event)" (filterChange)="handleFilterChange($event)"></app-search>
+  </div> -->
   <div class="overflow-x-auto shadow-md rounded-lg">
     <table class="min-w-full">
       <thead>
