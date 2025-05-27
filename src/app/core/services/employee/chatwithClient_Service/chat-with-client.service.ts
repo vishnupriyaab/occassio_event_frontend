@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import io from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
@@ -13,8 +13,7 @@ export class ChatWithClientService {
   private _socket = io(environment.url);
   private _baseUrl = environment.baseUrl;
   private _notificationSubject = new Subject<{ message: IChatMessage; conversationId: string }>();
-
-  constructor(private _http: HttpClient) {}
+  private _http = inject(HttpClient)
 
   connect(): void {
     this._socket.connect();
