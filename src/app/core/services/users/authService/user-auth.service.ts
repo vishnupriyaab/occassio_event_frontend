@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginResponse } from '../../../models/ILoginLogoutRes';
+import { LoginDto } from '../../../../dtos/login.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -17,16 +18,15 @@ export class UserAuthService {
       credential,
     });
   }
-  login(email: string, password: string): Observable<LoginResponse> {
+  login(loginData: LoginDto): Observable<LoginResponse> {
     return this._http.post<LoginResponse>(`${this._baseUrl}user/login`, {
-      email,
-      password,
+      loginData,
     });
   }
-  forgotPassword(email: string): Observable<{ message: string }> {
+  forgotPassword(email: string): Observable <{ message: string }> {
     return this._http.post<{ message: string }>(`${this._baseUrl}user/forgotPassword`, { email });
   }
-  resetPassword(newPassword: string, token: string): Observable<{ message: string }> {
+  resetPassword(newPassword: string, token: string): Observable <{ message: string }> {
     return this._http.post<{ message: string }>(`${this._baseUrl}user/resetPassword`, { password: newPassword, token });
   }
   setLoggedIn(status: string) {

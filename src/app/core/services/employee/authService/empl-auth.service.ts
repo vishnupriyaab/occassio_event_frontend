@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../models/commonAPIResponse';
+import { LoginDto } from '../../../../dtos/login.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +13,10 @@ export class EmplAuthService {
 
   constructor(private _http: HttpClient) {}
 
-  login(email: string, password: string): Observable<ApiResponse<string>> {
-    console.log(email, password, '123456');
+  login(loginData:LoginDto): Observable<ApiResponse<string>> {
+    console.log(loginData, '123456');
     return this._http.post<ApiResponse<string>>(`${this._baseUrl}employee/login`, {
-      email,
-      password,
+      loginData
     });
   }
   forgotPassword(email: string): Observable<{ message: string }> {

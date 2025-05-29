@@ -13,7 +13,7 @@ export class ChatWithClientService {
   private _socket = io(environment.url);
   private _baseUrl = environment.baseUrl;
   private _notificationSubject = new Subject<{ message: IChatMessage; conversationId: string }>();
-  private _http = inject(HttpClient)
+  private _http = inject(HttpClient);
 
   connect(): void {
     this._socket.connect();

@@ -1,0 +1,6 @@
+/* chart.component.css */
+/* Ensure chart canvas is responsive */
+canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}

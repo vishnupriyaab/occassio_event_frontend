@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { UserAuthService } from '../../../../core/services/users/authService/user-auth.service';
 import { EmplAuthService } from '../../../../core/services/employee/authService/empl-auth.service';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { LoginDto } from '../../../../dtos/login.dto';
 
 @Component({
   selector: 'app-login-form',
@@ -49,17 +50,17 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   formOnSubmit() {
     if (this.loginForm.invalid) return;
 
-    const { email, password } = this.loginForm.value;
+    const loginData: LoginDto = this.loginForm.value;
     const authService = this._authServices[this.formType];
 
-    authService?.login(email, password).subscribe(
+    authService?.login(loginData).subscribe(
       (response: any) => {
-        console.log(response, 'qwertyuio');
-        console.log(response.data, 'wertyuiop');
+        console.log(response, 'response');
+        console.log(response.data, 'responseData');
         this.handleSuccess(response);
       },
       (error: unknown) => {
-        console.log(error, '1234567890');
+        console.log(error, 'error');
         this.handleError(error);
       }
     );

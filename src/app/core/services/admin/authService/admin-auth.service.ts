@@ -5,6 +5,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { ApiResponse, LogOut } from '../../../models/commonAPIResponse';
 import IToastOption from '../../../models/IToastOptions';
 import { ToastService } from '../../common/toaster/toast.service';
+import { LoginDto } from '../../../../dtos/login.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +15,9 @@ export class AdminAuthService {
 
   constructor(private _http: HttpClient, private toastService: ToastService) {}
 
-  login(email: string, password: string): Observable<ApiResponse<string>> {
+  login(loginData:LoginDto): Observable<ApiResponse<string>> {
     return this._http.post<ApiResponse<string>>(`${this._baseUrl}admin/login`, {
-      email,
-      password,
+      loginData
     });
   }
   setLoggedIn(status: string) {

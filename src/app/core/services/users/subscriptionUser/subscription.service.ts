@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IClientData } from '../../../models/IUser';
 import { ApiResponse } from '../../../models/commonAPIResponse';
-import { IBooking } from '../../../models/IBooking';
 
 @Injectable({
   providedIn: 'root',
