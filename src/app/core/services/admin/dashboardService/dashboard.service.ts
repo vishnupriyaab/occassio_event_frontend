@@ -10,6 +10,10 @@ export interface DashboardStats {
   totalRevenue: number;
   totalEvents: number;
 }
+export interface MonthlyRevenue {
+  month: string;
+  revenue: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +25,9 @@ export class DashboardService {
 
   getDashboardStats(): Observable<ApiResponse<DashboardStats>> {
     return this._http.get<ApiResponse<DashboardStats>>(`${this._baseUrl}admin/dashboard`);
+  }
+
+  getMonthlyRevenue(): Observable<ApiResponse<MonthlyRevenue[]>> {
+    return this._http.get<ApiResponse<MonthlyRevenue[]>>(`${this._baseUrl}admin/dashboard/monthly-revenue`);
   }
 }
