@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:5000/',
-  url: 'http://localhost:5000',
+  baseUrl: 'https://api.occasio.sbs/',
+  url: 'https://api.occaio.sbs',
 };
