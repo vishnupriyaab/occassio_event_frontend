@@ -169,6 +169,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
 
   startVideoCall() {
     // this.isInCall = true;
+    console.log(this.selectedConversation, this.employeeId,"23456789")
     if (!this.selectedConversation || !this.employeeId) {
       const toastOption: IToastOption = {
         severity: 'warning-toast',
@@ -179,13 +180,10 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       return;
     }
 
-    // Generate a room ID based on the conversation ID
     const roomID = this.selectedConversation.conversationid;
 
-    // Generate a unique call ID
     const callId = Date.now().toString();
 
-    // First, store call data in the database
     const callData = {
       conversationId: this.selectedConversation.conversationid,
       callerId: this.employeeId,
