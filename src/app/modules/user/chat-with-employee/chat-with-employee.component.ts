@@ -129,6 +129,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
 
   // Video call related methods
   startVideoCall() {
+    console.log(this.conversationId, this.userId, this.employeeId)
     if (!this.conversationId || !this.userId || !this.employeeId) {
       const toastOption: IToastOption = {
         severity: 'warning-toast',

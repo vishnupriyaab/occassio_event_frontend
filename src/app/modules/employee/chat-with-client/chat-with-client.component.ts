@@ -169,7 +169,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
 
   startVideoCall() {
     // this.isInCall = true;
-    console.log(this.selectedConversation,"12121212", this.employeeId,"23456789")
     if (!this.selectedConversation || !this.selectedConversation.employeeId) {
       const toastOption: IToastOption = {
         severity: 'warning-toast',
@@ -244,15 +243,12 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
             }
           },
         });
-        // Set a timeout to mark call as missed if not answered within 30 seconds
         setTimeout(() => {
           if (this.isInCall && this.currentCallId === callId) {
-            // Check if the call is still in initiated state
             this._videoCallService.getCallHistory(this.selectedConversation!.conversationid).subscribe({
               next: response => {
                 const activeCall = response.data?.find((call: any) => call.callId === callId);
                 if (activeCall && activeCall.status === 'initiated') {
-                  // Mark as missed and end the call
                   this._videoCallService.updateCallStatus(callId, 'missed').subscribe();
                   this.endCall();
 
@@ -266,7 +262,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
               },
             });
           }
-        }, 30000); // 30 seconds timeout
+        }, 30000); 
       },
       error: error => {
         console.log(error, 'error');
@@ -289,7 +285,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
       this._videoCallService.updateCallStatus(this.currentCallId, 'ended', endTime, durationSeconds).subscribe({
         next: response => {
           console.log('Call ended:', response);
-          // Add notification in chat
           const callMessage = {
             user: 'employee',
             message: `Call ended. Duration: ${this.formatCallDuration(durationSeconds)}`,
@@ -309,14 +304,12 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     this.callStartTime = null;
   }
 
-  // Helper function to format call duration
   formatCallDuration(seconds: number): string {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   }
 
-  // Add this method to check for active calls when component initializes
   checkForActiveCall() {
     if (!this.selectedConversation) return;
 
@@ -327,7 +320,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
         if (activeCalls && activeCalls.length > 0) {
           const activeCall = activeCalls[0];
 
-          // If there's an active call where this employee is the receiver, show join option
           if (activeCall.receiverId === this.employeeId && activeCall.status === 'initiated') {
             this.showIncomingCallModal(activeCall);
           }
@@ -339,22 +331,16 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
     });
   }
 
-  // Add this method to handle incoming calls
   showIncomingCallModal(callData: any) {
-    // This would typically be implemented with a modal component
-    // For now, we'll use a simple confirmation
     const willAnswer = confirm('Incoming call. Would you like to answer?');
 
     if (willAnswer) {
-      // Join the call
       this.currentCallId = callData.callId;
       this.callStartTime = new Date();
       this.isInCall = true;
 
-      // Update call status
       this._videoCallService.updateCallStatus(callData.callId, 'accepted').subscribe();
 
-      // Join the room
       const appID = 400914278;
       const serverSecret = '274a74430adad287bc946c7a2e7fdb85';
 
@@ -376,7 +362,6 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
         onLeaveRoom: () => this.endCall(),
       });
     } else {
-      // Reject the call
       this._videoCallService.updateCallStatus(callData.callId, 'rejected').subscribe();
     }
   }
