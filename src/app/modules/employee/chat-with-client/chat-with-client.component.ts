@@ -207,7 +207,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
           appID,
           serverSecret,
           roomID,
-          this.employeeId!, // Your user ID
+          this.selectedConversation!.employeeId!, // Your user ID
           this.decodedToken?.name || 'Employee' // Your username
         );
 
