@@ -170,7 +170,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
   startVideoCall() {
     // this.isInCall = true;
     console.log(this.selectedConversation,"12121212", this.employeeId,"23456789")
-    if (!this.selectedConversation || !this.employeeId) {
+    if (!this.selectedConversation || !this.selectedConversation.employeeId) {
       const toastOption: IToastOption = {
         severity: 'warning-toast',
         summary: 'Warning',
@@ -186,7 +186,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
 
     const callData = {
       conversationId: this.selectedConversation.conversationid,
-      callerId: this.employeeId,
+      callerId: this.selectedConversation.employeeId,
       receiverId: this.selectedConversation.userId!,
       callerModel: 'Employee' as 'Employee',
       receiverModel: 'User' as 'User',

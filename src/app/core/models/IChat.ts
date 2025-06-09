@@ -34,6 +34,7 @@ export interface IConversation {
 }
 
 export interface IConversationwithUser {
+  employeeId: any;
   _id: string;
   conversationid: string;
   username: string;
