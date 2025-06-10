@@ -48,7 +48,6 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
   employeeDetails: FetchEmployeeData | undefined;
   selectedMessageIndex: number = -1;
 
-  // Video call related properties
   currentCallId: string | null = null;
   callStartTime: Date | null = null;
   isInCall: boolean = false;
@@ -124,7 +123,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
       // }
     });
     this.checkForActiveCall();
-    setInterval(() => this.checkForActiveCall(), 10000); // Check every 10 seconds
+    setInterval(() => this.checkForActiveCall(), 10000); 
   }
 
   // Video call related methods
@@ -437,7 +436,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
 
     this._chatService.deleteMessage(this.conversationId, message._id.toString()).subscribe({
       next: response => {
-        console.log('Delete message response:', response);
+        console.log('Delete message response:', response); 
 
         const index = this.messages.findIndex(m => m._id === message._id);
         if (index !== -1) {
