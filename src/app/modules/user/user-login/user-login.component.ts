@@ -25,7 +25,7 @@ export class UserLoginComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     google.accounts.id.initialize({
-      client_id: '309306198906-alk49laedlhkbamt2p1a6g9g28ni98lt.apps.googleusercontent.com',
+      client_id: '959230062032-nv8a7gu23ifg0b3k401u86ldfqiov8hi.apps.googleusercontent.com',
       callback: (resp: any) => {
         console.log(resp, 'responseeeee');
         this.handleLogin(resp);

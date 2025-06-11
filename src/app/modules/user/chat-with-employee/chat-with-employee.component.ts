@@ -204,10 +204,8 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
           },
         });
 
-        // Set a timeout to mark call as missed if not answered within 30 seconds
         setTimeout(() => {
           if (this.isInCall && this.currentCallId === callId) {
-            // Check if the call is still in initiated state
             this._videoCallService.getCallHistory(this.conversationId).subscribe({
               next: response => {
                 const activeCall = response.data?.find((call: any) => call.callId === callId);
@@ -249,7 +247,6 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
       this._videoCallService.updateCallStatus(this.currentCallId, 'ended', endTime, durationSeconds).subscribe({
         next: response => {
           console.log('Call ended:', response);
-          // Add notification in chat
           const callMessage = {
             user: 'user',
             message: `Call ended. Duration: ${this.formatCallDuration(durationSeconds)}`,
@@ -269,14 +266,12 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
     this.callStartTime = null;
   }
 
-  // Helper function to format call duration
   formatCallDuration(seconds: number): string {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   }
 
-  // Check for active calls
   checkForActiveCall() {
     if (!this.conversationId) return;
 
@@ -288,7 +283,6 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
         if (activeCalls && activeCalls.length > 0) {
           const activeCall = activeCalls[0];
 
-          // If there's an active call where this user is the receiver, show join option
           if (activeCall.receiverId === this.userId && activeCall.status === 'initiated') {
             this.showIncomingCallModal(activeCall);
           }
@@ -300,22 +294,16 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
     });
   }
 
-  // Show incoming call modal
   showIncomingCallModal(callData: any) {
-    // This would typically be implemented with a modal component
-    // For now, we'll use a simple confirmation
     const willAnswer = confirm('Incoming call from employee. Would you like to answer?');
 
     if (willAnswer) {
-      // Join the call
       this.currentCallId = callData.callId;
       this.callStartTime = new Date();
       this.isInCall = true;
 
-      // Update call status
       this._videoCallService.updateCallStatus(callData.callId, 'accepted').subscribe();
 
-      // Join the room
       const appID = 400914278;
       const serverSecret = '274a74430adad287bc946c7a2e7fdb85';
 
