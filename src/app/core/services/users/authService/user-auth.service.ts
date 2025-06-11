@@ -14,6 +14,7 @@ export class UserAuthService {
   constructor(private _http: HttpClient) {}
 
   googleLogin(credential: string): Observable<LoginResponse> {
+    console.log(credential,"11111")
     return this._http.post<LoginResponse>(`${this._baseUrl}user/google-login`, {
       credential,
     });
