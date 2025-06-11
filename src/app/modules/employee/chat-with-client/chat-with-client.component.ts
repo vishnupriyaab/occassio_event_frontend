@@ -151,7 +151,7 @@ export class ChatWithClientComponent implements OnInit, AfterViewChecked, OnDest
         message.reactions = data.reactions;
         console.log(data.reactions, '22222222222');
       }
-      console.log(message, 'qwertyuiop');
+      console.log(message, 'poiuytrewq');
     });
 
     this.checkForActiveCall();

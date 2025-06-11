@@ -104,7 +104,7 @@ export class ChatWithEmployeeComponent implements OnInit, AfterViewChecked, OnDe
         message.reactions = data.reactions;
         console.log(data.reactions, '22222222222');
       }
-      console.log(message, 'qwertyuiop');
+      console.log(message, 'mnbvcxz');
       // if (messageIndex !== -1) {
       //   if (!this.messages[messageIndex].reactions) {
       //     this.messages[messageIndex].reactions = [];

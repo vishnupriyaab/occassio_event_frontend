@@ -42,7 +42,7 @@ export class UserLoginComponent implements OnInit {
   handleLogin(credential: any) {
     this.userAuthService.googleLogin(credential).subscribe({
       next: response => {
-        console.log(response, 'qwertyuioertyuio');
+        console.log(response, 'responseeeeeingoogle login');
         const toastOption: IToastOption = {
           severity: 'success-toast',
           summary: 'Success',
